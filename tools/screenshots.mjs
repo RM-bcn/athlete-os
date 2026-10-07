@@ -36,7 +36,7 @@ const SECTIONS = {
   science: ['verdeling', 'periodisering', 'loadmodel', 'niet', 'stabiliteit', 'evidentie'],
   strength: ['doelen', 'interferentie', 'krachtwetenschap', 'samenstellen', 'bibliotheek', 'hevy', 'beschikbaarheid', 'anderesporten'],
   backend: ['architectuur', 'opslag', 'schrijfwegen', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
-  frontend: ['telefoon', 'herstel', 'kracht-beschikbaarheid', 'desktop', 'ontwerp'],
+  frontend: ['oppervlakken', 'telefoon', 'kaart', 'herstel', 'kracht-beschikbaarheid', 'desktop', 'ontwerp'],
 };
 
 const VIEWPORTS = [

@@ -52,6 +52,13 @@
   .avail .what { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
   .avail.other .what { color: var(--easy); }
   .avail.free .what { color: var(--dim); }
+
+  /* telegram-fotobijlage */
+  .tg-img { border: 1px solid var(--line-2); border-radius: 13px; overflow: hidden; max-width: 90%; margin-bottom: 9px; background: #0e1219; }
+  .tg-img .inner { padding: 16px 16px 14px; }
+  .tg-img .cap { font-size: 0.72rem; color: var(--muted); padding: 7px 12px; background: var(--surface); border-top: 1px solid var(--line); font-family: var(--mono); }
+  .tg-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .tg-actions span { font-family: var(--mono); font-size: 0.68rem; color: var(--fitness); border: 1px solid color-mix(in srgb, var(--fitness) 40%, transparent); border-radius: 100px; padding: 4px 11px; }
 </style>
 </head>
 <body>
@@ -81,6 +88,61 @@
   </div>
 </header>
 
+<!-- ============ DRIE OPPERVLAKKEN ============ -->
+<section class="band" id="oppervlakken">
+  <div class="wrap">
+    <p class="eyebrow accent">Eerst dit</p>
+    <h2>Drie oppervlakken,<br>één systeem.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
+      "Telegram, geen eigen app" en "je ziet een herstelring" zijn geen tegenstelling —
+      het zijn twee verschillende oppervlakken. Ik was daar eerder onduidelijk over.
+    </p>
+
+    <div class="grid g3" style="margin-top:40px">
+      <div class="card" style="border-top:3px solid var(--fitness)">
+        <span class="card-num">01</span>
+        <h4>Telegram</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          <strong>De push en het gesprek.</strong> De ochtendbrief komt binnen als bericht,
+          <em>met de herstelkaart als afbeelding</em>. Je antwoordt in gewoon Nederlands:
+          "verzet donderdag", "squat 3×8 op 110, voelde als een 8".
+        </p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--form)">
+        <span class="card-num">02</span>
+        <h4>Het dashboard</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          <strong>De visuals.</strong> Eén HTML-bestand dat je op je telefoon opent via een
+          <em>privé-URL</em> (Cloudflare Access) of lokaal. Hier zie je de ring, de
+          hypnogram, de trends en de week.
+        </p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--line-2)">
+        <span class="card-num">03</span>
+        <h4>De bestanden</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          <strong>De bron.</strong> Markdown op je eigen schijf. Alles wat het model leest
+          en schrijft, en wat je kunt openen en aanvechten. Geen black box.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:32px">
+      <strong>Dus hoe zie je die recovery score?</strong> Op drie manieren, en je kiest
+      per moment:
+      <span class="mono" style="font-size:0.84rem">Telegram-bericht (met afbeelding)</span> ·
+      <span class="mono" style="font-size:0.84rem">privé-URL op je telefoon</span> ·
+      <span class="mono" style="font-size:0.84rem">health/2026-10-06.md</span>
+    </div>
+
+    <div class="callout warn" style="margin-top:18px">
+      <strong>De schermen hieronder zijn dus het dashboard, niet Telegram.</strong>
+      Alleen het scherm met de naam <em>Coach</em> is Telegram. Ik heb dat nu in de
+      schermbalk van elk voorbeeld gezet, zodat je het verschil ziet.
+    </div>
+  </div>
+</section>
+
 <!-- ============ TELEFOON ============ -->
 <section class="band" id="telefoon">
   <div class="wrap">
@@ -93,7 +155,7 @@
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>09:41</span><span>Telegram · Athlete OS</span></div>
+            <div class="device-bar"><span>09:41</span><span>dashboard</span></div>
             <div class="device-body">
               <div class="app-sub">Dinsdag 6 oktober</div>
               <div class="app-h">Vandaag</div>
@@ -130,7 +192,7 @@
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>07:12</span><span>Athlete OS</span></div>
+            <div class="device-bar"><span>07:12</span><span>dashboard</span></div>
             <div class="device-body">
               <div class="app-sub">Herstel · vannacht</div>
               <div class="app-h">Herstel</div>
@@ -176,7 +238,7 @@
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>09:41</span><span>Telegram · Athlete OS</span></div>
+            <div class="device-bar"><span>09:41</span><span>dashboard</span></div>
             <div class="device-body">
               <div class="app-sub">Week 8 · Build</div>
               <div class="app-h">Deze week</div>
@@ -217,7 +279,7 @@
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>09:41</span><span>Telegram · Athlete OS</span></div>
+            <div class="device-bar"><span>09:41</span><span>dashboard</span></div>
             <div class="device-body">
               <div class="app-sub">Seizoen · richting marathon</div>
               <div class="app-h">Voortgang</div>
@@ -287,11 +349,65 @@
         <div class="screen-label"><b>De coach</b><span>twee richting, in Telegram</span></div>
       </div>
 
+      <!-- SCHERM · OCHTENDBRIEF IN TELEGRAM -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>07:02</span><span>Telegram</span></div>
+            <div class="device-body">
+              <div class="app-sub">Athlete OS</div>
+              <div class="app-h" style="margin-bottom:16px">Ochtendbrief</div>
+
+              <div class="bubble coach">
+                <b>Athlete OS</b>
+                Goedemorgen. Herstel 62% — redelijk. Vandaag een rustige duurloop van
+                45 min; je intervallen gaan naar donderdag.
+              </div>
+
+              <!-- de herstelkaart als meegestuurde afbeelding -->
+              <div class="tg-img">
+                <div class="inner">
+                  <div style="display:flex;align-items:center;gap:14px">
+                    <svg viewBox="0 0 120 120" style="width:74px;height:74px;flex:none" aria-hidden="true">
+                      <circle cx="60" cy="60" r="52" fill="none" stroke="#1b1b24" stroke-width="11"/>
+                      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--easy)" stroke-width="11"
+                              stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="124.1"
+                              transform="rotate(-90 60 60)"/>
+                    </svg>
+                    <div>
+                      <div style="font-family:var(--display);font-variation-settings:'wdth' 112;font-weight:800;font-size:1.9rem;line-height:1;color:var(--easy)">62%</div>
+                      <div class="app-sub" style="margin-top:4px">herstel</div>
+                    </div>
+                  </div>
+                  <div class="row" style="border-top:1px solid var(--line);margin-top:12px;padding-top:8px">
+                    <span class="k">HRV</span><span class="v" style="color:var(--easy)">52 ms</span>
+                  </div>
+                  <div class="row"><span class="k">Rustige HR</span><span class="v" style="color:var(--easy)">54</span></div>
+                  <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
+                </div>
+                <div class="cap">herstel-kaart.png · gegenereerd uit je eigen data</div>
+              </div>
+
+              <div class="bubble coach" style="margin-bottom:0">
+                <b>Athlete OS</b>
+                Tik op de kaart voor het volledige dashboard.
+              </div>
+
+              <div class="tg-actions">
+                <span>Toon dashboard</span>
+                <span>Waarom?</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Ochtendbrief</b><span>Telegram, met de kaart als beeld</span></div>
+      </div>
+
       <!-- SCHERM · KRACHT -->
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>18:30</span><span>Hevy · Athlete OS</span></div>
+            <div class="device-bar"><span>18:30</span><span>dashboard</span></div>
             <div class="device-body">
               <div class="app-sub">Blok 2 · week 5 · intensificatie</div>
               <div class="app-h">Kracht</div>
@@ -336,7 +452,7 @@
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>20:15</span><span>Athlete OS</span></div>
+            <div class="device-bar"><span>20:15</span><span>dashboard</span></div>
             <div class="device-body">
               <div class="app-sub">Deze week · 6–12 oktober</div>
               <div class="app-h">Beschikbaarheid</div>
@@ -368,10 +484,96 @@
 
     </div>
 
-    <div class="callout form" style="max-width:760px;margin:52px auto 0">
-      <strong>Waarom Telegram en niet een eigen app?</strong> Telegram is gratis, heeft
-      al je meldingen, en werkt twee richting zonder dat je een server hoeft te draaien.
-      De ochtendbrief is één uitgaand bericht. De rest is gewoon een gesprek.
+    <div class="callout form" style="max-width:820px;margin:52px auto 0">
+      <strong>Waarom Telegram en niet een eigen app?</strong> Omdat je geen app wilt
+      onderhouden, niet omdat je geen visuals kunt hebben. Telegram is gratis, heeft al je
+      meldingen, en werkt twee richting zonder server. <strong>De visuals komen uit het
+      dashboard</strong>, en het dashboard komt naar je toe: als afbeelding in Telegram,
+      en als privé-URL die je op je telefoon opent.
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOE DE KAART IN TELEGRAM KOMT ============ -->
+<section class="band" id="kaart">
+  <div class="wrap">
+    <p class="eyebrow accent">En hoe dan precies?</p>
+    <h2>Het dashboard rendert zichzelf<br>tot een plaatje.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Dit is het stukje dat de twee oppervlakken verbindt. Dezelfde HTML die je op je
+      telefoon opent, wordt 's ochtends ook als afbeelding naar Telegram gestuurd.
+    </p>
+
+    <div class="card" style="margin-top:40px;padding:30px">
+      <div class="flow">
+        <div class="flow-row">
+          <div>
+            <h4>1 · De data</h4>
+            <p class="mono" style="font-size:0.78rem;color:var(--muted)">intervals.icu wellness</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Slaap, rustige hartslag, HRV-curve, trainingsload van vannacht en gisteren.
+          </div>
+        </div>
+        <div class="flow-row">
+          <div>
+            <h4>2 · De kaart</h4>
+            <p class="mono" style="font-size:0.78rem;color:var(--muted)">card.html</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Een klein HTML-bestand: alleen de ring, de drie bijdragers en het oordeel.
+            Geen ruis, want het moet leesbaar zijn op een telefoon.
+          </div>
+        </div>
+        <div class="flow-row">
+          <div>
+            <h4>3 · Het plaatje</h4>
+            <p class="mono" style="font-size:0.78rem;color:var(--muted)">Playwright › PNG</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Een headless browser maakt er een afbeelding van. Dat is dezelfde techniek die
+            ik gebruik om de screenshots in deze repo te maken.
+          </div>
+        </div>
+        <div class="flow-row">
+          <div>
+            <h4>4 · Versturen</h4>
+            <p class="mono" style="font-size:0.78rem;color:var(--muted)">Telegram Bot API</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            De bot stuurt de PNG met een korte tekst eronder. Gratis, geen server.
+          </div>
+        </div>
+        <div class="flow-row">
+          <div>
+            <h4>5 · Tikken</h4>
+            <p class="mono" style="font-size:0.78rem;color:var(--muted)">privé-URL</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Tik je op de kaart, dan opent het volledige dashboard — op een URL die alleen
+            jij kunt bereiken (Cloudflare Access).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:30px;gap:26px">
+      <div class="callout form">
+        <strong>Waarom een afbeelding en geen linkje?</strong> Een link moet je aantikken,
+        en dan ben je al onderweg. Een afbeelding zie je meteen — in dezelfde beweging
+        waarin je je telefoon 's ochtends oppakt. Dat is het hele verschil tussen een
+        melding die je leest en een melding die je negeert.
+      </div>
+      <div class="callout">
+        <strong>En het is echt offline te maken.</strong> De kaart is gewoon HTML, dus hij
+        werkt ook als je geen internet hebt behalve Telegram zelf. Geen externe dienst, geen
+        screenshot-API, geen abonnement.
+      </div>
     </div>
   </div>
 </section>

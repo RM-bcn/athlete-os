@@ -15,7 +15,7 @@ Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server 
 | `strength.html` | **Kracht &amp; doel.** Twee soorten doelen (event én lichaamscompositie), de interferentie tussen duur en kracht, de hypertrofie-wetenschap, de oefeningenbibliotheek en de lus naar Hevy. |
 | `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), schrijfwegen (intervals.icu, Hevy), lagen, datamodel, skills, adaptatieregels, schema. |
 | `frontend.html` | **De interface.** Zeven telefoonschermen (vandaag, herstel, week, voortgang, coach, kracht, beschikbaarheid) en het desktop-dashboard. |
-| `screenshots/` | 92 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
+| `screenshots/` | 96 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
 | `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
 
 ## Screenshots
@@ -38,6 +38,20 @@ Er is geen GitHub-repo om te klonen — het "Athlete OS" van Kevin Rudd is een s
 Deze repo vertaalt dat naar **jouw** situatie: Huawei Watch + Wahoo ELEMNT + Hevy op Android.
 De ruggengraat is **intervals.icu** (gratis), want dat is de enige gratis dienst die je
 apparaten leest *én* geplande workouts terugschrijft *én* fitness/vermoeidheid/vorm berekent.
+
+## Drie oppervlakken, niet één
+
+"Telegram, geen eigen app" en "je ziet een herstelring" zijn geen tegenstelling:
+
+| | |
+|---|---|
+| **Telegram** | de push en het gesprek — de ochtendbrief komt binnen **met de herstelkaart als afbeelding** |
+| **Het dashboard** | de visuals — één HTML-bestand op een privé-URL (Cloudflare Access) of lokaal |
+| **De bestanden** | de bron — markdown op je schijf, alles leesbaar en aanvechtbaar |
+
+De herstelkaart wordt 's ochtends uit dezelfde HTML gerenderd tot een PNG (Playwright) en
+meegestuurd met het Telegram-bericht. Zie [`frontend.html#oppervlakken`](frontend.html)
+en [`frontend.html#kaart`](frontend.html).
 
 Twee dingen die de broncursus mist en hier wél in zitten:
 
