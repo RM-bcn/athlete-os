@@ -26,6 +26,7 @@ const PAGES = [
   { file: 'index.html', slug: 'index', title: 'Voorstel (pitch deck)' },
   { file: 'science.html', slug: 'science', title: 'Wetenschap' },
   { file: 'strength.html', slug: 'strength', title: 'Kracht & doel' },
+  { file: 'pwa.html', slug: 'pwa', title: 'PWA & architectuur' },
   { file: 'backend.html', slug: 'backend', title: 'Backend / architectuur' },
   { file: 'frontend.html', slug: 'frontend', title: 'Interface' },
 ];
@@ -35,6 +36,7 @@ const SECTIONS = {
   index: ['hero', 'probleem', 'kernvondst', 'setup', 'brein', 'skills', 'doelen', 'fasen', 'keuzes', 'opbrengst', 'grenzen', 'kosten', 'beslispunten'],
   science: ['verdeling', 'periodisering', 'loadmodel', 'niet', 'stabiliteit', 'evidentie'],
   strength: ['doelen', 'interferentie', 'krachtwetenschap', 'samenstellen', 'bibliotheek', 'hevy', 'weegschaal', 'beschikbaarheid', 'anderesporten'],
+  pwa: ['besluiten', 'architectuur', 'regels', 'ml', 'sparren', 'api', 'kosten'],
   backend: ['architectuur', 'opslag', 'schrijfwegen', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
   frontend: ['oppervlakken', 'telefoon', 'kaart', 'herstel', 'kracht-beschikbaarheid', 'desktop', 'ontwerp'],
 };
