@@ -1,15 +1,33 @@
 # Athlete OS — voorstel
 
+**Live: <https://rm-bcn.github.io/athlete-os/>**
+
 Drie pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken **voordat** er iets
 gebouwd wordt. Geen productcode — een voorstel, een architectuur en een interface-schets.
 
-Open `index.html` in je browser. Geen server nodig, geen build stap.
+Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server nodig, geen build stap.
 
 | Bestand | Wat het is |
 |---|---|
 | `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, de vijf fasen, de keuzes, wat het oplevert, de grenzen, de kosten. |
 | `backend.html` | **De architectuur.** Datastroom-diagram, lagen, bestandsstructuur, datamodel, skill-in/uit, de adaptatieregels, het schema. |
 | `frontend.html` | **De interface.** Vier telefoonschermen (vandaag, de week, voortgang, coach) en het desktop-dashboard. |
+| `screenshots/` | 50 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
+| `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
+
+## Screenshots
+
+Alles in `screenshots/` is te bekijken op GitHub, ook op mobiel:
+
+- `screenshots/desktop/` — `index-full.png`, `backend-full.png`, `frontend-full.png`
+- `screenshots/desktop/sections/` — per sectie, 22 stuks
+- `screenshots/mobile/` — dezelfde set op 390 px breed
+
+Opnieuw genereren:
+
+```bash
+PLAYWRIGHT_MODULE=/pad/naar/playwright/index.js node tools/screenshots.mjs
+```
 
 ## De kern in één alinea
 
