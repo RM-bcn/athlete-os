@@ -448,8 +448,9 @@
         <h4>Smart Life › Health Connect</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           Tuya's eigen BLE-weegschaal-oplossing ondersteunt synchronisatie met
-          <strong>Google Fit en Fitbit</strong>. Als jouw model dat doet, zet je het aan in de
-          app en komt je gewicht via Health Connect in intervals.icu.
+          <strong>Google Fit en Fitbit</strong>. Kijk in de app onder
+          <strong>Ik › Derden</strong>. Staat het er, dan komt je gewicht via Health Connect
+          in intervals.icu — zonder één regel code.
         </p>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
           Eerst proberen — kost 10 minuten
@@ -458,14 +459,14 @@
 
       <div class="card" style="border-top:3px solid var(--fitness)">
         <span class="card-num" style="color:var(--fitness)">ROUTE 2 · KLEIN SCRIPT</span>
-        <h4>Tuya Cloud API</h4>
+        <h4>Tuya IoT Cloud</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           Tuya heeft officiële <strong>Body Fat Scale Open API's</strong>. Je leest de
           weeggeschiedenis uit, of laat een vetrapport genereren uit gewicht + weerstand.
           Er bestaat een werkende Home Assistant-integratie die je kunt nabouwen.
         </p>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
-          gratis IoT-project · service moet je aanzetten
+          gratis IoT-project · service aanzetten
         </p>
       </div>
 
@@ -481,6 +482,18 @@
           alleen bij een wifi-weegschaal
         </p>
       </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:26px">
+      <strong>De vondst die het uitmaakt — LSC is een Tuya-kloon.</strong> Jouw weegschaal
+      werkt met Smart Life én met LSC Smart Connect, en dat klopt: <strong>LSC Smart Connect
+      is een white-label van Tuya</strong>, net zoals Calex dat is. Maar de koppeling naar de
+      Tuya-cloud werkt via een QR-code die je met <strong>Smart Life of Tuya Smart</strong>
+      scant — niet met LSC. Wie het via LSC probeert krijgt letterlijk
+      <em>"0 devices under the app account"</em>.
+      <br><br>
+      <strong>Dus:</strong> zet de weegschaal in <strong>Smart Life</strong>, niet in LSC.
+      Dan kun je hem zowel aan de Tuya-cloud koppelen als aan Google Fit.
     </div>
 
     <div class="grid g2" style="margin-top:34px;gap:30px;align-items:start">
