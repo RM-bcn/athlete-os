@@ -16,7 +16,7 @@ De bouw loopt. Wat er nu echt staat:
 | **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen, 119 activiteiten, cron elke 4 uur. Hevy en de weegschaal nog niet. |
 | **2 · Rekenregels** | klaar | 41 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
-| **4 · Invoer** | leeg | nog niets |
+| **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
 | **5 · Coach** | deels | De vault staat: constitutie, profiel, 7 skills. Nog geen `/api/chat`. |
 | **6 · Kracht** | leeg | alleen de skill |
 | **7 · Telegram** | deels | De bot werkt en is getest. Nog geen webhook naar de Worker. |
