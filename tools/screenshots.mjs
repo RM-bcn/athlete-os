@@ -24,6 +24,7 @@ const CHROME = process.env.CHROME_PATH || '/usr/bin/chromium';
 
 const PAGES = [
   { file: 'index.html', slug: 'index', title: 'Voorstel (pitch deck)' },
+  { file: 'science.html', slug: 'science', title: 'Wetenschap' },
   { file: 'backend.html', slug: 'backend', title: 'Backend / architectuur' },
   { file: 'frontend.html', slug: 'frontend', title: 'Interface' },
 ];
@@ -31,8 +32,9 @@ const PAGES = [
 // secties waar de uitlijning het meest kritisch is
 const SECTIONS = {
   index: ['hero', 'probleem', 'kernvondst', 'setup', 'brein', 'skills', 'fasen', 'keuzes', 'opbrengst', 'grenzen', 'kosten', 'beslispunten'],
-  backend: ['architectuur', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
-  frontend: ['telefoon', 'desktop', 'ontwerp'],
+  science: ['verdeling', 'periodisering', 'loadmodel', 'niet', 'stabiliteit', 'evidentie'],
+  backend: ['architectuur', 'opslag', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
+  frontend: ['telefoon', 'herstel', 'desktop', 'ontwerp'],
 };
 
 const VIEWPORTS = [

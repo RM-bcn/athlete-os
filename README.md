@@ -2,25 +2,27 @@
 
 **Live: <https://rm-bcn.github.io/athlete-os/>**
 
-Drie pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken **voordat** er iets
-gebouwd wordt. Geen productcode — een voorstel, een architectuur en een interface-schets.
+Vier pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken **voordat** er iets
+gebouwd wordt. Geen productcode — een voorstel, een wetenschappelijke onderbouwing, een
+architectuur en een interface-schets.
 
 Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server nodig, geen build stap.
 
 | Bestand | Wat het is |
 |---|---|
 | `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, de vijf fasen, de keuzes, wat het oplevert, de grenzen, de kosten. |
-| `backend.html` | **De architectuur.** Datastroom-diagram, lagen, bestandsstructuur, datamodel, skill-in/uit, de adaptatieregels, het schema. |
-| `frontend.html` | **De interface.** Vier telefoonschermen (vandaag, de week, voortgang, coach) en het desktop-dashboard. |
-| `screenshots/` | 50 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
+| `science.html` | **De wetenschap.** Gepolariseerde intensiteitsverdeling (80/20), periodisering, het CTL/ATL/TSB-loadmodel, wat we verwerpen (ACWR), en de stabiliteitsregels tegen plan-gerammel. |
+| `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), lagen, bestandsstructuur, datamodel, skill-in/uit, adaptatieregels, schema. |
+| `frontend.html` | **De interface.** Vijf telefoonschermen (vandaag, **herstel**, de week, voortgang, coach) en het desktop-dashboard. |
+| `screenshots/` | 68 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
 | `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
 
 ## Screenshots
 
 Alles in `screenshots/` is te bekijken op GitHub, ook op mobiel:
 
-- `screenshots/desktop/` — `index-full.png`, `backend-full.png`, `frontend-full.png`
-- `screenshots/desktop/sections/` — per sectie, 22 stuks
+- `screenshots/desktop/` — `index-full.png`, `science-full.png`, `backend-full.png`, `frontend-full.png`
+- `screenshots/desktop/sections/` — per sectie
 - `screenshots/mobile/` — dezelfde set op 390 px breed
 
 Opnieuw genereren:
@@ -35,16 +37,37 @@ Er is geen GitHub-repo om te klonen — het "Athlete OS" van Kevin Rudd is een s
 Deze repo vertaalt dat naar **jouw** situatie: Huawei Watch + Wahoo ELEMNT + Hevy op Android.
 De ruggengraat is **intervals.icu** (gratis), want dat is de enige gratis dienst die je
 apparaten leest *én* geplande workouts terugschrijft *én* fitness/vermoeidheid/vorm berekent.
-De cursus mist één ding: een adaptieve herplanner. Die zit hier in als `adapt-week`.
+
+Twee dingen die de broncursus mist en hier wél in zitten:
+
+1. **Een adaptieve herplanner** (`adapt-week`) — de cursus bouwt een plan en reviewt het,
+   maar herplant nooit.
+2. **Stabiliteit als ontwerpregel** — het seizoensplan is een contract dat alleen bij een
+   echte trigger verandert. De dagelijkse laag mag uitsluitend de uitvoering bijstellen.
+   Anders krijg je een model dat elke dag "optimaliseert" en een plan dat niemand volgt.
+
+## De wetenschap in het kort
+
+| | |
+|---|---|
+| **Verdeling** | gepolariseerd, ~80% makkelijk / ~20% hard, bijna niets in de grijze zone (Seiler) |
+| **Vorm** | periodisering: Base › Build › Peak › Taper, terug vanaf racedag |
+| **Instrument** | CTL/ATL/TSB (Banister; Coggan) — gelezen uit intervals.icu, niet zelf gebouwd |
+| **Verworpen** | ACWR als blessurevoorspeller — AUC 0,55–0,65, wiskundig ondeugdelijk (Impellizzeri et al.) |
+| **Grens** | geen arts, geen fysiotherapeut. Het signaleert, het diagnosticeert niet. |
+
+Volledig met bronnen en bewijskracht per onderdeel: [`science.html`](science.html).
 
 ## Wat het kost
 
 Alles is €0 behalve het Claude-plan (verplicht voor Claude Code) en de AI-tokens voor de
-automatische taken. Geen VPS, geen database, geen abonnementen.
+automatische taken. Geen VPS, geen abonnementen. De opslag is markdown (beslissingen) plus
+SQLite lokaal of Cloudflare D1 (metingen) — beide gratis.
 
 ## Status
 
 - [x] Lesmateriaal bestudeerd (199 lessen, geverifieerd tegen de bron)
+- [x] Wetenschappelijke basis uitgewerkt en geciteerd
 - [x] Architectuur en interface uitgewerkt
 - [ ] Jouw twee antwoorden: **doel** en **beschikbare uren/dagen**
 - [ ] Fase 0 — aansluiten
@@ -56,6 +79,6 @@ automatische taken. Geen VPS, geen database, geen abonnementen.
 ## Technisch
 
 Statische HTML + één gedeeld CSS- en JS-bestand. Lettertypes van Google Fonts met een
-systeem-fallback, dus de pagina's blijven leesbaar zonder internet. De grafieken zijn
+systeem-fallback, dus de pagina's blijven leesbaar zonder internet. Alle grafieken zijn
 met de hand getekende SVG — geen Chart.js, geen CDN. Dat is een bewuste keuze: het
 dashboard dat hieruit volgt moet écht offline werken.

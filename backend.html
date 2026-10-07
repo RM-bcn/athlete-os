@@ -17,6 +17,7 @@
     <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
     <div class="nav-links">
       <a href="index.html">Voorstel</a>
+      <a href="science.html">Wetenschap</a>
       <a href="backend.html" aria-current="page">Backend</a>
       <a href="frontend.html">Interface</a>
     </div>
@@ -112,11 +113,11 @@
 
         <!-- D · OPSLAG -->
         <rect x="70" y="614" width="360" height="130" rx="14" fill="#13131a" stroke="#26262f"/>
-        <text x="94" y="642" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">OPSLAG · platte bestanden</text>
+        <text x="94" y="642" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">OPSLAG · twee soorten, bewust gescheiden</text>
         <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#8b8b9a">
-          <text x="94" y="668">training/ · reviews/ · races/ · health/</text>
-          <text x="94" y="688">brain/  (raw · wiki · index)</text>
-          <text x="94" y="708">athlete.db  <tspan fill="#5c5c6b">SQLite</tspan></text>
+          <text x="94" y="666"><tspan fill="#00d68f">beslissingen</tspan>  training/ · reviews/ · races/ · health/</text>
+          <text x="94" y="684">brain/  <tspan fill="#5c5c6b">raw · wiki · index</tspan></text>
+          <text x="94" y="706"><tspan fill="#3d7bff">metingen</tspan>     athlete.db  <tspan fill="#5c5c6b">SQLite · wellness · activiteiten · dedup</tspan></text>
           <text x="94" y="728">git  <tspan fill="#5c5c6b">› private repo (vangnet)</tspan></text>
         </g>
 
@@ -141,17 +142,115 @@
 
     <div class="grid g3" style="margin-top:30px">
       <div class="card">
-        <h4>Waarom platte bestanden</h4>
+        <h4>Markdown voor beslissingen</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Één sporter, ~1.400 rijen per jaar. Postgres zou meer beheer kosten dan het oplost.
-          Markdown is grepbaar, diffbaar en overleeft elke toolwissel.
+          Profiel, plannen, reviews, race-dossiers, herstelvlaggen, het brein. Het taalmodel
+          leest dit <strong>direct</strong> — geen query-laag ertussen. Grepbaar, diffbaar,
+          en het overleeft elke toolwissel.
         </p>
       </div>
       <div class="card">
+        <h4>SQLite voor metingen</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Wellness en activiteiten zijn tijdreeksen. "HRV laatste 90 dagen" hoort een
+          <strong>index</strong> te hebben, niet een herlezing van alle JSON. Plus een
+          ledger tegen dubbele imports.
+        </p>
+      </div>
+      <div class="card">
+        <h4>En als het in de cloud moet</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Draait het 24/7 in een Cloudflare Worker, dan is de laptop niet bereikbaar.
+          Dan wordt SQLite <strong>Cloudflare D1</strong> — gratis, en dezelfde SQL.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPSLAGLAAG ============ -->
+<section class="band" id="opslag">
+  <div class="wrap">
+    <p class="eyebrow accent">De opslaglaag</p>
+    <h2>Ik was te stellig over<br>"geen database".</h2>
+
+    <p style="max-width:66ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
+      Een database helpt wél — alleen niet voor alles. De fout is denken dat het een
+      keuze is tussen bestanden <em>of</em> een database. Het is een splitsing: het ene
+      soort data wil tekst zijn, het andere wil een index.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:16px;color:var(--form)">Markdown — beslissingen</h4>
+        <p style="color:var(--muted);font-size:0.92rem">
+          Profiel, seizoensplan, weekplan, reviews, race-dossiers, herstelvlaggen, het
+          brein. Alles waar een <em>oordeel</em> in zit.
+        </p>
+        <ul class="ticks" style="font-size:0.9rem;margin-top:14px">
+          <li>Het taalmodel leest het <strong>direct</strong> — geen query-laag, geen serialisatie</li>
+          <li>Jij kunt het lezen en aanvechten</li>
+          <li>Grepbaar, diffbaar, git-versioneerd</li>
+          <li>Verandert zelden, dus volume is geen probleem</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:16px;color:var(--fitness)">SQLite — metingen</h4>
+        <p style="color:var(--muted);font-size:0.92rem">
+          Wellness (slaap, HRV, RHR) en activiteiten. Tijdreeksen die je steeds opnieuw
+          over een venster bevraagt.
+        </p>
+        <ul class="ticks" style="font-size:0.9rem;margin-top:14px">
+          <li><strong>Indexen.</strong> "HRV laatste 90 dagen" is een query, geen herlezing van alle JSON</li>
+          <li><strong>Dedup-ledger.</strong> Houdt bij wat al gesynchroniseerd is — anders importeer je dubbel</li>
+          <li><strong>Aggregaten.</strong> Weekrollups vooraf berekenen in plaats van elke keer</li>
+          <li><strong>Schaalt.</strong> Jaren aan dagelijkse metingen blijven snel</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top:52px;margin-bottom:20px">Welke gratis database, en wanneer</h3>
+    <table>
+      <thead><tr><th>Optie</th><th>Gratis tier</th><th>Wanneer</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>SQLite lokaal</strong> <span class="pill go" style="margin-left:6px">default</span></td>
+          <td class="mono" style="font-size:0.8rem">onbeperkt · een bestand</td>
+          <td>als het brein op je laptop draait. Snelst, geen account, geen limiet, portable</td>
+        </tr>
+        <tr>
+          <td><strong>Cloudflare D1</strong></td>
+          <td class="mono" style="font-size:0.8rem">5 GB · 5M rijen lezen/dag · 100k schrijven/dag</td>
+          <td>als de Worker 24/7 draait en de laptop niet bereikbaar is. Zelfde SQL</td>
+        </tr>
+        <tr>
+          <td><strong>Turso</strong> (libSQL)</td>
+          <td class="mono" style="font-size:0.8rem">5 GB · 500M rijen lezen/maand</td>
+          <td>als je ooit tegen de daglimiet van D1 aanloopt. Voor één sporter onwaarschijnlijk</td>
+        </tr>
+        <tr>
+          <td><strong>Supabase</strong></td>
+          <td class="mono" style="font-size:0.8rem">500 MB · pauzeert na 7 dagen</td>
+          <td>niet. Precies waarom de cursus hier betaalt</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout form" style="margin-top:34px">
+      <strong>De rekenkundige check:</strong> één sporter, ~1.400 rijen per jaar, ~15 rijen
+      per dagelijkse lezing. Tegen D1's 5 miljoen rijen per dag is dat <strong>0,1%</strong>.
+      Elke gratis optie hier is ruim overbemeten. De keuze gaat dus niet over capaciteit
+      maar over <em>waar het draait</em>: laptop › SQLite, cloud › D1.
+    </div>
+
+    <div class="grid g2" style="margin-top:34px;gap:26px">
+      <div class="card">
         <h4>Waarom de API-key geen probleem is</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          intervals.icu-keys <strong>verlopen nooit</strong>. De cursus heeft hier een gat:
-          Strava-tokens sterven na 6 uur en niets ververst ze. Dat probleem bestaat hier niet.
+          intervals.icu-keys <strong>verlopen nooit</strong>. De broncursus heeft hier een
+          gat: Strava-tokens sterven na 6 uur en niets ververst ze. Dat probleem bestaat
+          hier niet — een van de sterkste redenen voor deze ruggengraat.
         </p>
       </div>
       <div class="card">
@@ -365,7 +464,40 @@
       </tbody>
     </table>
 
-    <div class="callout warn" style="margin-top:34px">
+    <h3 style="margin-top:52px;margin-bottom:20px">En de regel die voorkomt dat het plan rammelt</h3>
+    <div class="grid g3">
+      <div class="card">
+        <span class="card-num" style="color:var(--form)">STABIEL</span>
+        <h4>Dagelijks: alleen uitvoering</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Verplaatsen, verzachten, inkorten, rust invoegen. De dagelijkse laag raakt de
+          seizoensstructuur <strong>nooit</strong> aan.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num" style="color:var(--fatigue)">TRIGGER</span>
+        <h4>Structuur: alleen bij een echt event</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Twee rode weken, &gt;40% van een week gemist, ziekte of blessure, of een nieuw
+          doel. Anders niet.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num" style="color:var(--fitness)">BESCHERMD</span>
+        <h4>De verdeling is een invariant</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Na elke aanpassing wordt de 80/20-verdeling <strong>hercontroleerd</strong>. Zakt
+          het aandeel makkelijk onder 75%, dan corrigeert het terug.
+        </p>
+      </div>
+    </div>
+    <div class="callout form" style="margin-top:22px">
+      <strong>Wijzigingsbudget:</strong> maximaal twee structurele wijzigingen per week, en
+      elke wijziging wordt gelogd met reden en diff. Geen stille aanpassingen. Zie
+      <a href="science.html#stabiliteit">de wetenschapspagina §05</a> voor de onderbouwing.
+    </div>
+
+    <div class="callout warn" style="margin-top:22px">
       <strong>Twee harde regels die overal gelden</strong> (uit de constitutie):
       nooit meer dan ~10% volumestijging per week zonder het te benoemen, en altijd
       overtraining- en blessuresignalen direct melden. Die twee staan boven elke andere regel.

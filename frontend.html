@@ -22,6 +22,21 @@
 
   .minichart { width: 100%; height: 56px; display: block; }
   .legend-dot { display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px }
+
+  /* herstel-ring (WHOOP-achtig) */
+  .ring { display: flex; align-items: center; gap: 16px; }
+  .ring svg { width: 104px; height: 104px; flex: none; }
+  .ring .big { font-family: var(--display); font-variation-settings:"wdth" 112; font-weight: 800; font-size: 2.5rem; line-height: 1; letter-spacing: -0.03em; }
+  .ring .sub { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-top: 4px; }
+
+  /* slaapfases */
+  .hypno { width: 100%; height: 72px; display: block; margin: 4px 0 10px; }
+  .stage { display: grid; grid-template-columns: 52px 1fr 44px; align-items: center; gap: 10px; font-family: var(--mono); font-size: 0.72rem; margin-bottom: 7px; }
+  .stage .sbar { height: 7px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .stage .sfill { height: 100%; border-radius: 4px; }
+  .stage .spct { text-align: right; color: var(--dim); }
+  .st-w .sfill { background: #4a5568; } .st-r .sfill { background: #a98ad6; }
+  .st-l .sfill { background: #3d7bff; } .st-d .sfill { background: #1e3a8a; }
 </style>
 </head>
 <body>
@@ -31,6 +46,7 @@
     <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
     <div class="nav-links">
       <a href="index.html">Voorstel</a>
+      <a href="science.html">Wetenschap</a>
       <a href="backend.html">Backend</a>
       <a href="frontend.html" aria-current="page">Interface</a>
     </div>
@@ -52,7 +68,7 @@
 <!-- ============ TELEFOON ============ -->
 <section class="band" id="telefoon">
   <div class="wrap">
-    <p class="eyebrow">Vier schermen</p>
+    <p class="eyebrow">Vijf schermen</p>
     <h2 style="margin-bottom:44px">De kern in je zak.</h2>
 
     <div class="screens">
@@ -92,6 +108,52 @@
           </div>
         </div>
         <div class="screen-label"><b>Vandaag</b><span>de dagelijkse poort</span></div>
+      </div>
+
+      <!-- SCHERM · HERSTEL -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>07:12</span><span>Athlete OS</span></div>
+            <div class="device-body">
+              <div class="app-sub">Herstel · vannacht</div>
+              <div class="app-h">Herstel</div>
+
+              <div class="ring" style="margin:18px 0 16px">
+                <svg viewBox="0 0 120 120" aria-hidden="true">
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="#1b1b24" stroke-width="9"/>
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="var(--easy)" stroke-width="9"
+                          stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="124.1"
+                          transform="rotate(-90 60 60)"/>
+                </svg>
+                <div>
+                  <div class="big" style="color:var(--easy)">62%</div>
+                  <div class="sub">redelijk hersteld</div>
+                </div>
+              </div>
+
+              <div class="row"><span class="k">HRV</span><span class="v" style="color:var(--easy)">52 ms &nbsp;onder basis</span></div>
+              <div class="row"><span class="k">Rustige hartslag</span><span class="v" style="color:var(--easy)">54 &nbsp;4 hoog</span></div>
+              <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
+
+              <div class="app-sub" style="margin:20px 0 4px">Slaaparchitectuur</div>
+              <svg class="hypno" viewBox="0 0 300 72" preserveAspectRatio="none"
+                   aria-label="Hypnogram: wakker boven, diepe slaap onder, over de nacht.">
+                <path d="M3 3 H7.3 V47 H22.8 V69 H46.9 V47 H59.7 V25 H69.6 V47 H88 V69 H102.2 V47 H123.4 V25 H139 V3 H142.6 V47 H159.6 V25 H180.8 V69 H189.3 V47 H209.2 V25 H233.2 V47 H247.4 V3 H250.2 V47 H265.8 V25 H284.2 V47 H297"
+                      fill="none" stroke="#8b8b9a" stroke-width="1.7" stroke-linejoin="round"/>
+              </svg>
+
+              <div class="stage st-w"><span>Wakker</span><div class="sbar"><div class="sfill" style="width:4%"></div></div><span class="spct">0:15</span></div>
+              <div class="stage st-r"><span>REM</span><div class="sbar"><div class="sfill" style="width:30%"></div></div><span class="spct">2:06</span></div>
+              <div class="stage st-l"><span>Licht</span><div class="sbar"><div class="sfill" style="width:50%"></div></div><span class="spct">3:28</span></div>
+              <div class="stage st-d"><span>Diep</span><div class="sbar"><div class="sfill" style="width:16%"></div></div><span class="spct">1:06</span></div>
+
+              <div class="row" style="margin-top:12px"><span class="k">Slaapbehoefte</span><span class="v">8 u 05</span></div>
+              <div class="row"><span class="k">Geslapen</span><span class="v" style="color:var(--easy)">6 u 55 &nbsp;86%</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Herstel</b><span>slaap en readiness</span></div>
       </div>
 
       <!-- SCHERM 2 · DE WEEK -->
@@ -215,6 +277,66 @@
       <strong>Waarom Telegram en niet een eigen app?</strong> Telegram is gratis, heeft
       al je meldingen, en werkt twee richting zonder dat je een server hoeft te draaien.
       De ochtendbrief is één uitgaand bericht. De rest is gewoon een gesprek.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLAAP & HERSTEL ============ -->
+<section class="band" id="herstel">
+  <div class="wrap">
+    <p class="eyebrow accent">Slaap &amp; herstel</p>
+    <h2>Herstel is de eerste sessie<br>van de dag.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Dit scherm krijgt dezelfde gewichtige plek als de training. De ring, de
+      slaaparchitectuur en de drie bijdragers komen uit de WHOOP-taal — maar de cijfers
+      zijn van jou, uit je eigen Huawei-data, en het systeem vertelt er eerlijk bij wat
+      het niet weet.
+    </p>
+
+    <div class="grid g4" style="margin-top:40px">
+      <div class="card">
+        <h4>De ring</h4>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
+          Eén herstelpercentage, met de kleur van de dag. Groen, amber, rood. Geen
+          tientallen grafieken — één oordeel.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Drie bijdragers</h4>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
+          HRV, rustige hartslag en slaap. Elk met de afwijking van <em>jouw</em> basislijn,
+          niet van een populatiegemiddelde.
+        </p>
+      </div>
+      <div class="card">
+        <h4>De hypnogram</h4>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
+          Wakker, REM, licht, diep — over de nacht, met de aandelen erbij. Zo zie je of
+          het tekort in de diepe slaap zit of in de duur.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Slaapbehoefte vs. geslapen</h4>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
+          Niet "je sliep 7 uur", maar "je had 8 u 05 nodig en haalde 86%". Dat is het
+          getal dat de volgende dag stuurt.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:34px;gap:26px;align-items:start">
+      <div class="callout warn">
+        <strong>Wat er eerlijk niet is:</strong> een dagelijkse HRV-waarde. De Huawei-API
+        levert alleen een HRV-curve. Tot die er is, draagt de ring op slaap + rustige
+        hartslag + trainingsload, en staat er letterlijk "HRV ontbreekt" in plaats van
+        een stil nulletje. Via Health Sync op Android kan de curve alsnog door.
+      </div>
+      <div class="callout form">
+        <strong>En de regel die het bruikbaar houdt:</strong> op een normale dag zegt het
+        scherm bijna niets. Geen "alles goed!"-melding elke ochtend. Alleen als er iets
+        is dat je aandacht verdient. Een herstelcheck die elke dag alarm slaat, negeer je
+        binnen een week.
+      </div>
     </div>
   </div>
 </section>

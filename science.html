@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wetenschap — Athlete OS</title>
+<meta name="description" content="Op welke wetenschap de training rust: gepolariseerde intensiteitsverdeling, periodisering, het load-model, en de regels die voorkomen dat het plan continu op de schop gaat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .zone { display: grid; grid-template-columns: 92px 1fr 84px; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .zone .lbl { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.06em; }
+  .zone .bar { height: 34px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+  .zone .fill { height: 100%; border-radius: 6px; }
+  .zone .pct { font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 1.15rem; text-align: right; }
+  .z1 .lbl, .z1 .pct { color: var(--fitness); } .z1 .fill { background: var(--fitness); }
+  .z2 .lbl, .z2 .pct { color: var(--dim); }    .z2 .fill { background: #5c5c6b; }
+  .z3 .lbl, .z3 .pct { color: var(--fatigue); }.z3 .fill { background: var(--fatigue); }
+  @media (max-width: 620px) { .zone { grid-template-columns: 68px 1fr 56px; gap: 10px; } }
+
+  .rule { border: 1px solid var(--line); border-left: 3px solid var(--form); border-radius: var(--radius-sm); padding: 16px 20px; background: var(--surface); margin-bottom: 12px; }
+  .rule.stop { border-left-color: var(--fatigue); }
+  .rule h4 { margin-bottom: 6px; }
+  .rule p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+  .rule code { font-size: 0.82rem; color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
+    <div class="nav-links">
+      <a href="index.html">Voorstel</a>
+      <a href="science.html" aria-current="page">Wetenschap</a>
+      <a href="backend.html">Backend</a>
+      <a href="frontend.html">Interface</a>
+    </div>
+  </div>
+</nav>
+
+<header class="band">
+  <div class="wrap">
+    <p class="eyebrow accent">Bijlage C</p>
+    <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">De wetenschap.</h1>
+    <p class="lead" style="max-width:66ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
+      Waar de training op rust, welke onderdelen echt bewijs hebben, wat we expliciet
+      <em>niet</em> gebruiken — en de regels die voorkomen dat het plan elke week op de
+      schop gaat.
+    </p>
+  </div>
+</header>
+
+<!-- ============ 1. VERDELING ============ -->
+<section class="band" id="verdeling">
+  <div class="wrap">
+    <p class="eyebrow">01 · De kern</p>
+    <h2>Gepolariseerd: veel makkelijk,<br>weinig écht hard, bijna niets ertussen.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Dit is het belangrijkste enkelvoudige besluit in het hele systeem. Het is ook het
+      besluit dat een taalmodel het vaakst verkeerd doet: het vult gaten met "tempo",
+      want dat <em>voelt</em> productief. Ons systeem bewaakt de verdeling actief.
+    </p>
+
+    <div class="grid g2" style="margin-top:44px;gap:44px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:22px">De verdeling over een week</h4>
+        <div class="zone z1">
+          <span class="lbl">Z1 · makkelijk</span>
+          <div class="bar"><div class="fill" style="width:80%"></div></div>
+          <span class="pct">~80%</span>
+        </div>
+        <div class="zone z2">
+          <span class="lbl">Z2 · tempo</span>
+          <div class="bar"><div class="fill" style="width:5%"></div></div>
+          <span class="pct">~5%</span>
+        </div>
+        <div class="zone z3">
+          <span class="lbl">Z3 · hard</span>
+          <div class="bar"><div class="fill" style="width:20%"></div></div>
+          <span class="pct">~20%</span>
+        </div>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:18px">
+          gerekend naar tijd in zone · de "grijze zone" is opzettelijk leeg
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px">Het bewijs</h4>
+        <ul class="ticks" style="font-size:0.94rem">
+          <li>
+            <strong>Seiler &amp; Kjerland (2006)</strong> — 17 wereldkampioen
+            langlaufers: <strong>91% van het jaarlijkse volume onder de eerste
+            lactaatdrempel</strong>, slechts 8% boven de tweede. Dat was de observatie
+            die het hele model startte.
+          </li>
+          <li>
+            <strong>Seiler (2010)</strong> — overzichtsartikel: een patroon van ongeveer
+            <strong>80/20 naar sessies</strong> bij hoog-volume competitieve atleten.
+          </li>
+          <li>
+            <strong>Stöggl &amp; Sperlich (2014)</strong> — gepolariseerd en piramidaal
+            leverden beide betere uitkomsten dan drempel-zwaar trainen bij goed
+            getrainde atleten.
+          </li>
+          <li class="warn">
+            <strong>De nuance die ertoe doet:</strong> het is geen voorschrift maar een
+            patroon waar elites naartoe convergeren. Latere studies vinden zowel
+            gepolariseerde als piramidale verdelingen. Wij kiezen gepolariseerd als
+            <em>default</em>, niet als wet.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout form" style="margin-top:36px">
+      <strong>Waarom dit zo belangrijk is:</strong> de grijze zone kost herstel alsof het
+      een harde training is, maar levert niet de adaptatie van een harde training. Je
+      betaalt de prijs en krijgt de winst niet. Een model dat die zone vult "omdat het
+      kan", ondermijnt het hele plan.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. PERIODISERING ============ -->
+<section class="band" id="periodisering">
+  <div class="wrap">
+    <p class="eyebrow accent">02 · De vorm</p>
+    <h2>Periodisering.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Eerst volume, dan intensiteit, dan scherp maken. Terugrekenen vanaf de racedag.
+      Dit is het oudste en best onderbouwde stuk van de trainingsleer.
+    </p>
+
+    <table style="margin-top:40px">
+      <thead><tr><th>Fase</th><th>Wat het doet</th><th>Verdeling</th><th>Duur</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Base</strong></td>
+          <td>aërobe basis, volume opbouwen, techniek</td>
+          <td class="mono" style="font-size:0.8rem">~85 / 5 / 10</td>
+          <td class="mono" style="font-size:0.8rem">4–8 wk</td>
+        </tr>
+        <tr>
+          <td><strong>Build</strong></td>
+          <td>intensiteit toevoegen, drempel en VO₂max</td>
+          <td class="mono" style="font-size:0.8rem">~80 / 5 / 15</td>
+          <td class="mono" style="font-size:0.8rem">6–10 wk</td>
+        </tr>
+        <tr>
+          <td><strong>Peak</strong></td>
+          <td>scherp maken, race-specifiek</td>
+          <td class="mono" style="font-size:0.8rem">~75 / 5 / 20</td>
+          <td class="mono" style="font-size:0.8rem">1–3 wk</td>
+        </tr>
+        <tr>
+          <td><strong>Taper</strong></td>
+          <td>volume omlaag, intensiteit behouden</td>
+          <td class="mono" style="font-size:0.8rem">volume −40 tot −60%</td>
+          <td class="mono" style="font-size:0.8rem">1–3 wk</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid g2" style="margin-top:34px;gap:26px">
+      <div class="card">
+        <h4>Wat onderbouwd is</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Dat volume en intensiteit niet tegelijk pieken. Dat een taper de prestatie
+          verbetert. Dat de volgorde basis › scherpte werkt. Dit is breed gerepliceerd.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Wat conventie is, geen wet</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          De exacte lengtes van de fases. De 3:1-opbouw. Dat zijn startpunten die we
+          aanpassen aan jouw herstel, niet heilige getallen.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. LOAD-MODEL ============ -->
+<section class="band" id="loadmodel">
+  <div class="wrap">
+    <p class="eyebrow">03 · Het instrument</p>
+    <h2>Hoe we vermoeidheid meten.</h2>
+
+    <div class="grid g3" style="margin-top:40px">
+      <div class="card">
+        <span class="card-num" style="color:var(--fitness)">CTL</span>
+        <h4>Fitness</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          42-daags voortschrijdend gemiddelde van je trainingsbelasting. Stijgt langzaam.
+          Dit is je conditie.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num" style="color:var(--fatigue)">ATL</span>
+        <h4>Vermoeidheid</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          7-daags gemiddelde. Schiet snel op en zakt snel. Dit is wat je vandaag voelt.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num" style="color:var(--form)">TSB</span>
+        <h4>Vorm</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          CTL − ATL. Negatief in een opbouw, positief na een taper. Een <em>bijeffect</em>,
+          geen doel op zich.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:34px">
+      <strong>Herkomst:</strong> het impuls-responsmodel van Banister, later
+      gepopulariseerd als de Performance Management Chart door Coggan. intervals.icu
+      rekent het gratis voor je uit — wij hoeven het niet te bouwen, alleen te lezen.
+      <span class="mono" style="font-size:0.82rem">CTL 42 d · ATL 7 d · TSB = CTL − ATL</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. WAT WE NIET GEBRUIKEN ============ -->
+<section class="band" id="niet">
+  <div class="wrap">
+    <p class="eyebrow">04 · Wat we laten liggen</p>
+    <h2>De cursus gebruikt ACWR<br>als doctrine. Wij niet.</h2>
+
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      De acute:chronic workload ratio is populair en wordt in de broncursus als
+      harde regel ingebakken. Het probleem: hij voorspelt blessures nauwelijks
+      beter dan toeval, en hij is wiskundig ondeugdelijk.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px;gap:26px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:14px">De bezwaren</h4>
+        <ul class="ticks" style="font-size:0.94rem">
+          <li class="no">
+            <strong>Voorspellend vermogen is zwak.</strong> De AUC ligt rond
+            <strong>0,55–0,65</strong> — nauwelijks boven kans.
+          </li>
+          <li class="no">
+            <strong>De "sweet spot" is een artefact.</strong> Impellizzeri, Woodcock,
+            McCall, Ward &amp; Coutts (2019) lieten zien dat de figuur statistisch
+            ondeugdelijk is.
+          </li>
+          <li class="no">
+            <strong>Koppeling.</strong> De acute load zit wiskundig ín de chronic load
+            verweven, dus de ratio meet deels zichzelf (Impellizzeri et al., 2020).
+          </li>
+          <li class="no">
+            <strong>Nog steeds betwist.</strong> Een systematic review + meta-analyse
+            (Frontiers, 2026) besluit dat het nut "betwist blijft".
+          </li>
+        </ul>
+      </div>
+
+      <div class="card raised">
+        <h4 style="margin-bottom:14px">Wat we in plaats daarvan doen</h4>
+        <ul class="ticks" style="font-size:0.92rem">
+          <li><strong>Trends, geen drempels.</strong> RHR, slaapduur en TSB over 2–4 weken bekijken, niet één getal tegen een grens.</li>
+          <li><strong>Monotonie en strain</strong> (Foster) — meet of je te veel opeenvolgende dagen dezelfde belasting doet. Simpeler en minder omstreden.</li>
+          <li><strong>Subjectieve readiness.</strong> Hoe voelt de sessie? Dat is een echt signaal, geen afgeleid getal.</li>
+          <li><strong>De 10%-regel</strong> blijft als <em>waarschuwing</em>, niet als wet. De betere regel: vermijd grote sprongen en beoordeel op respons.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. STABILITEIT ============ -->
+<section class="band" id="stabiliteit">
+  <div class="wrap">
+    <p class="eyebrow accent">05 · Het belangrijkste ontwerpbesluit</p>
+    <h2>Het plan is stabiel.<br>Het model gooit niet alles om.</h2>
+
+    <p style="max-width:66ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
+      Dit is jouw punt, en het is het scherpste bezwaar tegen AI-coaching: een model dat
+      elke dag opnieuw "optimaliseert" produceert een plan dat niemand kan volgen. Het
+      bouwt vertrouwen af in plaats van op. Daarom is stabiliteit hier een
+      <strong>eerste-klas ontwerpregel</strong>, niet een bijproduct.
+    </p>
+
+    <div class="grid g2" style="margin-top:44px;gap:34px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:16px">De dagelijkse laag mag alleen dit</h4>
+        <div class="rule">
+          <h4>Verplaatsen</h4>
+          <p>Een sessie naar een andere dag schuiven binnen dezelfde week.</p>
+        </div>
+        <div class="rule">
+          <h4>Verzachten of verzwaren</h4>
+          <p>De intensiteit van één sessie aanpassen op basis van readiness.</p>
+        </div>
+        <div class="rule">
+          <h4>Inkorten</h4>
+          <p>Duur naar beneden bij slaaptekort of een rode dag.</p>
+        </div>
+        <div class="rule">
+          <h4>Rust invoegen</h4>
+          <p>Een extra rustdag als de signalen dat vragen.</p>
+        </div>
+        <p class="mono" style="font-size:0.76rem;color:var(--dim);margin-top:14px">
+          De dagelijkse laag raakt de <strong>seizoensstructuur nooit aan</strong>.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:16px">De structuur verandert alleen bij een trigger</h4>
+        <div class="rule stop">
+          <h4>Twee rode weken op rij</h4>
+          <p>Dan stopt het plannen en volgt een deload — met uitleg.</p>
+        </div>
+        <div class="rule stop">
+          <h4>Meer dan ~40% van een week gemist</h4>
+          <p>De week wordt herverdeeld in plaats van "ingehaald".</p>
+        </div>
+        <div class="rule stop">
+          <h4>Ziekte of blessure</h4>
+          <p>Het blok gaat op pauze; de opbouw start conservatiever opnieuw.</p>
+        </div>
+        <div class="rule stop">
+          <h4>Nieuwe race of gewijzigd doel</h4>
+          <p>Alleen dan wordt er teruggerekend en herperiodiseerd.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:38px">
+      <div class="card">
+        <h4>Wijzigingsbudget</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Maximaal <strong>twee structurele wijzigingen per week</strong>. Daarboven
+          moet het systeem uitleggen waarom, en anders niet ingrijpen.
+        </p>
+      </div>
+      <div class="card">
+        <h4>De verdeling is beschermd</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Na elke aanpassing <strong>hercontroleert</strong> het systeem de 80/20-verdeling.
+          Zakt het aandeel makkelijk onder 75%, dan corrigeert het terug.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Altijd een diff</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Elke wijziging wordt gelogd met reden en met wat er precies veranderde.
+          Geen stille aanpassingen.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout form" style="margin-top:36px">
+      <strong>De regel in één zin:</strong> het seizoensplan is een contract dat je samen
+      sluit. Het model mag de uitvoering bijstellen, maar niet het contract herschrijven —
+      tenzij er iets echt is veranderd, en dan zegt het dat.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. EVIDENTIETABEL ============ -->
+<section class="band" id="evidentie">
+  <div class="wrap">
+    <p class="eyebrow">06 · Eerlijk over de zekerheid</p>
+    <h2>Wat we weten, en hoe zeker.</h2>
+
+    <table style="margin-top:40px">
+      <thead><tr><th>Onderdeel</th><th>Bewijskracht</th><th>Hoe we het gebruiken</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Volume + intensiteit niet tegelijk pieken</td>
+          <td><span class="pill go">sterk</span></td>
+          <td>de ruggengraat van de periodisering</td>
+        </tr>
+        <tr>
+          <td>Taper verbetert prestatie</td>
+          <td><span class="pill go">sterk</span></td>
+          <td>elke race krijgt een taper, volume omlaag</td>
+        </tr>
+        <tr>
+          <td>Gepolariseerde verdeling bij elites</td>
+          <td><span class="pill go">sterk</span> observationeel</td>
+          <td>default-verdeling; bewust bewaakt</td>
+        </tr>
+        <tr>
+          <td>Gepolariseerd <em>beter</em> dan piramidaal</td>
+          <td><span class="pill easy">gemengd</span></td>
+          <td>we kiezen het als startpunt, niet als wet</td>
+        </tr>
+        <tr>
+          <td>CTL/ATL/TSB als load-model</td>
+          <td><span class="pill easy">bruikbaar</span></td>
+          <td>we lezen het uit intervals.icu; het is een instrument, geen waarheid</td>
+        </tr>
+        <tr>
+          <td>Exacte faselengtes, 3:1-opbouw</td>
+          <td><span class="pill off">conventie</span></td>
+          <td>startpunt, aanpassen aan jouw herstel</td>
+        </tr>
+        <tr>
+          <td>De 10%-regel</td>
+          <td><span class="pill off">zwak</span></td>
+          <td>waarschuwing, niet als harde grens</td>
+        </tr>
+        <tr>
+          <td>ACWR als blessurevoorspeller</td>
+          <td><span class="pill rest">verworpen</span></td>
+          <td>niet gebruiken — zie §04</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn" style="margin-top:34px">
+      <strong>En de grens die boven alles staat:</strong> dit systeem is geen arts, geen
+      fysiotherapeut en geen gecertificeerde coach. Het signaleert patronen. Het vertelt
+      je wanneer je moet stoppen en naar iemand moet gaan. Pijn die je beweging verandert
+      is nooit iets om doorheen te trainen.
+    </div>
+
+    <div class="grid g3" style="margin-top:44px">
+      <a class="card" href="index.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Terug</p><h3>← Het voorstel</h3></a>
+      <a class="card" href="backend.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Bijlage A</p><h3>De backend ›</h3></a>
+      <a class="card" href="frontend.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Bijlage B</p><h3>De interface ›</h3></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Bijlage C · Wetenschap</span>
+    <span><a href="index.html">← voorstel</a> · <a href="backend.html">backend</a> · <a href="frontend.html">interface</a></span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
