@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interface — Athlete OS</title>
+<meta name="description" content="Hoe Athlete OS eruit komt te zien: vandaag, de week, de voortgang en de coach in je zak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .screens { display: flex; flex-wrap: wrap; gap: 34px; justify-content: center; align-items: flex-start; }
+  .screen-label { text-align: center; margin-top: 18px; }
+  .screen-label b { font-family: var(--display); font-variation-settings:"wdth" 110; font-weight: 800; display: block; font-size: 1rem; }
+  .screen-label span { font-family: var(--mono); font-size: 0.7rem; color: var(--dim); letter-spacing: 0.06em; }
+
+  .bubble { max-width: 84%; padding: 10px 13px; border-radius: 13px; font-size: 0.82rem; line-height: 1.45; margin-bottom: 9px; }
+  .bubble.me { background: var(--surface-2); margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble.coach { background: #0e1a14; border: 1px solid color-mix(in srgb, var(--form) 30%, transparent); border-bottom-left-radius: 4px; }
+  .bubble.coach b { color: var(--form); display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+
+  .minichart { width: 100%; height: 56px; display: block; }
+  .legend-dot { display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
+    <div class="nav-links">
+      <a href="index.html">Voorstel</a>
+      <a href="backend.html">Backend</a>
+      <a href="frontend.html" aria-current="page">Interface</a>
+    </div>
+  </div>
+</nav>
+
+<header class="band">
+  <div class="wrap">
+    <p class="eyebrow accent">Bijlage B</p>
+    <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">De interface.</h1>
+    <p class="lead" style="max-width:64ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
+      Eén scherm dat je 's ochtends opent zonder eraan herinnerd te worden. Geen navigatie,
+      geen tabs vol statistieken — alleen wat vandaag verandert. Dit zijn schetsen, geen
+      gebouwde app: ze bestaan om te bespreken voordat er iets wordt gemaakt.
+    </p>
+  </div>
+</header>
+
+<!-- ============ TELEFOON ============ -->
+<section class="band" id="telefoon">
+  <div class="wrap">
+    <p class="eyebrow">Vier schermen</p>
+    <h2 style="margin-bottom:44px">De kern in je zak.</h2>
+
+    <div class="screens">
+
+      <!-- SCHERM 1 · VANDAAG -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>09:41</span><span>Telegram · Athlete OS</span></div>
+            <div class="device-body">
+              <div class="app-sub">Dinsdag 6 oktober</div>
+              <div class="app-h">Vandaag</div>
+
+              <div class="readiness easy" style="margin:16px 0">
+                <div class="val">EASY</div>
+                <div>
+                  <strong style="font-size:0.88rem">Rustige duurloop</strong>
+                  <small>HRV ontbreekt · RHR +6 · slaap 5 u 40</small>
+                </div>
+              </div>
+
+              <div class="session">
+                <div class="t">Duurloop 45 min · Z2</div>
+                <div class="d">HR &lt; 148 · geen tempo-doel</div>
+              </div>
+
+              <p style="font-size:0.82rem;color:var(--muted);margin:14px 0 6px">
+                Je geplande intervallen zijn verplaatst naar donderdag. Twee korte nachten op
+                rij — de kwaliteit zou er toch niet uitkomen.
+              </p>
+
+              <div class="row"><span class="k">Slaap</span><span class="v" style="color:var(--easy)">5 u 40</span></div>
+              <div class="row"><span class="k">Rustige HR</span><span class="v" style="color:var(--easy)">54</span></div>
+              <div class="row"><span class="k">Vorm (TSB)</span><span class="v">−4</span></div>
+              <div class="row"><span class="k">Dagen tot doel</span><span class="v">188</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Vandaag</b><span>de dagelijkse poort</span></div>
+      </div>
+
+      <!-- SCHERM 2 · DE WEEK -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>09:41</span><span>Telegram · Athlete OS</span></div>
+            <div class="device-body">
+              <div class="app-sub">Week 8 · Build</div>
+              <div class="app-h">Deze week</div>
+
+              <div style="margin-top:16px">
+                <div class="session done">
+                  <div class="t">Ma · Herstel 30 min</div>
+                  <div class="d"><span class="ok"></span>gedaan · HR 121</div>
+                </div>
+                <div class="session">
+                  <div class="t">Di · Duurloop 45 min Z2</div>
+                  <div class="d">vandaag</div>
+                </div>
+                <div class="session">
+                  <div class="t">Wo · Kracht (Hevy)</div>
+                  <div class="d">Lower A · 5 oefeningen</div>
+                </div>
+                <div class="session">
+                  <div class="t">Do · 5×3 min drempel</div>
+                  <div class="d">verplaatst vanaf di · Z4</div>
+                </div>
+                <div class="session">
+                  <div class="t">Za · Lange rit 3 u</div>
+                  <div class="d">Wahoo · Z2, 210 W cap</div>
+                </div>
+                <div class="session rest">
+                  <div class="t">Zo · Rust</div>
+                  <div class="d">verplicht · niet optioneel</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>De week</b><span>na aanpassing</span></div>
+      </div>
+
+      <!-- SCHERM 3 · VOORTGANG -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>09:41</span><span>Telegram · Athlete OS</span></div>
+            <div class="device-body">
+              <div class="app-sub">Seizoen · richting marathon</div>
+              <div class="app-h">Voortgang</div>
+
+              <svg class="minichart" viewBox="0 0 300 56" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 44 L20 42 L40 43 L60 39 L80 40 L100 35 L120 34 L140 30 L160 28 L180 25 L200 26 L220 20 L240 18 L260 14 L280 12 L300 10"
+                      fill="none" stroke="#3d7bff" stroke-width="2" stroke-linecap="round"/>
+                <path d="M0 44 L20 42 L40 43 L60 39 L80 40 L100 35 L120 34 L140 30 L160 28 L180 25 L200 26 L220 20 L240 18 L260 14 L280 12 L300 10 L300 56 L0 56 Z"
+                      fill="url(#g1)" stroke="none"/>
+                <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3d7bff" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#3d7bff" stop-opacity="0"/>
+                </linearGradient></defs>
+              </svg>
+              <p class="mono" style="font-size:0.68rem;color:var(--dim);margin:2px 0 18px">
+                <span class="legend-dot" style="background:var(--fitness)"></span>fitness (CTL) · 20 weken
+              </p>
+
+              <div class="row"><span class="k">Fitness (CTL)</span><span class="v" style="color:var(--fitness)">64 › 77</span></div>
+              <div class="row"><span class="k">eFTP</span><span class="v" style="color:var(--form)">268 › 281 W</span></div>
+              <div class="row"><span class="k">Drempeltempo</span><span class="v" style="color:var(--form)">4:42 › 4:31</span></div>
+              <div class="row"><span class="k">Verwachte marathontijd</span><span class="v">3:18 › 3:06</span></div>
+              <div class="row"><span class="k">Weken in plan</span><span class="v">8 / 20</span></div>
+
+              <div class="callout" style="margin-top:16px;font-size:0.8rem;padding:12px 14px">
+                Je drempel is 11 s/km sneller geworden sinds de base-fase. De voorspelling
+                blijft een bereik, geen punt.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Voortgang</b><span>naar je doel toe</span></div>
+      </div>
+
+      <!-- SCHERM 4 · COACH -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>09:41</span><span>Telegram</span></div>
+            <div class="device-body">
+              <div class="app-sub">Athlete OS</div>
+              <div class="app-h" style="margin-bottom:16px">Coach</div>
+
+              <div class="bubble me">Zaterdag een clubrit gedaan, 2u40. Zwaarder dan gepland.</div>
+              <div class="bubble coach">
+                <b>Athlete OS</b>
+                Gezien — 138 TSS, binnen. Ik heb je zondagsessie geschrapt en de lange rit van
+                maandag naar 90 min gehaald. Je weeklast blijft gelijk.
+              </div>
+
+              <div class="bubble me">Squat 3×8 op 110, voelde als een 8.</div>
+              <div class="bubble coach">
+                <b>Athlete OS</b>
+                Gelogd. Dat is 12 kg onder je vorige top — bewust? Zo ja, dan houd ik het zo.
+                Volgende week +2,5 kg als de slaap meewerkt.
+              </div>
+
+              <div class="bubble me">Waarom zo weinig interval deze week?</div>
+              <div class="bubble coach">
+                <b>Athlete OS</b>
+                Twee korte nachten, RHR 6 slagen hoog, TSB −14. Dat is een opbouw die te snel
+                ging, geen luiheid. Volgende week staat er weer 2× kwaliteit in.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>De coach</b><span>twee richting, in Telegram</span></div>
+      </div>
+
+    </div>
+
+    <div class="callout form" style="max-width:760px;margin:52px auto 0">
+      <strong>Waarom Telegram en niet een eigen app?</strong> Telegram is gratis, heeft
+      al je meldingen, en werkt twee richting zonder dat je een server hoeft te draaien.
+      De ochtendbrief is één uitgaand bericht. De rest is gewoon een gesprek.
+    </div>
+  </div>
+</section>
+
+<!-- ============ DESKTOP ============ -->
+<section class="band" id="desktop">
+  <div class="wrap">
+    <p class="eyebrow">Op je scherm</p>
+    <h2 style="margin-bottom:40px">Het dashboard.</h2>
+
+    <div class="card raised" style="padding:0;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:9px;padding:13px 18px;border-bottom:1px solid var(--line)">
+        <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
+        <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
+        <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
+        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">dashboard.html — lokaal, offline</span>
+      </div>
+
+      <div style="padding:28px">
+        <div style="display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-start;margin-bottom:28px">
+          <div>
+            <div class="app-sub">Dinsdag 6 oktober · week 8 van 20</div>
+            <div class="app-h" style="font-size:1.7rem;margin-top:4px">Goedemorgen.</div>
+          </div>
+          <div class="readiness easy" style="min-width:260px">
+            <div class="val">EASY</div>
+            <div>
+              <strong style="font-size:0.88rem">Rustige duurloop</strong>
+              <small>intervallen verplaatst naar donderdag</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid g4" style="margin-bottom:30px">
+          <div class="stat"><div class="n" style="color:var(--fitness)">77</div><div class="l">Fitness · CTL</div></div>
+          <div class="stat"><div class="n" style="color:var(--fatigue)">81</div><div class="l">Vermoeidheid · ATL</div></div>
+          <div class="stat"><div class="n">−4</div><div class="l">Vorm · TSB</div></div>
+          <div class="stat"><div class="n" style="color:var(--easy)">5:40</div><div class="l">Slaap vannacht</div></div>
+        </div>
+
+        <div style="border-top:1px solid var(--line);padding-top:26px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px">
+            <h4>Seizoen · fitness, vermoeidheid, vorm</h4>
+            <span class="mono" style="font-size:0.7rem;color:var(--dim)">20 weken · SVG, geen CDN</span>
+          </div>
+
+          <svg viewBox="0 0 1000 220" class="chart-svg" aria-label="Fitness, vermoeidheid en vorm over het seizoen.">
+            <g class="phase-bands">
+              <rect x="16" y="14" width="292" height="192" fill="#3d7bff" opacity="0.02"/>
+              <rect x="308" y="14" width="390" height="192" fill="#3d7bff" opacity="0.045"/>
+              <rect x="698" y="14" width="96" height="192" fill="#ff4d3d" opacity="0.045"/>
+              <rect x="794" y="14" width="190" height="192" fill="#00d68f" opacity="0.045"/>
+            </g>
+            <g stroke="#2c2c38" stroke-width="1">
+              <line x1="308" y1="14" x2="308" y2="206"/>
+              <line x1="698" y1="14" x2="698" y2="206"/>
+              <line x1="794" y1="14" x2="794" y2="206"/>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.4">
+              <rect x="22" y="20" width="42" height="14" rx="3" fill="#0a0a0e" opacity="0.72"/>
+              <rect x="314" y="20" width="48" height="14" rx="3" fill="#0a0a0e" opacity="0.72"/>
+              <rect x="704" y="20" width="38" height="14" rx="3" fill="#0a0a0e" opacity="0.72"/>
+              <rect x="800" y="20" width="48" height="14" rx="3" fill="#0a0a0e" opacity="0.72"/>
+              <text x="26" y="30" fill="#8b8b9a">BASE</text><text x="318" y="30" fill="#8b8b9a">BUILD</text>
+              <text x="708" y="30" fill="#8b8b9a">PEAK</text><text x="804" y="30" fill="#8b8b9a">TAPER</text>
+            </g>
+            <line x1="16" y1="168" x2="984" y2="168" stroke="#33333f" stroke-dasharray="3 4"/>
+            <path d="M16 96 L50 95 L85 94 L120 96 L155 93 L190 92 L225 95 L260 94 L295 91 L330 90 L365 87 L400 86 L435 82 L470 81 L505 77 L540 76 L575 71 L610 70 L645 65 L680 64 L715 60 L750 62 L785 55 L820 58 L855 62 L890 66 L925 70 L960 74 L984 77"
+                  fill="none" stroke="#3d7bff" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M16 88 L50 76 L85 74 L120 79 L155 66 L190 52 L225 78 L260 80 L295 64 L330 52 L365 65 L400 61 L435 45 L470 70 L505 77 L540 66 L575 49 L610 55 L645 61 L680 44 L715 72 L750 78 L785 75 L820 92 L855 108 L890 104 L925 112 L960 122 L984 118"
+                  fill="none" stroke="#ff4d3d" stroke-width="1.5" stroke-linecap="round" opacity="0.95"/>
+            <path d="M16 176 L50 190 L85 192 L120 188 L155 195 L190 203 L225 187 L260 186 L295 196 L330 201 L365 195 L400 196 L435 206 L470 189 L505 185 L540 191 L575 205 L610 200 L645 195 L680 212 L715 186 L750 182 L785 186 L820 168 L855 150 L890 155 L925 145 L960 133 L984 138"
+                  fill="none" stroke="#00d68f" stroke-width="1.7" stroke-linecap="round" opacity="0.9"/>
+          </svg>
+
+          <div class="chart-legend" style="margin-top:12px;margin-bottom:0">
+            <i class="l-ctl">Fitness · CTL</i>
+            <i class="l-atl">Vermoeidheid · ATL</i>
+            <i class="l-tsb">Vorm · TSB</i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:30px">
+      <div class="card">
+        <h4>Drie tabbladen, geen meer</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Vandaag · Trends · Coach. De cursus belooft precies dit en levert het ook — wij
+          voegen kracht en fietsen toe aan de mix.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Echt offline</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Eén bestand, SVG-grafieken met de hand getekend, geen Chart.js van een CDN.
+          De cursus belooft "geen internet nodig" en laadt tegelijk een CDN — dat repareren we.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Knoppen kopiëren, ze bellen niets</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Een statisch bestand kan geen agent aansturen. Knoppen zetten het commando op je
+          klembord; jij plakt het in Claude Code. Simpel en veilig.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ONTWERPKEEUZES ============ -->
+<section class="band" id="ontwerp">
+  <div class="wrap-narrow">
+    <p class="eyebrow accent">Ontwerpkeuzes</p>
+    <h2 style="margin-bottom:34px">Waarom het er zo uitziet.</h2>
+
+    <ul class="ticks" style="font-size:1rem">
+      <li>
+        <strong>Kleur codeert een variabele, het is geen decoratie.</strong>
+        Blauw is fitness, rood is vermoeidheid, groen is vorm. Dezelfde drie kleuren
+        betekenen hetzelfde op elk scherm, in de grafiek en in de chat.
+      </li>
+      <li>
+        <strong>De grafiek is het plan.</strong> De fase-banden (Base, Build, Peak, Taper)
+        staan ín de fysiologie-curve. Je plan en je lichaam zijn hetzelfde plaatje — dat is
+        de hele gedachte achter het systeem.
+      </li>
+      <li>
+        <strong>Eén oordeel per dag, niet een dashboard vol cijfers.</strong>
+        "EASY" met de reden erbij. De cursus noemt dit "signal, not noise": een check die
+        elke dag alarm slaat, negeer je binnen een week.
+      </li>
+      <li>
+        <strong>Readiness-staten zijn dezelfde drie overal.</strong>
+        <span class="pill go">go hard</span>
+        <span class="pill easy">go easy</span>
+        <span class="pill rest">rust</span>
+        — in de app, in de chat, in het dashboard.
+      </li>
+      <li>
+        <strong>Geen cijfers zonder herkomst.</strong> Waar een getal een schatting is,
+        staat dat erbij. Waar HRV ontbreekt, staat "ontbreekt" — niet een stil nulletje.
+      </li>
+    </ul>
+
+    <div class="callout" style="margin-top:34px">
+      <strong>Dit zijn schetsen.</strong> Ze bestaan om te bespreken voordat er iets gebouwd
+      wordt. Alles is aanpasbaar — de kleuren, de tabbladen, de volgorde, wat er wel en niet
+      op het eerste scherm staat. Zeg wat je anders wilt en ik teken het opnieuw.
+    </div>
+
+    <div class="grid g2" style="margin-top:44px">
+      <a class="card" href="index.html" style="display:block">
+        <p class="eyebrow" style="margin-bottom:10px">Terug</p>
+        <h3>← Het voorstel</h3>
+      </a>
+      <a class="card" href="backend.html" style="display:block">
+        <p class="eyebrow" style="margin-bottom:10px">Bijlage A</p>
+        <h3>De backend ›</h3>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Bijlage B · Interface</span>
+    <span><a href="index.html">← voorstel</a> · <a href="backend.html">backend</a></span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

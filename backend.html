@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backend — Athlete OS</title>
+<meta name="description" content="De backend-structuur van Athlete OS: datastroom, lagen, opslag, skills en datamodel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
+    <div class="nav-links">
+      <a href="index.html">Voorstel</a>
+      <a href="backend.html" aria-current="page">Backend</a>
+      <a href="frontend.html">Interface</a>
+    </div>
+  </div>
+</nav>
+
+<header class="band">
+  <div class="wrap">
+    <p class="eyebrow accent">Bijlage A</p>
+    <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">De backend.</h1>
+    <p class="lead" style="max-width:64ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
+      Eén ruggengraat, drie bronnen, één brein, platte bestanden. Geen database, geen server,
+      geen queue. De hele architectuur past op één pagina — dat is opzettelijk.
+    </p>
+  </div>
+</header>
+
+<!-- ============ ARCHITECTUUR ============ -->
+<section class="band" id="architectuur">
+  <div class="wrap">
+    <p class="eyebrow">Datastroom</p>
+    <h2 style="margin-bottom:38px">Van pols naar plan<br>en terug.</h2>
+
+    <div class="chart-shell" style="padding:26px">
+      <svg viewBox="0 0 980 800" class="chart-svg" role="img"
+           aria-label="Architectuurdiagram: Huawei, Wahoo en Hevy leveren data aan intervals.icu; intervals.icu voedt het brein (Claude Code met skills); het brein schrijft naar de opslag; intervals.icu stuurt geplande workouts terug naar de apparaten.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="#5c5c6b"/>
+          </marker>
+          <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="#3d7bff"/>
+          </marker>
+        </defs>
+
+        <!-- A · BRONNEN -->
+        <rect x="70" y="30" width="360" height="132" rx="14" fill="#13131a" stroke="#26262f"/>
+        <text x="94" y="58" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">BRONNEN</text>
+        <g font-family="IBM Plex Sans, sans-serif" font-size="13.5" fill="#ececf1">
+          <rect x="94" y="74" width="312" height="24" rx="6" fill="#1b1b24"/>
+          <text x="106" y="91">Huawei Watch</text>
+          <text x="392" y="91" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">slaap · RHR</text>
+          <rect x="94" y="102" width="312" height="24" rx="6" fill="#1b1b24"/>
+          <text x="106" y="119">Wahoo ELEMNT</text>
+          <text x="392" y="119" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">ritten · power</text>
+          <rect x="94" y="130" width="312" height="24" rx="6" fill="#1b1b24"/>
+          <text x="106" y="147">Hevy</text>
+          <text x="392" y="147" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">kracht</text>
+        </g>
+
+        <!-- pijl A -> B -->
+        <line x1="250" y1="162" x2="250" y2="208" stroke="#5c5c6b" stroke-width="1.5" marker-end="url(#ah)"/>
+        <text x="262" y="190" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">lezen</text>
+
+        <!-- B · INTERVALS.ICU -->
+        <rect x="70" y="214" width="360" height="140" rx="14" fill="#101725" stroke="#3d7bff" stroke-width="1.5"/>
+        <text x="94" y="242" font-family="IBM Plex Mono, monospace" font-size="11" fill="#3d7bff" letter-spacing="1.6">intervals.icu · DE RUGGENGRAAT</text>
+        <g font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#8b8b9a">
+          <text x="94" y="270">GET  /athlete/0/activities</text>
+          <text x="94" y="288">GET  /athlete/0/wellness</text>
+          <text x="94" y="306">POST /athlete/0/events</text>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5">
+          <text x="94" y="334" fill="#3d7bff">CTL</text>
+          <text x="126" y="334" fill="#ff4d3d">ATL</text>
+          <text x="158" y="334" fill="#00d68f">TSB</text>
+          <text x="196" y="334" fill="#5c5c6b">· eFTP · drempeltempo</text>
+        </g>
+        <text x="392" y="258" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#5c5c6b">gratis</text>
+
+        <!-- pijl B <-> C -->
+        <line x1="242" y1="354" x2="242" y2="400" stroke="#3d7bff" stroke-width="1.5" marker-end="url(#ahb)"/>
+        <line x1="258" y1="400" x2="258" y2="354" stroke="#3d7bff" stroke-width="1.5" marker-end="url(#ahb)"/>
+        <text x="274" y="382" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#3d7bff">API · read + write</text>
+
+        <!-- C · HET BREIN -->
+        <rect x="70" y="406" width="360" height="156" rx="14" fill="#13131a" stroke="#26262f"/>
+        <text x="94" y="434" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">HET BREIN · CLAUDE CODE</text>
+        <g font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#ececf1">
+          <text x="94" y="460">CLAUDE.md</text>
+          <text x="392" y="460" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">constitutie + 4 harde regels</text>
+          <text x="94" y="482">athlete-profile.md</text>
+          <text x="392" y="482" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">doelen · zones · grenzen</text>
+        </g>
+        <rect x="94" y="496" width="312" height="48" rx="8" fill="#0e1a14" stroke="#00d68f" stroke-opacity="0.35"/>
+        <text x="106" y="515" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#00d68f">.claude/skills/</text>
+        <text x="106" y="532" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#8b8b9a">12 skills · elk een SKILL.md</text>
+
+        <!-- pijl C <-> D -->
+        <line x1="242" y1="562" x2="242" y2="608" stroke="#5c5c6b" stroke-width="1.5" marker-end="url(#ah)"/>
+        <line x1="258" y1="608" x2="258" y2="562" stroke="#5c5c6b" stroke-width="1.5" marker-end="url(#ah)"/>
+        <text x="274" y="590" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">lezen + schrijven</text>
+
+        <!-- D · OPSLAG -->
+        <rect x="70" y="614" width="360" height="130" rx="14" fill="#13131a" stroke="#26262f"/>
+        <text x="94" y="642" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">OPSLAG · platte bestanden</text>
+        <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#8b8b9a">
+          <text x="94" y="668">training/ · reviews/ · races/ · health/</text>
+          <text x="94" y="688">brain/  (raw · wiki · index)</text>
+          <text x="94" y="708">athlete.db  <tspan fill="#5c5c6b">SQLite</tspan></text>
+          <text x="94" y="728">git  <tspan fill="#5c5c6b">› private repo (vangnet)</tspan></text>
+        </g>
+
+        <!-- RETOUR-LUS: intervals.icu -> apparaten -->
+        <path d="M430 284 L860 284 Q884 284 884 260 L884 120 Q884 96 860 96 L436 96"
+              fill="none" stroke="#00d68f" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#ah)" opacity="0.85"/>
+        <text x="700" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#00d68f">geplande workouts terug</text>
+        <text x="700" y="272" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5c5c6b">runs › Huawei · ritten › Wahoo</text>
+
+        <!-- kanttekening rechtsonder: eigen paneel zodat het bewust oogt -->
+        <rect x="500" y="406" width="410" height="156" rx="14" fill="#0f0f15" stroke="#26262f"/>
+        <text x="524" y="434" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">KANTTEKENINGEN</text>
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#8b8b9a">
+          <text x="524" y="462">5.000 req/dag · wij gebruiken ~20</text>
+          <text x="524" y="486">één gepland workout per keer (Huawei)</text>
+          <text x="524" y="510">1 jaar historie via de Huawei-API</text>
+          <text x="524" y="534">geen dagelijkse HRV (alleen een curve)</text>
+        </g>
+        <text x="524" y="556" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5c5c6b">sleutel verloopt nooit — geen refresh nodig</text>
+      </svg>
+    </div>
+
+    <div class="grid g3" style="margin-top:30px">
+      <div class="card">
+        <h4>Waarom platte bestanden</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Één sporter, ~1.400 rijen per jaar. Postgres zou meer beheer kosten dan het oplost.
+          Markdown is grepbaar, diffbaar en overleeft elke toolwissel.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Waarom de API-key geen probleem is</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          intervals.icu-keys <strong>verlopen nooit</strong>. De cursus heeft hier een gat:
+          Strava-tokens sterven na 6 uur en niets ververst ze. Dat probleem bestaat hier niet.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Waarom er een retour-lus is</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Lezen is makkelijk. Terugschrijven is wat een schema een coach maakt: het plan
+          landt op je pols en je fietscomputer, niet in een tabblad dat je nooit opent.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LAGEN ============ -->
+<section class="band" id="lagen">
+  <div class="wrap">
+    <p class="eyebrow">De lagen</p>
+    <h2 style="margin-bottom:36px">Zes lagen,<br>elk met één taak.</h2>
+
+    <table>
+      <thead><tr><th>Laag</th><th>Rol</th><th>Techniek</th><th style="text-align:right">Kosten</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bron</strong></td><td>levert de ruwe signalen</td><td class="mono" style="font-size:0.8rem">Huawei · Wahoo · Hevy › Health Connect</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Ruggengraat</strong></td><td>aggregeert, rekent CTL/ATL/TSB, schrijft workouts terug</td><td class="mono" style="font-size:0.8rem">intervals.icu REST API v1</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Brein</strong></td><td>interpreteert, plant, adapteert</td><td class="mono" style="font-size:0.8rem">Claude Code + CLAUDE.md + skills</td><td class="mono" style="text-align:right;color:var(--fatigue)">plan + tokens</td></tr>
+        <tr><td><strong>Geheugen</strong></td><td>bewaart wat er gebeurde en waarom</td><td class="mono" style="font-size:0.8rem">markdown + SQLite</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Planning</strong></td><td>laat de taken draaien zonder jou</td><td class="mono" style="font-size:0.8rem">cron/launchd + GitHub Actions</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Oppervlak</strong></td><td>laat je het zien</td><td class="mono" style="font-size:0.8rem">statische HTML + Telegram</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ BESTANDSSTRUCTUUR ============ -->
+<section class="band" id="structuur">
+  <div class="wrap">
+    <p class="eyebrow accent">De structuur</p>
+    <h2 style="margin-bottom:36px">Alles op één plek.</h2>
+
+    <div class="grid g2" style="gap:28px;align-items:start">
+      <div class="tree"><b>athlete-os/</b>
+├── <b>CLAUDE.md</b>              <span class="c"># constitutie + 4 harde regels</span>
+├── <b>athlete-profile.md</b>     <span class="c"># wie je bent, zones, grenzen</span>
+├── <b>athlete-os.md</b>          <span class="c"># één-pagina kaart</span>
+├── <b>.env</b>                   <span class="c"># sleutels (in .gitignore)</span>
+│
+├── <span class="hi">goals/</span>                 <span class="c"># ← nieuw</span>
+│   └── 2027-04-12-marathon.md
+├── <span class="hi">training/</span>
+│   ├── season-plan.md       <span class="c"># ← periodisering</span>
+│   ├── current-week.md      <span class="c"># ← de adaptieve week</span>
+│   └── 2026-10-05-week.md
+├── <span class="hi">reviews/</span>               <span class="c"># append-only</span>
+├── <span class="hi">races/</span>                 <span class="c"># dossiers + race-dagplan</span>
+├── <span class="hi">health/</span>                <span class="c"># readiness-flags</span>
+│
+├── <span class="hi">brain/</span>                 <span class="c"># ← LLM-wiki</span>
+│   ├── raw/                 <span class="c"># alles wat je erin gooit</span>
+│   ├── wiki/                <span class="c"># gelinkte notities</span>
+│   └── index.md
+│
+├── <b>.claude/skills/</b>         <span class="c"># 12 × SKILL.md</span>
+│   ├── set-goal/
+│   ├── build-season-plan/
+│   ├── plan-my-week/
+│   ├── adapt-week/
+│   ├── today/
+│   ├── recovery-check/
+│   ├── weekly-review/
+│   ├── run-analysis/
+│   ├── race-analysis/
+│   ├── fuel-and-pace/
+│   ├── progress/
+│   └── strength-log/
+│
+├── <b>scripts/</b>
+│   ├── pull_intervals.py    <span class="c"># de spine uitlezen</span>
+│   ├── push_workout.py      <span class="c"># plan › horloge</span>
+│   └── build_dashboard.py   <span class="c"># › dashboard.html</span>
+│
+├── <b>data/</b>
+│   ├── activities.json
+│   ├── wellness.json
+│   └── athlete.db           <span class="c"># SQLite</span>
+│
+└── <b>dashboard.html</b>          <span class="c"># statisch, offline</span></div>
+
+      <div>
+        <h4 style="margin-bottom:14px">Drie principes</h4>
+        <ul class="ticks">
+          <li><strong>Alles wat het brein moet weten, staat in een bestand.</strong> Geen verborgen state, geen database die je niet kunt lezen.</li>
+          <li><strong>Geschiedenis wordt nooit overschreven.</strong> <span class="mono">reviews/</span> en <span class="mono">health/</span> groeien alleen maar aan. De geschiedenis ís de waarde.</li>
+          <li><strong>Skills zijn platte tekst.</strong> Je kunt ze lezen, aanpassen en versiebeheren. Geen code, alleen instructies in gewoon Nederlands.</li>
+        </ul>
+
+        <div class="callout" style="margin-top:26px">
+          <strong>Wat nieuw is ten opzichte van de cursus:</strong>
+          <span class="mono" style="font-size:0.82rem">goals/</span>,
+          <span class="mono" style="font-size:0.82rem">season-plan.md</span>,
+          <span class="mono" style="font-size:0.82rem">current-week.md</span>,
+          <span class="mono" style="font-size:0.82rem">brain/</span> en vijf van de twaalf skills.
+          De rest is herbouwd op intervals.icu in plaats van Strava.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DATAMODEL ============ -->
+<section class="band" id="datamodel">
+  <div class="wrap">
+    <p class="eyebrow">Datamodel</p>
+    <h2 style="margin-bottom:36px">Wat we bewaren,<br>en waar het vandaan komt.</h2>
+
+    <div class="grid g2" style="gap:28px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:16px">Dagelijkse wellness <span class="mono" style="font-size:0.72rem;color:var(--dim)">/athlete/0/wellness</span></h4>
+        <table>
+          <tbody>
+            <tr><td class="mono" style="font-size:0.82rem">id</td><td style="color:var(--muted);font-size:0.88rem">datum</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem;color:var(--fitness)">ctl</td><td style="color:var(--muted);font-size:0.88rem">fitness — 42-daags gemiddelde</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem;color:var(--fatigue)">atl</td><td style="color:var(--muted);font-size:0.88rem">vermoeidheid — 7-daags gemiddelde</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">tsb</td><td style="color:var(--muted);font-size:0.88rem">vorm = CTL − ATL</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">restingHR</td><td style="color:var(--muted);font-size:0.88rem">rustige hartslag</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">sleepSecs</td><td style="color:var(--muted);font-size:0.88rem">slaapduur</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">sleepScore</td><td style="color:var(--muted);font-size:0.88rem">slaapkwaliteit</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">weight · vo2max</td><td style="color:var(--muted);font-size:0.88rem">gewicht, VO₂max-schatting</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem;color:var(--dim)">hrv</td><td style="color:var(--dim);font-size:0.88rem">leeg — Huawei levert geen dagwaarde</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:16px">Activiteiten <span class="mono" style="font-size:0.72rem;color:var(--dim)">/athlete/0/activities</span></h4>
+        <table>
+          <tbody>
+            <tr><td class="mono" style="font-size:0.82rem">start_date_local</td><td style="color:var(--muted);font-size:0.88rem">wanneer</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">type</td><td style="color:var(--muted);font-size:0.88rem">Run · Ride · WeightTraining</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">moving_time · distance</td><td style="color:var(--muted);font-size:0.88rem">duur, afstand</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">average_heartrate</td><td style="color:var(--muted);font-size:0.88rem">gem. hartslag</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem;color:var(--fitness)">icu_training_load</td><td style="color:var(--muted);font-size:0.88rem">trainingsbelasting</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">icu_intensity</td><td style="color:var(--muted);font-size:0.88rem">intensiteitsfactor</td></tr>
+            <tr><td class="mono" style="font-size:0.82rem">total_elevation_gain</td><td style="color:var(--muted);font-size:0.88rem">hoogtemeters</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout warn" style="margin-top:24px">
+          <strong>Kracht zonder Hevy Pro:</strong> via Health Connect komt de sessie binnen als
+          <span class="mono">WeightTraining</span> met duur en hartslag — maar zonder
+          set/rep/gewicht-detail en zonder load-schatting. Genoeg om de vermoeidheid mee te
+          tellen. Wil je het detail, dan is Hevy Pro (~€9/mnd) de enige upgrade.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:34px">
+      <strong>De instelling die je moet weten:</strong> intervals.icu zet de fitnessbijdrage van
+      <span class="mono">WeightTraining</span> standaard op <strong>0%</strong>. Kracht telt dan
+      mee als vermoeidheid maar niet als fitness. Veel coaches doen dat bewust — gymwerk bouwt
+      geen aerobe basis. Het is een keuze die we expliciet maken, geen default die we laten staan.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILL I/O ============ -->
+<section class="band" id="skills-io">
+  <div class="wrap">
+    <p class="eyebrow accent">De skills</p>
+    <h2 style="margin-bottom:36px">Wie leest wat,<br>wie schrijft wat.</h2>
+
+    <table>
+      <thead><tr><th>Skill</th><th>Leest</th><th>Schrijft</th><th>Bron</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="font-size:0.82rem">set-goal</td><td>jouw invoer</td><td class="mono" style="font-size:0.8rem">goals/&lt;datum&gt;-&lt;race&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">—</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">build-season-plan</td><td>goal + profile + CTL</td><td class="mono" style="font-size:0.8rem">training/season-plan.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">plan-my-week</td><td>season-plan + beschikbaarheid</td><td class="mono" style="font-size:0.8rem">training/current-week.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">adapt-week</td><td>current-week + wat je deed</td><td class="mono" style="font-size:0.8rem">current-week.md <em>herschreven</em></td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">today</td><td>wellness + current-week</td><td class="mono" style="font-size:0.8rem">health/ (alleen bij flag)</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">recovery-check</td><td>wellness + load</td><td class="mono" style="font-size:0.8rem">health/YYYY-MM-DD.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">weekly-review</td><td>week + vorige reviews</td><td class="mono" style="font-size:0.8rem">reviews/YYYY-MM-DD.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">run-analysis</td><td>activiteit + streams</td><td class="mono" style="font-size:0.8rem">reviews/ (op verzoek)</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">strength-log</td><td>Hevy-sessies</td><td class="mono" style="font-size:0.8rem">data/ + week-load</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">Health Connect</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">progress</td><td>wellness-historie</td><td class="mono" style="font-size:0.8rem">dashboard + samenvatting</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">fuel-and-pace</td><td>races/ + profile</td><td class="mono" style="font-size:0.8rem">races/&lt;race&gt;-dagplan.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">web</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">race-analysis</td><td>splits + races/</td><td class="mono" style="font-size:0.8rem">races/&lt;datum&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">jij plakt</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ ADAPTATIEREGELS ============ -->
+<section class="band" id="regels">
+  <div class="wrap">
+    <p class="eyebrow">Het hart</p>
+    <h2 style="margin-bottom:36px">De regels van<br><span class="mono" style="color:var(--form);font-size:0.7em">adapt-week</span>.</h2>
+    <p style="max-width:62ch;color:var(--muted);margin-bottom:34px">
+      Dit is wat het verschil maakt tussen een schema en een coach. Elke regel is een
+      expliciete beslissing, geen impliciete aanname — je kunt ze allemaal aanvechten en aanpassen.
+    </p>
+
+    <table>
+      <thead><tr><th style="width:32%">Als dit gebeurt</th><th>Dan doet het systeem</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Je mist een sleutelsessie</strong></td><td>Hervordelen naar een latere dag in dezelfde week als de week dat toelaat. Anders: laten vallen en de resterende weken niet opblazen om het "in te halen".</td></tr>
+        <tr><td><strong>Je deed een onverwachte clubrit</strong></td><td>Die telt als sessie. De geplande rit van die dag wordt geschrapt of verzacht, niet verdubbeld.</td></tr>
+        <tr><td><strong>Readiness is rood</strong></td><td>De hele week wordt herschreven, niet alleen vandaag. Een rode dag betekent niet "neem één dag rust" — het betekent dat de opbouw te snel ging.</td></tr>
+        <tr><td><strong>Een sessie was te makkelijk</strong> (HR ver onder doel, RPE laag)</td><td>Progressie versnellen binnen de 10%-regel, of het doel bijstellen in plaats van blijven herhalen.</td></tr>
+        <tr><td><strong>Je slaapt structureel kort</strong></td><td>Volume naar beneden, intensiteit behouden. Slaaptekort kost je de kwaliteitssessies, niet de duurloop.</td></tr>
+        <tr><td><strong>Twee weken op rij rood</strong></td><td>Stoppen met plannen. Eerst een deload, en het systeem zegt waarom.</td></tr>
+        <tr><td><strong>Er is geen data</strong></td><td>Niet gokken. Het vraagt. <span class="mono" style="font-size:0.82rem">"Never stall, never invent."</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn" style="margin-top:34px">
+      <strong>Twee harde regels die overal gelden</strong> (uit de constitutie):
+      nooit meer dan ~10% volumestijging per week zonder het te benoemen, en altijd
+      overtraining- en blessuresignalen direct melden. Die twee staan boven elke andere regel.
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANNING ============ -->
+<section class="band" id="planning">
+  <div class="wrap">
+    <p class="eyebrow accent">Planning</p>
+    <h2 style="margin-bottom:36px">Wanneer draait wat.</h2>
+
+    <table>
+      <thead><tr><th>Taak</th><th>Wanneer</th><th>Waar</th><th>Doet</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="font-size:0.82rem">sync</td><td class="mono" style="font-size:0.82rem">05:00 dagelijks</td><td>lokaal</td><td>intervals.icu uitlezen › <span class="mono" style="font-size:0.8rem">data/</span></td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">today</td><td class="mono" style="font-size:0.82rem">06:30 dagelijks</td><td>lokaal › Telegram</td><td>readiness-poort + de sessie van vandaag</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">adapt-week</td><td class="mono" style="font-size:0.82rem">na elke sessie</td><td>lokaal</td><td>week herverdelen als er iets veranderde</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">weekly-review</td><td class="mono" style="font-size:0.82rem">ma 06:00</td><td>lokaal › Telegram</td><td>oordeel over de week + volgende week</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">dashboard</td><td class="mono" style="font-size:0.82rem">na de review</td><td>lokaal</td><td><span class="mono" style="font-size:0.8rem">dashboard.html</span> herbouwen</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">vangnet</td><td class="mono" style="font-size:0.82rem">ma 07:00</td><td>GitHub Actions</td><td>draait de review als de laptop uit stond</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid g2" style="margin-top:34px">
+      <div class="card">
+        <h4>Waarom lokaal eerst</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Een cronjob op je eigen machine doet exact hetzelfde als een server van €5 per maand,
+          maar dan met je data thuis. De GitHub Action is een vangnet, niet de motor.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Wat je moet weten over GitHub-cron</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          <span class="mono">schedule</span> is alleen UTC en kan tot ~15 minuten vertragen bij
+          drukte. Zet de ochtendtaak op 05:45 UTC, dan is hij vroeg in plaats van laat.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Bijlage A · Backend</span>
+    <span><a href="index.html">← terug naar het voorstel</a> · <a href="frontend.html">interface ›</a></span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

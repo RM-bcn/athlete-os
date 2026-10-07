@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Athlete OS — voorstel</title>
+<meta name="description" content="Voorstel voor een zelfgebouwd, adaptief trainingssysteem op intervals.icu. Gratis, geen VPS, volledig transparant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
+    <div class="nav-links">
+      <a href="index.html" aria-current="page">Voorstel</a>
+      <a href="backend.html">Backend</a>
+      <a href="frontend.html">Interface</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="band" id="hero">
+  <div class="wrap">
+    <p class="eyebrow accent">Voorstel · v1 · 2026-10</p>
+    <h1>Een coach die je data leest,<br>het begrijpt, en morgen<br>je plan bijstelt.</h1>
+
+    <p class="lead reveal" style="max-width:62ch;margin-top:26px;font-size:1.12rem;color:var(--muted)">
+      Gebouwd op <strong>intervals.icu</strong>. Draait op je eigen laptop. Geen abonnement,
+      geen VPS, geen black box. Alleen jouw data en een plan dat zich aanpast aan wat je
+      werkelijk gedaan hebt — inclusief de clubrit die je niet gepland had.
+    </p>
+
+    <div class="reveal" style="margin-top:44px">
+      <div class="chart-shell">
+        <div class="chart-legend">
+          <i class="l-ctl">Fitness · CTL</i>
+          <i class="l-atl">Vermoeidheid · ATL</i>
+          <i class="l-tsb">Vorm · TSB</i>
+          <i class="l-zero">nul</i>
+        </div>
+
+        <svg class="chart-svg" viewBox="0 0 1000 300" role="img"
+             aria-label="Fitness, vermoeidheid en vorm over een seizoen van twintig weken, met de fases Base, Build, Peak en Taper.">
+          <defs>
+            <linearGradient id="ctlFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3d7bff" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#3d7bff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- fase-banden: het plan en de fysiologie zijn hetzelfde plaatje -->
+          <g class="phase-bands">
+            <rect x="18" y="26" width="291.3" height="248" fill="#3d7bff" opacity="0.02"/>
+            <rect x="309.3" y="26" width="388.4" height="248" fill="#3d7bff" opacity="0.045"/>
+            <rect x="697.7" y="26" width="97" height="248" fill="#ff4d3d" opacity="0.045"/>
+            <rect x="794.7" y="26" width="187.3" height="248" fill="#00d68f" opacity="0.045"/>
+          </g>
+          <g stroke="#2c2c38" stroke-width="1" class="phase-bands">
+            <line x1="309.3" y1="26" x2="309.3" y2="274"/>
+            <line x1="697.7" y1="26" x2="697.7" y2="274"/>
+            <line x1="794.7" y1="26" x2="794.7" y2="274"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.4">
+            <rect x="26" y="32" width="46" height="16" rx="3" fill="#0a0a0e" opacity="0.72"/>
+            <rect x="317" y="32" width="52" height="16" rx="3" fill="#0a0a0e" opacity="0.72"/>
+            <rect x="705" y="32" width="42" height="16" rx="3" fill="#0a0a0e" opacity="0.72"/>
+            <rect x="802" y="32" width="52" height="16" rx="3" fill="#0a0a0e" opacity="0.72"/>
+            <text x="30" y="44" fill="#8b8b9a">BASE</text>
+            <text x="321" y="44" fill="#8b8b9a">BUILD</text>
+            <text x="709" y="44" fill="#8b8b9a">PEAK</text>
+            <text x="806" y="44" fill="#8b8b9a">TAPER</text>
+          </g>
+
+          <!-- rasterlijnen -->
+          <g stroke="#26262f" stroke-width="1">
+            <line x1="18" y1="74" x2="982" y2="74"/>
+            <line x1="18" y1="128" x2="982" y2="128"/>
+            <line x1="18" y1="182" x2="982" y2="182"/>
+          </g>
+
+          <!-- nul-lijn voor TSB -->
+          <line x1="18" y1="232.3" x2="982" y2="232.3" stroke="#33333f" stroke-width="1" stroke-dasharray="3 4"/>
+
+          <!-- CTL -->
+          <path d="M18.0 132.0 L24.9 130.3 L31.9 130.1 L38.8 130.5 L45.7 129.3 L52.7 128.0 L59.6 130.0 L66.5 130.0 L73.5 128.3 L80.4 127.7 L87.4 128.3 L94.3 127.6 L101.2 126.0 L108.2 128.0 L115.1 128.4 L122.0 127.1 L129.0 126.0 L135.9 126.5 L142.8 126.4 L149.8 124.8 L156.7 126.8 L163.6 127.4 L170.6 126.5 L177.5 125.0 L184.4 125.3 L191.4 125.6 L198.3 124.2 L205.3 126.1 L212.2 126.7 L219.1 126.4 L226.1 124.8 L233.0 124.6 L239.9 125.2 L246.9 124.2 L253.8 126.0 L260.7 126.4 L267.7 126.5 L274.6 125.0 L281.5 124.3 L288.5 125.0 L295.4 124.5 L302.3 126.2 L309.3 125.0 L316.2 124.9 L323.2 121.5 L330.1 118.3 L337.0 118.3 L344.0 117.3 L350.9 118.7 L357.8 116.7 L364.8 117.1 L371.7 114.8 L378.6 111.1 L385.6 110.6 L392.5 110.6 L399.4 112.2 L406.4 109.5 L413.3 109.9 L420.2 108.7 L427.2 105.0 L434.1 103.8 L441.1 104.4 L448.0 106.3 L454.9 103.0 L461.9 103.0 L468.8 102.9 L475.7 99.6 L482.7 97.5 L489.6 98.3 L496.5 100.6 L503.5 97.0 L510.4 96.4 L517.3 97.0 L524.3 94.5 L531.2 91.7 L538.1 92.2 L545.1 94.8 L552.0 91.5 L558.9 90.0 L565.9 91.0 L572.8 89.5 L579.8 86.4 L586.7 86.3 L593.6 89.2 L600.6 86.5 L607.5 84.2 L614.4 85.2 L621.4 84.8 L628.3 81.6 L635.2 80.7 L642.2 83.8 L649.1 82.1 L656.0 79.3 L663.0 79.7 L669.9 80.3 L676.8 77.6 L683.8 75.8 L690.7 79.0 L697.7 78.0 L704.6 74.2 L711.5 73.6 L718.5 74.8 L725.4 72.3 L732.3 69.2 L739.3 72.4 L746.2 72.7 L753.1 69.2 L760.1 67.5 L767.0 69.0 L773.9 67.8 L780.9 64.3 L787.8 67.4 L794.7 70.7 L801.7 71.9 L808.6 73.1 L815.6 76.3 L822.5 78.7 L829.4 79.3 L836.4 82.5 L843.3 85.6 L850.2 87.0 L857.2 87.5 L864.1 89.9 L871.0 92.5 L878.0 93.0 L884.9 95.8 L891.8 98.5 L898.8 100.2 L905.7 100.2 L912.6 101.8 L919.6 104.4 L926.5 105.1 L933.5 107.5 L940.4 109.6 L947.3 111.6 L954.3 111.5 L961.2 112.2 L968.1 114.6 L975.1 115.7 L982.0 117.8 L 982.0 274.0 L 18.0 274.0 Z"
+                fill="url(#ctlFill)" stroke="none" opacity="0"/>
+          <path class="draw" d="M18.0 132.0 L24.9 130.3 L31.9 130.1 L38.8 130.5 L45.7 129.3 L52.7 128.0 L59.6 130.0 L66.5 130.0 L73.5 128.3 L80.4 127.7 L87.4 128.3 L94.3 127.6 L101.2 126.0 L108.2 128.0 L115.1 128.4 L122.0 127.1 L129.0 126.0 L135.9 126.5 L142.8 126.4 L149.8 124.8 L156.7 126.8 L163.6 127.4 L170.6 126.5 L177.5 125.0 L184.4 125.3 L191.4 125.6 L198.3 124.2 L205.3 126.1 L212.2 126.7 L219.1 126.4 L226.1 124.8 L233.0 124.6 L239.9 125.2 L246.9 124.2 L253.8 126.0 L260.7 126.4 L267.7 126.5 L274.6 125.0 L281.5 124.3 L288.5 125.0 L295.4 124.5 L302.3 126.2 L309.3 125.0 L316.2 124.9 L323.2 121.5 L330.1 118.3 L337.0 118.3 L344.0 117.3 L350.9 118.7 L357.8 116.7 L364.8 117.1 L371.7 114.8 L378.6 111.1 L385.6 110.6 L392.5 110.6 L399.4 112.2 L406.4 109.5 L413.3 109.9 L420.2 108.7 L427.2 105.0 L434.1 103.8 L441.1 104.4 L448.0 106.3 L454.9 103.0 L461.9 103.0 L468.8 102.9 L475.7 99.6 L482.7 97.5 L489.6 98.3 L496.5 100.6 L503.5 97.0 L510.4 96.4 L517.3 97.0 L524.3 94.5 L531.2 91.7 L538.1 92.2 L545.1 94.8 L552.0 91.5 L558.9 90.0 L565.9 91.0 L572.8 89.5 L579.8 86.4 L586.7 86.3 L593.6 89.2 L600.6 86.5 L607.5 84.2 L614.4 85.2 L621.4 84.8 L628.3 81.6 L635.2 80.7 L642.2 83.8 L649.1 82.1 L656.0 79.3 L663.0 79.7 L669.9 80.3 L676.8 77.6 L683.8 75.8 L690.7 79.0 L697.7 78.0 L704.6 74.2 L711.5 73.6 L718.5 74.8 L725.4 72.3 L732.3 69.2 L739.3 72.4 L746.2 72.7 L753.1 69.2 L760.1 67.5 L767.0 69.0 L773.9 67.8 L780.9 64.3 L787.8 67.4 L794.7 70.7 L801.7 71.9 L808.6 73.1 L815.6 76.3 L822.5 78.7 L829.4 79.3 L836.4 82.5 L843.3 85.6 L850.2 87.0 L857.2 87.5 L864.1 89.9 L871.0 92.5 L878.0 93.0 L884.9 95.8 L891.8 98.5 L898.8 100.2 L905.7 100.2 L912.6 101.8 L919.6 104.4 L926.5 105.1 L933.5 107.5 L940.4 109.6 L947.3 111.6 L954.3 111.5 L961.2 112.2 L968.1 114.6 L975.1 115.7 L982.0 117.8"
+                fill="none" stroke="#3d7bff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- ATL -->
+          <path class="draw d2" d="M18.0 122.1 L24.9 107.6 L31.9 105.4 L38.8 109.7 L45.7 99.0 L52.7 84.4 L59.6 109.2 L66.5 110.1 L73.5 96.0 L80.4 84.7 L87.4 96.8 L94.3 92.8 L101.2 77.0 L108.2 102.1 L115.1 107.6 L122.0 97.3 L129.0 80.5 L135.9 85.5 L142.8 91.6 L149.8 76.0 L156.7 103.0 L163.6 108.2 L170.6 105.8 L177.5 84.0 L184.4 80.2 L191.4 92.1 L198.3 82.2 L205.3 104.4 L212.2 105.2 L219.1 110.3 L226.1 91.2 L233.0 76.1 L239.9 86.0 L246.9 88.1 L253.8 112.6 L260.7 100.0 L267.7 109.2 L273.7 100.1 L280.6 80.9 L287.6 82.9 L294.6 95.3 L301.5 115.2 L308.5 63.6 L315.5 70.4 L322.4 68.5 L329.4 27.9 L336.3 15.0 L343.3 30.7 L350.3 55.3 L357.2 13.0 L364.2 11.2 L371.2 29.2 L378.1 12.4 L385.1 1.0 L392.1 5.6 L399.4 25.7 L406.4 5.8 L413.3 1.2 L420.2 12.9 L427.2 16.4 L434.1 1.0 L441.1 1.0 L448.0 22.3 L454.9 9.0 L461.9 1.0 L468.8 1.0 L475.7 14.7 L482.7 1.0 L489.6 1.0 L496.5 16.3 L503.5 22.5 L510.4 1.0 L517.3 1.0 L524.3 15.3 L531.2 7.6 L538.1 1.0 L545.1 15.7 L552.0 33.5 L558.9 12.9 L565.9 1.0 L572.8 9.6 L579.8 20.2 L586.7 1.0 L593.6 21.9 L600.6 44.3 L607.5 37.6 L614.4 4.6 L621.4 7.3 L628.3 26.3 L635.2 8.8 L642.2 34.5 L649.1 45.6 L656.0 54.5 L663.0 25.5 L669.9 8.2 L676.8 30.6 L683.8 29.7 L690.7 51.5 L697.7 39.2 L704.6 55.9 L711.5 30.4 L718.5 1.0 L725.4 7.8 L732.3 22.3 L739.3 45.9 L746.2 15.5 L753.1 35.9 L760.1 33.7 L767.0 1.0 L773.9 1.0 L780.9 8.5 L787.8 38.8 L794.7 52.1 L801.7 82.1 L808.6 112.5 L815.6 119.1 L822.5 124.8 L829.4 148.5 L836.4 171.6 L843.3 166.5 L850.2 171.3 L857.2 191.6 L864.1 195.1 L871.0 186.6 L878.0 195.7 L884.9 213.7 L891.8 208.0 L898.8 200.2 L905.7 212.3 L912.6 220.7 L919.6 210.4 L926.5 208.0 L933.5 224.7 L940.4 225.7 L947.3 213.6 L954.3 216.7 L961.2 228.7 L968.1 223.1 L975.1 213.5 L982.0 228.0"
+                fill="none" stroke="#ff4d3d" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+
+          <!-- TSB -->
+          <path class="draw d3" d="M18.0 244.3 L24.9 255.7 L31.9 257.2 L38.8 253.2 L45.7 260.4 L52.7 268.7 L59.6 252.6 L66.5 251.4 L73.5 261.6 L80.4 266.6 L87.4 260.4 L94.3 261.6 L101.2 271.2 L108.2 254.7 L115.1 250.2 L122.0 256.5 L129.0 265.7 L135.9 262.1 L142.8 257.7 L149.8 266.2 L156.7 251.0 L163.6 246.9 L170.6 248.3 L177.5 259.7 L184.4 261.7 L191.4 255.2 L198.3 259.1 L205.3 245.6 L212.2 245.3 L219.1 242.4 L226.1 251.8 L233.0 259.5 L239.9 254.1 L246.9 252.5 L253.8 239.5 L260.7 245.2 L267.7 240.6 L273.7 245.2 L280.6 256.0 L287.6 255.0 L294.6 249.5 L301.5 235.4 L308.5 264.6 L315.5 260.4 L322.4 260.3 L329.4 288.4 L336.3 301.0 L343.3 286.2 L350.3 267.5 L357.2 296.2 L364.2 297.3 L371.2 283.0 L378.1 296.9 L385.1 316.9 L392.1 305.1 L399.4 279.6 L406.4 300.5 L413.3 311.4 L420.2 294.1 L427.2 292.6 L434.1 314.3 L441.1 313.2 L448.0 283.4 L454.9 292.3 L461.9 311.8 L468.8 301.0 L475.7 286.6 L482.7 302.3 L489.6 313.4 L496.5 283.1 L503.5 278.4 L510.4 299.4 L517.3 301.2 L524.3 281.7 L531.2 286.1 L538.1 305.2 L545.1 277.6 L552.0 263.4 L558.9 278.8 L565.9 293.6 L572.8 278.2 L579.8 270.2 L586.7 289.4 L593.6 266.8 L600.6 251.2 L607.5 256.3 L614.4 279.1 L621.4 275.3 L628.3 259.1 L635.2 271.9 L642.2 253.5 L649.1 245.0 L656.0 238.9 L663.0 261.3 L669.9 271.9 L676.8 255.4 L683.8 256.1 L690.7 240.6 L697.7 248.9 L704.6 236.4 L711.5 254.9 L718.5 282.7 L725.4 273.7 L732.3 262.5 L739.3 245.9 L746.2 267.0 L753.1 252.5 L760.1 253.7 L767.0 283.4 L773.9 287.7 L780.9 267.7 L787.8 246.0 L794.7 236.9 L801.7 216.6 L808.6 195.9 L815.6 192.4 L822.5 189.4 L829.4 173.5 L836.4 158.0 L843.3 163.4 L850.2 161.5 L857.2 149.7 L864.1 149.1 L871.0 157.4 L878.0 152.9 L884.9 141.5 L891.8 147.8 L898.8 155.3 L905.7 148.0 L912.6 143.9 L919.6 153.7 L926.5 157.7 L933.5 147.4 L940.4 148.8 L947.3 160.1 L954.3 159.3 L961.2 151.7 L968.1 157.9 L975.1 167.4 L982.0 158.0"
+                fill="none" stroke="#00d68f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+        </svg>
+
+        <div class="phase-key">
+          <span><b>Base</b> 6 wk — volume opbouwen</span>
+          <span><b>Build</b> 8 wk — intensiteit toevoegen</span>
+          <span><b>Peak</b> 2 wk — scherp maken</span>
+          <span><b>Taper</b> 4 wk — vermoeidheid laten zakken, vorm omhoog</span>
+        </div>
+      </div>
+      <p class="mono" style="color:var(--dim);font-size:0.76rem;margin-top:14px">
+        Gesimuleerd met dezelfde EWMA-formule die intervals.icu gebruikt (CTL 42 d · ATL 7 d · TSB = CTL − ATL).
+      </p>
+    </div>
+
+    <div class="grid g3 reveal" style="margin-top:56px">
+      <div class="stat"><div class="n" style="color:var(--form)">€0</div><div class="l">abonnementen</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">databronnen, één model</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">fasen naar een werkend systeem</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PROBLEEM ============ -->
+<section class="band" id="probleem">
+  <div class="wrap">
+    <p class="eyebrow">01 · Het probleem</p>
+    <h2>Je betaalt drie keer<br>voor hetzelfde stukje data.</h2>
+    <div class="grid g2" style="margin-top:44px;align-items:start">
+      <div>
+        <p style="font-size:1.06rem">
+          JOIN voor het fietsplan. REN voor het hardloopplan. Strava om de ritten te bewaren.
+          En elk daarvan houdt een schijfje van jezelf vast, in een model dat je nooit te zien krijgt.
+        </p>
+        <p>
+          Ondertussen valt je <strong>gymwerk volledig buiten beeld</strong>. Geen van die apps
+          weet dat je gisteren zwaar hebt gesquat — terwijl dat wél vermoeidheid is die je
+          volgende interval beïnvloedt.
+        </p>
+        <p>
+          Je huurt de intelligentie. Je bezit het model niet. En je kunt er niets aan vragen.
+        </p>
+      </div>
+      <div class="card raised">
+        <h4 style="margin-bottom:18px">Wat je nu betaalt</h4>
+        <table>
+          <tr><td>JOIN</td><td class="mono" style="text-align:right">~€10/mnd</td></tr>
+          <tr><td>Run with REN</td><td class="mono" style="text-align:right">~€10/mnd</td></tr>
+          <tr><td>Strava (API/app)</td><td class="mono" style="text-align:right">~€12/mnd</td></tr>
+          <tr><td>Hevy Pro <span class="pill off" style="margin-left:6px">optioneel</span></td><td class="mono" style="text-align:right">~€9/mnd</td></tr>
+          <tr><td><strong>Samen</strong></td><td class="mono" style="text-align:right;color:var(--fatigue)"><strong>~€41/mnd</strong></td></tr>
+        </table>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:16px">
+          en je data blijft in vier silo's staan
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KERNVONDST ============ -->
+<section class="band" id="kernvondst">
+  <div class="wrap">
+    <p class="eyebrow accent">02 · De kernvondst</p>
+    <h2>intervals.icu kan<br>het al. Gratis.</h2>
+    <p class="lead" style="max-width:60ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
+      Het is de enige gratis dienst die drie dingen tegelijk doet — en dat is precies
+      de hele reden dat dit systeem kan bestaan.
+    </p>
+
+    <div class="grid g3" style="margin-top:44px">
+      <div class="card">
+        <span class="card-num">01</span>
+        <h4>Het leest alles</h4>
+        <p style="color:var(--muted);font-size:0.93rem">
+          Huawei, Wahoo, Garmin, COROS, Polar, Suunto, Oura, WHOOP, Zwift — één koppeling,
+          al je apparaten. Inclusief <strong>slaap, rustige hartslag, gewicht en VO₂max</strong>.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num">02</span>
+        <h4>Het schrijft terug</h4>
+        <p style="color:var(--muted);font-size:0.93rem">
+          Geplande workouts gaan naar je horloge en je fietscomputer. Strava kan dit nooit —
+          dat is puur een archief.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num">03</span>
+        <h4>Het rekent de kern uit</h4>
+        <p style="color:var(--muted);font-size:0.93rem">
+          <span class="mono" style="color:var(--fitness)">CTL</span>,
+          <span class="mono" style="color:var(--fatigue)">ATL</span>,
+          <span class="mono" style="color:var(--form)">TSB</span> — fitness, vermoeidheid, vorm.
+          Plus eFTP en drempeltempo. Dat is de motor onder elk adaptief plan.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout form reveal" style="margin-top:34px">
+      <strong>En het meest overtuigende bewijs:</strong> Run with REN — een commercieel product
+      met elitecoaches — gebruikt intervals.icu zélf als brug naar COROS-, Samsung- en
+      Google-horloges. Wij bouwen dus op dezelfde fundering, alleen zonder de abonnementslaag.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SETUP ============ -->
+<section class="band" id="setup">
+  <div class="wrap">
+    <p class="eyebrow">03 · Jouw setup</p>
+    <h2>Wat er werkt, en<br>wat de gaten zijn.</h2>
+
+    <table style="margin-top:40px">
+      <thead>
+        <tr><th>Apparaat</th><th>Wat intervals.icu leest</th><th>Schrijft terug</th><th>Kosten</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Huawei Watch</strong></td>
+          <td>activiteiten, stappen, <strong>slaap</strong>, rustige hartslag, gewicht, vet%, bloeddruk, VO₂max</td>
+          <td><span class="pill easy">alleen runs/walks</span></td>
+          <td class="mono" style="color:var(--form)">€0</td>
+        </tr>
+        <tr>
+          <td><strong>Wahoo ELEMNT</strong></td>
+          <td>ritten, routes, vermogen, cadans</td>
+          <td><span class="pill go">gestructureerde ritten</span></td>
+          <td class="mono" style="color:var(--form)">€0</td>
+        </tr>
+        <tr>
+          <td><strong>Hevy</strong></td>
+          <td>krachtsessies via Health Connect › als <span class="mono">WeightTraining</span></td>
+          <td><span class="pill off">nee</span></td>
+          <td class="mono" style="color:var(--form)">€0</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid g2" style="margin-top:34px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:14px">De drie echte beperkingen</h4>
+        <ul class="ticks">
+          <li class="warn">
+            <strong>Geen dagelijkse HRV.</strong> De Huawei-API levert alleen een HRV-curve,
+            geen ochtendwaarde. <span class="mono">recovery-check</span> draait daarom op
+            slaap + rustige hartslag + trainingsload. HRV is een slot dat zich later vult.
+          </li>
+          <li class="warn">
+            <strong>Geen fietsworkouts op de Huawei.</strong> Alleen hardlopen, wandelen en
+            hiken. Maar je hebt de Wahoo — dus ritten gaan daarheen. Een schone tweedeling.
+          </li>
+          <li class="warn">
+            <strong>Eén gepland workout tegelijk</strong> naar de Huawei. Dus "je volgende
+            sessie", niet "je hele week op de pols".
+          </li>
+        </ul>
+      </div>
+      <div class="card raised">
+        <h4 style="margin-bottom:16px">De verdeling die daaruit volgt</h4>
+        <div class="flow">
+          <div class="flow-row" style="grid-template-columns:1fr auto 1fr;padding:14px 0">
+            <span class="mono" style="font-size:0.84rem">hardlopen</span>
+            <span class="flow-arrow">›</span>
+            <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Huawei Watch</span>
+          </div>
+          <div class="flow-row" style="grid-template-columns:1fr auto 1fr;padding:14px 0">
+            <span class="mono" style="font-size:0.84rem">fietsen</span>
+            <span class="flow-arrow">›</span>
+            <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Wahoo ELEMNT</span>
+          </div>
+          <div class="flow-row" style="grid-template-columns:1fr auto 1fr;padding:14px 0">
+            <span class="mono" style="font-size:0.84rem">kracht</span>
+            <span class="flow-arrow">›</span>
+            <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Hevy (logboek)</span>
+          </div>
+        </div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-top:16px">
+          Eén bron van waarheid voor alle drie: intervals.icu.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HET BREIN ============ -->
+<section class="band" id="brein">
+  <div class="wrap">
+    <p class="eyebrow accent">04 · Het brein</p>
+    <h2>De adaptieve lus.</h2>
+    <p class="lead" style="max-width:62ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
+      Dit is het stuk dat de cursus mist. Die bouwt een plan en reviewt het — maar herplant nooit.
+      Hier zit het verschil tussen een schema en een coach.
+    </p>
+
+    <div class="card" style="margin-top:44px;padding:34px">
+      <div class="flow">
+        <div class="flow-row">
+          <div>
+            <h4>Doel</h4>
+            <p class="mono" style="font-size:0.8rem;color:var(--muted)">event · datum · afstand · hoogtemeters · streeftijd</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Je geeft één keer op waar je naartoe traint. Alles hieronder rekent daar naartoe terug.
+          </div>
+        </div>
+
+        <div class="flow-row">
+          <div>
+            <h4>Baseline</h4>
+            <p class="mono" style="font-size:0.8rem;color:var(--muted)">eFTP · drempeltempo · CTL</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            <strong style="color:var(--form)">Gratis gelezen uit intervals.icu.</strong>
+            JOIN verkoopt dit als feature; wij hoeven het niet te berekenen.
+          </div>
+        </div>
+
+        <div class="flow-row">
+          <div>
+            <h4>Seizoensplan</h4>
+            <p class="mono" style="font-size:0.8rem;color:var(--muted)">Base › Build › Peak › Taper</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Terugrekenen vanaf racedag, met jouw beschikbare uren en dagen als harde rand.
+          </div>
+        </div>
+
+        <div class="flow-row">
+          <div>
+            <h4>Dagelijkse poort</h4>
+            <p class="mono" style="font-size:0.8rem;color:var(--muted)">slaap + RHR + load</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            <span class="pill go">go hard</span> <span class="pill easy">go easy</span> <span class="pill rest">rust</span>
+            — met de reden erbij, niet alleen het label.
+          </div>
+        </div>
+
+        <div class="flow-row">
+          <div>
+            <h4>Uitvoeren</h4>
+            <p class="mono" style="font-size:0.8rem;color:var(--muted)">runs › Huawei · ritten › Wahoo</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Gestructureerde workouts met tempo- of hartslagdoelen, naar het juiste apparaat.
+          </div>
+        </div>
+
+        <div class="flow-row">
+          <div>
+            <h4>Adapteren</h4>
+            <p class="mono" style="font-size:0.8rem;color:var(--form)">← dit miste</p>
+          </div>
+          <span class="flow-arrow">›</span>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Gemist? <strong>herverdelen</strong>, niet laten vallen. Onverwachte clubrit?
+            <strong>telt mee</strong> als sessie. Readiness rood? De <strong>week wordt
+            herschreven</strong> — niet alleen "neem rust".
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="band" id="skills">
+  <div class="wrap">
+    <p class="eyebrow">05 · De bouwstenen</p>
+    <h2>Zeven skills uit de cursus.<br>Vijf die er echt toe doen.</h2>
+
+    <div class="grid g2" style="margin-top:44px;gap:40px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:18px;color:var(--muted)">Herbouwd op intervals.icu</h4>
+        <div class="grid" style="gap:12px">
+          <div class="skill"><span class="name">plan-my-week</span><p>Zet de volgende week in elkaar binnen je beschikbare slots.</p></div>
+          <div class="skill"><span class="name">weekly-review</span><p>Beoordeelt uitvoering, niet aanwezigheid. Leest zijn eigen geschiedenis.</p></div>
+          <div class="skill"><span class="name">recovery-check</span><p>Dagelijkse readiness. Zwijgt op een normale dag — dat is het hele punt.</p></div>
+          <div class="skill"><span class="name">run-analysis</span><p>Pa:HR-decoupling, HR-drift, zonediscipline. Na elke sessie.</p></div>
+          <div class="skill"><span class="name">race-analysis</span><p>Forensische uitsplitsing: waar verloor je tijd, waar is het terug te halen.</p></div>
+          <div class="skill"><span class="name">fuel-and-pace</span><p>Race-dag voeding en pacing, met alle aannames expliciet gelabeld.</p></div>
+          <div class="skill"><span class="name">research-my-race</span><p>Parcours, weer, uitslagen van finishers. Met bronnen, of het zegt niets.</p></div>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:18px;color:var(--form)">Nieuw — het JOIN/REN-equivalent</h4>
+        <div class="grid" style="gap:12px">
+          <div class="skill" style="border-color:var(--line-2)"><span class="name new">set-goal</span><p>Event-intake: datum, afstand, hoogtemeters, streeftijd, prioriteit A/B/C.</p></div>
+          <div class="skill" style="border-color:var(--line-2)"><span class="name new">build-season-plan</span><p>Periodiseert Base›Build›Peak›Taper, terug vanaf racedag.</p></div>
+          <div class="skill" style="border-color:var(--line-2)"><span class="name new">adapt-week</span><p><strong>De herplanner.</strong> Gemist, extra of rood › herverdeelt de rest van de week.</p></div>
+          <div class="skill" style="border-color:var(--line-2)"><span class="name new">today</span><p>De dagelijkse poort in één regel, met een concrete aanpassing.</p></div>
+          <div class="skill" style="border-color:var(--line-2)"><span class="name new">progress</span><p>Voortgang naar doel: eFTP-trend, CTL-curve, weeksamenvatting.</p></div>
+        </div>
+        <div class="callout" style="margin-top:20px">
+          <span class="mono" style="font-size:0.82rem">strength-log</span> leest je Hevy-sessies
+          en verrekent de krachtload in de week — iets wat geen enkele hardloop- of fietsapp doet.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FASEN ============ -->
+<section class="band" id="fasen">
+  <div class="wrap">
+    <p class="eyebrow accent">06 · De weg ernaartoe</p>
+    <h2>Vijf fasen.<br>Elke fase levert iets werkends op.</h2>
+
+    <div style="margin-top:44px">
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 0</b><span class="dur">een dagdeel</span></div>
+        <div>
+          <h3>Aansluiten, niet bouwen</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            intervals.icu-account, Huawei koppelen, <strong>Health Service Kit aanzetten</strong>
+            in de Huawei-app (vergeet je dit, dan komt er niets binnen), Wahoo koppelen,
+            Hevy via Health Connect.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: al je data op één plek, en je weet dat de koppelingen echt werken.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 1</b><span class="dur">een dagdeel</span></div>
+        <div>
+          <h3>Het brein</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Het project op je laptop: <span class="mono">CLAUDE.md</span> als constitutie,
+            je profiel, de mappenstructuur, en de eerste skills. Nog geen automatisering,
+            nog geen dashboard.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: je kunt in gewoon Nederlands tegen je trainingsdata praten.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 2</b><span class="dur">de kern</span></div>
+        <div>
+          <h3>De adaptieve lus</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            <span class="mono">set-goal</span> ›
+            <span class="mono">build-season-plan</span> ›
+            <span class="mono">today</span> ›
+            <span class="mono">adapt-week</span> ›
+            <span class="mono">progress</span>.
+            Dit is het hart. Zonder deze fase is het een schema; met deze fase is het een coach.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: een plan dat zich aanpast als je leven anders loopt dan gepland.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 3</b><span class="dur">halve dag</span></div>
+        <div>
+          <h3>Automatisering</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Lokale cron voor de ochtendbrief en de wekelijkse review. GitHub als vangnet
+            voor als je laptop uit staat. Telegram voor de ochtendmelding.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: je hoeft er niet meer aan te denken. Het komt naar jou toe.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 4</b><span class="dur">halve dag</span></div>
+        <div>
+          <h3>Het dashboard</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Eén statisch HTML-bestand: vandaag, de week, de trend, en de voortgang naar je doel.
+            Werkt offline, geen CDN, geen server. Run + fiets + kracht in één beeld.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: één scherm dat je 's ochtends opent zonder eraan herinnerd te worden.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KEUZES ============ -->
+<section class="band" id="keuzes">
+  <div class="wrap">
+    <p class="eyebrow">07 · De keuzes</p>
+    <h2>En waarom.</h2>
+
+    <table style="margin-top:40px">
+      <thead>
+        <tr><th style="width:26%">Keuze</th><th style="width:37%">Waarom</th><th>Wat het je kost</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>intervals.icu als ruggengraat</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">niet Strava</span></td>
+          <td>De enige gratis dienst die leest <em>én</em> terugschrijft. Strava kan alleen lezen en kost nu geld.</td>
+          <td>Een account, één API-key. 5.000 requests/dag; wij gebruiken er ~20.</td>
+        </tr>
+        <tr>
+          <td><strong>Markdown als geheugen</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen database</span></td>
+          <td>Één sporter heeft geen Postgres nodig. Bestanden zijn grepbaar, versioneerbaar en je bezit ze.</td>
+          <td>Niets. Het is ook nog eens sneller.</td>
+        </tr>
+        <tr>
+          <td><strong>Lokaal draaien</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen VPS</span></td>
+          <td>Een cronjob op je eigen laptop doet hetzelfde als een server van €5/mnd.</td>
+          <td>Je laptop moet aan staan voor de automatische taken. GitHub vangt de rest op.</td>
+        </tr>
+        <tr>
+          <td><strong>LLM in plaats van ML</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen black box</span></td>
+          <td>Redeneert over jouw data en legt uit waarom. Geen trainingsset nodig, geen verborgen model.</td>
+          <td>Minder "geleerd" dan een ML-model dat duizenden atleten heeft gezien.</td>
+        </tr>
+        <tr>
+          <td><strong>Geen CDN in het dashboard</strong></td>
+          <td>"Offline" moet echt offline zijn. De cursus laadt Chart.js van een CDN en belooft tegelijk geen internet nodig te hebben.</td>
+          <td>Iets meer werk: de grafieken zijn met de hand getekende SVG.</td>
+        </tr>
+        <tr>
+          <td><strong>ACWR als trend, niet als wet</strong></td>
+          <td>De acute:chronic ratio is omstreden. De cursus bakt hem in als doctrine.</td>
+          <td>We moeten zelf nadenken over de grenswaarden in plaats van ze te kopiëren.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ OPBRENGST ============ -->
+<section class="band" id="opbrengst">
+  <div class="wrap">
+    <p class="eyebrow accent">08 · Wat het je oplevert</p>
+    <h2>Vijf dingen die<br>je nu niet hebt.</h2>
+
+    <div class="grid g2" style="margin-top:44px;gap:36px;align-items:start">
+      <ul class="ticks" style="font-size:1rem">
+        <li><strong>Een plan dat zich aanpast.</strong> Niet herbeginnen als je een week mist — herverdelen.</li>
+        <li><strong>Cross-domain.</strong> Hardlopen, fietsen en kracht in één load-model. Geen enkele app doet dit.</li>
+        <li><strong>Volledige transparantie.</strong> Je kunt elke beslissing bevragen. "Waarom deze sessie?" krijgt een echt antwoord.</li>
+        <li><strong>Je bezit je data.</strong> Bestanden op je eigen schijf, in een git-repo. Geen export-knop nodig.</li>
+        <li><strong>Geen abonnementen.</strong> €41/mnd wordt €0.</li>
+      </ul>
+      <div class="card raised">
+        <h4 style="margin-bottom:16px">Wat het jou kost</h4>
+        <div class="row"><span class="k">Een dagdeel opzetten</span><span class="v" style="color:var(--easy)">eenmalig</span></div>
+        <div class="row"><span class="k">Claude-plan (Claude Code)</span><span class="v" style="color:var(--fatigue)">verplicht</span></div>
+        <div class="row"><span class="k">AI-tokens voor de automatische taken</span><span class="v" style="color:var(--fatigue)">per gebruik</span></div>
+        <div class="row"><span class="k">Alles daartussen</span><span class="v" style="color:var(--form)">€0</span></div>
+        <p style="font-size:0.84rem;color:var(--muted);margin-top:18px">
+          Eén betaald Claude-plan is onvermijdelijk: Claude Code werkt niet op het gratis
+          abonnement. Dat is de vloer van het hele systeem.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GRENZEN ============ -->
+<section class="band" id="grenzen">
+  <div class="wrap-narrow">
+    <p class="eyebrow">09 · Wat het niet is</p>
+    <h2>Eerlijk over de grenzen.</h2>
+
+    <ul class="ticks" style="margin-top:34px;font-size:1rem">
+      <li class="no"><strong>Geen 400 gecureerde workouts.</strong> We genereren ze. JOIN heeft een catalogus die door World Tour-coaches is samengesteld — dat evenaren we niet.</li>
+      <li class="no"><strong>Geen gepolijste mobiele app.</strong> Een statisch dashboard en Telegram. Functioneel, niet mooi-als-een-app.</li>
+      <li class="no"><strong>Geen medisch advies.</strong> Het systeem signaleert patronen. Het is geen arts en het zegt dat zelf ook.</li>
+      <li class="no"><strong>Geen HRV in de eerste versie.</strong> De Huawei-API geeft het niet. Slaap en rustige hartslag dragen de readiness-poort; HRV komt later via Health Sync.</li>
+      <li class="no"><strong>Eerste twee weken observe-only.</strong> Een nieuwe databron is twee weken onbetrouwbaar. Tot die tijd kijkt het mee en grijpt het niet in.</li>
+    </ul>
+
+    <div class="callout warn" style="margin-top:34px">
+      <strong>De eerlijke afweging:</strong> als je gewoon een plan wilt en niet wilt sleutelen,
+      is €10/mnd voor REN of JOIN het geld dubbel en dwars waard. Dit systeem is voor jou
+      interessant als je <em>controle</em> wilt, cross-domain wilt trainen, of nieuwsgierig bent
+      naar hoe zoiets werkt. Alle drie de redenen zijn goed — maar het is een bewuste keuze.
+    </div>
+  </div>
+</section>
+
+<!-- ============ KOSTEN ============ -->
+<section class="band" id="kosten">
+  <div class="wrap">
+    <p class="eyebrow">10 · De rekening</p>
+    <h2>Wat er overblijft<br>aan kosten.</h2>
+
+    <table style="margin-top:40px">
+      <thead><tr><th>Onderdeel</th><th>Wat het doet</th><th style="text-align:right">Kosten</th></tr></thead>
+      <tbody>
+        <tr><td>intervals.icu</td><td>ruggengraat: leest alles, schrijft terug, rekent CTL/ATL/TSB</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Huawei › intervals.icu</td><td>activiteiten, slaap, rustige hartslag</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Wahoo ELEMNT</td><td>ritten + gestructureerde fietsworkouts</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Hevy › Health Connect</td><td>krachtload in het model</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Opslag</td><td>markdown + SQLite in een private git-repo</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Automatisering</td><td>lokale cron + GitHub Actions als vangnet</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Meldingen</td><td>Telegram, uitgaand</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Claude-plan</strong></td><td>het brein — Claude Code</td><td class="mono" style="text-align:right;color:var(--fatigue)"><strong>verplicht</strong></td></tr>
+        <tr><td><strong>AI-tokens</strong></td><td>de dagelijkse en wekelijkse taken</td><td class="mono" style="text-align:right;color:var(--fatigue)"><strong>per gebruik</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout form" style="margin-top:34px">
+      Van ~€41 per maand naar <strong>alleen je Claude-plan en tokens</strong>. Alles daartussen is €0.
+    </div>
+  </div>
+</section>
+
+<!-- ============ BESLISPUNTEN ============ -->
+<section class="band" id="beslispunten">
+  <div class="wrap-narrow">
+    <p class="eyebrow accent">11 · Wat ik van je nodig heb</p>
+    <h2>Twee antwoorden,<br>dan kan ik beginnen.</h2>
+
+    <div class="grid" style="gap:18px;margin-top:40px">
+      <div class="card">
+        <span class="card-num">VRAAG 01</span>
+        <h4>Wat is je doel?</h4>
+        <p style="color:var(--muted);margin-top:8px">
+          Een concreet event — welke, welke datum, welke afstand en hoogtemeters — of
+          "algemeen fitter worden"? JOIN ondersteunt beide; <span class="mono">set-goal</span> ook.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-num">VRAAG 02</span>
+        <h4>Hoeveel uur per week, en welke dagen?</h4>
+        <p style="color:var(--muted);margin-top:8px">
+          Dit is JOIN's kernfeature: beschikbaarheids-slots. Zonder dit kan
+          <span class="mono">plan-my-week</span> geen sessies plaatsen — dan blijft het bij goede
+          bedoelingen.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:44px">
+      <a class="card" href="backend.html" style="display:block">
+        <p class="eyebrow" style="margin-bottom:10px">Bijlage A</p>
+        <h3>De backend ›</h3>
+        <p style="color:var(--muted);margin-top:8px;font-size:0.92rem">
+          Datastroom, lagen, bestandsstructuur, skills en het datamodel.
+        </p>
+      </a>
+      <a class="card" href="frontend.html" style="display:block">
+        <p class="eyebrow" style="margin-bottom:10px">Bijlage B</p>
+        <h3>De interface ›</h3>
+        <p style="color:var(--muted);margin-top:8px;font-size:0.92rem">
+          Hoe het eruit komt te zien: vandaag, de week, de trend, en de coach in je zak.
+        </p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Athlete OS — voorstel v1 · gebouwd op intervals.icu</span>
+    <span class="mono">Geen abonnement · geen VPS · jouw data blijft van jou</span>
+  </div>
+</footer>
+
+<nav class="rail" aria-label="Secties">
+  <a href="#hero" aria-label="Hero"></a>
+  <a href="#probleem" aria-label="Probleem"></a>
+  <a href="#kernvondst" aria-label="Kernvondst"></a>
+  <a href="#setup" aria-label="Setup"></a>
+  <a href="#brein" aria-label="Het brein"></a>
+  <a href="#skills" aria-label="Skills"></a>
+  <a href="#fasen" aria-label="Fasen"></a>
+  <a href="#keuzes" aria-label="Keuzes"></a>
+  <a href="#opbrengst" aria-label="Opbrengst"></a>
+  <a href="#grenzen" aria-label="Grenzen"></a>
+  <a href="#kosten" aria-label="Kosten"></a>
+  <a href="#beslispunten" aria-label="Beslispunten"></a>
+</nav>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
