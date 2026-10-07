@@ -2,7 +2,7 @@
 
 **Live: <https://rm-bcn.github.io/athlete-os/>**
 
-Vier pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken **voordat** er iets
+Vijf pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken **voordat** er iets
 gebouwd wordt. Geen productcode — een voorstel, een wetenschappelijke onderbouwing, een
 architectuur en een interface-schets.
 
@@ -10,18 +10,19 @@ Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server 
 
 | Bestand | Wat het is |
 |---|---|
-| `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, de vijf fasen, de keuzes, wat het oplevert, de grenzen, de kosten. |
+| `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, doelen en domeinen, de vijf fasen, de keuzes, wat het oplevert, de grenzen, de kosten. |
 | `science.html` | **De wetenschap.** Gepolariseerde intensiteitsverdeling (80/20), periodisering, het CTL/ATL/TSB-loadmodel, wat we verwerpen (ACWR), en de stabiliteitsregels tegen plan-gerammel. |
-| `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), lagen, bestandsstructuur, datamodel, skill-in/uit, adaptatieregels, schema. |
-| `frontend.html` | **De interface.** Vijf telefoonschermen (vandaag, **herstel**, de week, voortgang, coach) en het desktop-dashboard. |
-| `screenshots/` | 68 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
+| `strength.html` | **Kracht &amp; doel.** Twee soorten doelen (event én lichaamscompositie), de interferentie tussen duur en kracht, de hypertrofie-wetenschap, de oefeningenbibliotheek en de lus naar Hevy. |
+| `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), schrijfwegen (intervals.icu, Hevy), lagen, datamodel, skills, adaptatieregels, schema. |
+| `frontend.html` | **De interface.** Zeven telefoonschermen (vandaag, herstel, week, voortgang, coach, kracht, beschikbaarheid) en het desktop-dashboard. |
+| `screenshots/` | 92 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
 | `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
 
 ## Screenshots
 
 Alles in `screenshots/` is te bekijken op GitHub, ook op mobiel:
 
-- `screenshots/desktop/` — `index-full.png`, `science-full.png`, `backend-full.png`, `frontend-full.png`
+- `screenshots/desktop/` — `index-full.png`, `science-full.png`, `strength-full.png`, `backend-full.png`, `frontend-full.png`
 - `screenshots/desktop/sections/` — per sectie
 - `screenshots/mobile/` — dezelfde set op 390 px breed
 
@@ -50,13 +51,16 @@ Twee dingen die de broncursus mist en hier wél in zitten:
 
 | | |
 |---|---|
-| **Verdeling** | gepolariseerd, ~80% makkelijk / ~20% hard, bijna niets in de grijze zone (Seiler) |
+| **Duurverdeling** | gepolariseerd, ~80% makkelijk / ~20% hard, bijna niets in de grijze zone (Seiler) |
 | **Vorm** | periodisering: Base › Build › Peak › Taper, terug vanaf racedag |
 | **Instrument** | CTL/ATL/TSB (Banister; Coggan) — gelezen uit intervals.icu, niet zelf gebouwd |
-| **Verworpen** | ACWR als blessurevoorspeller — AUC 0,55–0,65, wiskundig ondeugdelijk (Impellizzeri et al.) |
+| **Kracht** | 10–20 sets per spiergroep per week, 2× frequentie, 0–3 reps in reserve (Schoenfeld e.a.) |
+| **Interferentie** | duur + kracht botsen om hetzelfde signaal; ≥6 uur scheiding en fase-denken (Wilson 2012, Hickson 1980) |
+| **Verworpen** | ACWR als blessurevoorspeller — AUC 0,55–0,65, wiskundig ondeugdelijk (Impellizzeri e.a.) |
 | **Grens** | geen arts, geen fysiotherapeut. Het signaleert, het diagnosticeert niet. |
 
-Volledig met bronnen en bewijskracht per onderdeel: [`science.html`](science.html).
+Volledig met bronnen en bewijskracht per onderdeel: [`science.html`](science.html) en
+[`strength.html`](strength.html).
 
 ## Wat het kost
 

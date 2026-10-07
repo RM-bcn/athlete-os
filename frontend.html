@@ -37,6 +37,21 @@
   .stage .spct { text-align: right; color: var(--dim); }
   .st-w .sfill { background: #4a5568; } .st-r .sfill { background: #a98ad6; }
   .st-l .sfill { background: #3d7bff; } .st-d .sfill { background: #1e3a8a; }
+
+  /* krachtoefeningen */
+  .gym-ex { display: grid; grid-template-columns: 46px 1fr; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .gym-ex:last-of-type { border-bottom: 0; }
+  .gym-ex .thumb { width: 46px; height: 46px; border-radius: 7px; background: var(--surface-2); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.5rem; color: var(--dim); text-align: center; line-height: 1.15; }
+  .gym-ex .meta { font-family: var(--mono); font-size: 0.68rem; color: var(--dim); margin-top: 3px; }
+  .gym-ex .ttl { font-size: 0.88rem; font-weight: 600; }
+
+  /* beschikbaarheid */
+  .avail { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.82rem; }
+  .avail:last-child { border-bottom: 0; }
+  .avail .d { font-family: var(--mono); font-size: 0.68rem; color: var(--dim); text-transform: uppercase; }
+  .avail .what { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+  .avail.other .what { color: var(--easy); }
+  .avail.free .what { color: var(--dim); }
 </style>
 </head>
 <body>
@@ -47,6 +62,7 @@
     <div class="nav-links">
       <a href="index.html">Voorstel</a>
       <a href="science.html">Wetenschap</a>
+      <a href="strength.html">Kracht</a>
       <a href="backend.html">Backend</a>
       <a href="frontend.html" aria-current="page">Interface</a>
     </div>
@@ -68,7 +84,7 @@
 <!-- ============ TELEFOON ============ -->
 <section class="band" id="telefoon">
   <div class="wrap">
-    <p class="eyebrow">Vijf schermen</p>
+    <p class="eyebrow">Zeven schermen</p>
     <h2 style="margin-bottom:44px">De kern in je zak.</h2>
 
     <div class="screens">
@@ -271,6 +287,85 @@
         <div class="screen-label"><b>De coach</b><span>twee richting, in Telegram</span></div>
       </div>
 
+      <!-- SCHERM · KRACHT -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>18:30</span><span>Hevy · Athlete OS</span></div>
+            <div class="device-body">
+              <div class="app-sub">Blok 2 · week 5 · intensificatie</div>
+              <div class="app-h">Kracht</div>
+              <p class="mono" style="font-size:0.72rem;color:var(--dim);margin:8px 0 12px">Lower A · 6 oefeningen · ~65 min</p>
+
+              <div class="gym-ex">
+                <div class="thumb">demo<br>beeld</div>
+                <div><div class="ttl">Back Squat</div><div class="meta">4 × 6 · 100 kg · rust 180s</div></div>
+              </div>
+              <div class="gym-ex">
+                <div class="thumb">demo<br>beeld</div>
+                <div><div class="ttl">Romanian Deadlift</div><div class="meta">3 × 8 · 80 kg · rust 120s</div></div>
+              </div>
+              <div class="gym-ex">
+                <div class="thumb">demo<br>beeld</div>
+                <div><div class="ttl">Leg Press</div><div class="meta">3 × 10 · 140 kg · rust 90s</div></div>
+              </div>
+              <div class="gym-ex">
+                <div class="thumb">demo<br>beeld</div>
+                <div><div class="ttl">Walking Lunge</div><div class="meta">3 × 10 · 20 kg · rust 90s</div></div>
+              </div>
+              <div class="gym-ex">
+                <div class="thumb">demo<br>beeld</div>
+                <div><div class="ttl">Standing Calf Raise</div><div class="meta">4 × 12 · 60 kg · rust 60s</div></div>
+              </div>
+              <div class="gym-ex">
+                <div class="thumb">demo<br>beeld</div>
+                <div><div class="ttl">Hanging Leg Raise</div><div class="meta">3 × 12 · lichaamsgewicht</div></div>
+              </div>
+
+              <div class="session" style="margin-top:14px;border-left-color:var(--form)">
+                <div class="t">Openen in Hevy</div>
+                <div class="d">routine staat klaar · tik en start</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Kracht</b><span>met demo per oefening</span></div>
+      </div>
+
+      <!-- SCHERM · BESCHIKBAARHEID -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>20:15</span><span>Athlete OS</span></div>
+            <div class="device-body">
+              <div class="app-sub">Deze week · 6–12 oktober</div>
+              <div class="app-h">Beschikbaarheid</div>
+
+              <div style="margin-top:14px">
+                <div class="avail"><span class="d">ma</span><span class="what">hardlopen · 60 min</span></div>
+                <div class="avail"><span class="d">di</span><span class="what">kracht · 75 min</span></div>
+                <div class="avail other"><span class="d">wo</span><span class="what">volleybal · 90 min</span></div>
+                <div class="avail free"><span class="d">do</span><span class="what">vrij</span></div>
+                <div class="avail"><span class="d">vr</span><span class="what">hardlopen · 60 min</span></div>
+                <div class="avail"><span class="d">za</span><span class="what">fietsen · 150 min</span></div>
+                <div class="avail free"><span class="d">zo</span><span class="what">vrij</span></div>
+              </div>
+
+              <div class="app-sub" style="margin:20px 0 6px">Andere sport telt mee</div>
+              <div class="session" style="border-left-color:var(--easy)">
+                <div class="t">Volleybal · 90 min</div>
+                <div class="d">RPE 7 · load ~630 · geschat</div>
+              </div>
+              <p style="font-size:0.8rem;color:var(--muted);margin:12px 0 0">
+                Donderdag is vrij. De coach gebruikt die ruimte niet automatisch — hij
+                vraagt eerst of je wilt.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Beschikbaarheid</b><span>per week, per sport</span></div>
+      </div>
+
     </div>
 
     <div class="callout form" style="max-width:760px;margin:52px auto 0">
@@ -337,6 +432,70 @@
         is dat je aandacht verdient. Een herstelcheck die elke dag alarm slaat, negeer je
         binnen een week.
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KRACHT & BESCHIKBAARHEID ============ -->
+<section class="band" id="kracht-beschikbaarheid">
+  <div class="wrap">
+    <p class="eyebrow accent">Kracht &amp; de week</p>
+    <h2>De sportschool en je agenda,<br>op dezelfde plek.</h2>
+
+    <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:14px">Het kracht-scherm</h4>
+        <ul class="ticks" style="font-size:0.92rem">
+          <li>
+            <strong>Je ziet de sessie van vandaag</strong> — oefeningen, sets, reps en het
+            streefgewicht. Eén blok, geen eindeloze lijst.
+          </li>
+          <li>
+            <strong>Elke oefening heeft een demonstratiebeeld.</strong> Dat komt uit Hevy's
+            eigen <span class="mono">thumbnail_url</span>, dus het is precies de oefening
+            die je gaat loggen.
+          </li>
+          <li>
+            <strong>"Openen in Hevy"</strong> — de routine staat al klaar. Je tikt en
+            start. Geen overtypen.
+          </li>
+          <li class="warn">
+            <strong>En de oefeningen wisselen niet binnen een blok.</strong> Vier tot acht
+            weken dezelfde bewegingen, zodat je ze echt kunt laden. Dat is waar progressie
+            vandaan komt.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px">Het beschikbaarheidsscherm</h4>
+        <ul class="ticks" style="font-size:0.92rem">
+          <li>
+            <strong>Per dag, per sport, met tijd.</strong> Wat kan, wat niet. Dit is wat
+            <span class="mono">plan-my-week</span> gebruikt om sessies te plaatsen.
+          </li>
+          <li>
+            <strong>Andere sporten staan er gewoon tussen.</strong> Volleybal op woensdag
+            is geen voetnoot — het is een regel in je week.
+          </li>
+          <li>
+            <strong>En het telt mee als belasting.</strong> Duur × RPE › load, als
+            handmatige activiteit naar intervals.icu. Anders doet de coach alsof die dag
+            rust was.
+          </li>
+          <li class="warn">
+            <strong>Vrije dagen worden niet automatisch gevuld.</strong> De coach vraagt
+            eerst. Anders sluipt er training in die je niet wilde.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:32px">
+      <strong>Dit is het stuk dat geen enkele app doet:</strong> JOIN kent geen
+      sportschool, REN kent geen volleybal, en geen van beide weet dat je donderdag niet
+      kunt. Hier zit alles in één week — gelopen, gefietst, getild en gespeeld — en het
+      voedt één vermoeidheidsmodel. Zie <a href="strength.html">Bijlage D</a>.
     </div>
   </div>
 </section>

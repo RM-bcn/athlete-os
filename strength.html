@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kracht &amp; doel — Athlete OS</title>
+<meta name="description" content="Twee soorten doelen (event en lichaamscompositie), de krachtwetenschap, de interferentie met duurtraining, de oefeningenbibliotheek en de lus naar Hevy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .goal { border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; background: var(--surface); }
+  .goal.event { border-top: 3px solid var(--fitness); }
+  .goal.body { border-top: 3px solid var(--form); }
+  .goal h4 { margin-bottom: 10px; }
+
+  .dose { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .dose .row2 { display: grid; grid-template-columns: 118px 1fr 92px; align-items: center; gap: 14px; font-family: var(--mono); font-size: 0.78rem; }
+  .dose .dbar { height: 26px; border-radius: 5px; background: var(--surface-2); overflow: hidden; }
+  .dose .dfill { height: 100%; border-radius: 5px; background: var(--fitness); }
+  .dose .dv { text-align: right; color: var(--muted); }
+  @media (max-width: 620px) { .dose .row2 { grid-template-columns: 92px 1fr 74px; gap: 8px; } }
+
+  .ex { display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .ex:last-child { border-bottom: 0; }
+  .ex .thumb { width: 58px; height: 58px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.6rem; color: var(--dim); text-align: center; line-height: 1.2; }
+  .ex .meta { font-family: var(--mono); font-size: 0.72rem; color: var(--dim); margin-top: 3px; }
+
+  .loop { display: grid; gap: 0; }
+  .loop .step { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 18px 0; border-top: 1px dashed var(--line); align-items: start; }
+  .loop .step:first-child { border-top: 0; }
+  .loop .n { font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 1.5rem; color: var(--fitness); line-height: 1; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
+    <div class="nav-links">
+      <a href="index.html">Voorstel</a>
+      <a href="science.html">Wetenschap</a>
+      <a href="strength.html" aria-current="page">Kracht</a>
+      <a href="backend.html">Backend</a>
+      <a href="frontend.html">Interface</a>
+    </div>
+  </div>
+</nav>
+
+<header class="band">
+  <div class="wrap">
+    <p class="eyebrow accent">Bijlage D</p>
+    <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">Kracht, doel<br>en de sportschool.</h1>
+    <p class="lead" style="max-width:66ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
+      Het systeem moet twee soorten doelen aankunnen — een event <em>en</em> een
+      lichaamscompositie — en het moet kracht kunnen periodiseren met oefeningen die je
+      daadwerkelijk in Hevy terugziet, inclusief hoe je ze uitvoert.
+    </p>
+  </div>
+</header>
+
+<!-- ============ 1. TWEE SOORTEN DOELEN ============ -->
+<section class="band" id="doelen">
+  <div class="wrap">
+    <p class="eyebrow">01 · De doelen</p>
+    <h2>Twee soorten, en ze<br>concurreren om herstel.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      JOIN kent één soort doel: een event. Jij wilt er een tweede bij. Dat kan — maar het
+      systeem moet eerlijk zijn over de spanning ertussen, want die is fysiologisch echt.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px;gap:24px;align-items:start">
+      <div class="goal event">
+        <span class="eyebrow" style="color:var(--fitness)">Type A</span>
+        <h4>Event-doel</h4>
+        <p style="color:var(--muted);font-size:0.92rem">
+          Een race met datum, afstand, hoogtemeters en streeftijd. Terugrekenen naar
+          Base › Build › Peak › Taper.
+        </p>
+        <p class="mono" style="font-size:0.76rem;color:var(--dim);margin-top:12px">
+          set-goal --type event
+        </p>
+      </div>
+      <div class="goal body">
+        <span class="eyebrow" style="color:var(--form)">Type B</span>
+        <h4>Lichaamscompositie-doel</h4>
+        <p style="color:var(--muted);font-size:0.92rem">
+          Streefgewicht, vetpercentage of spiermassa. Geen datum maar een richting, met
+          een tempo dat veilig is.
+        </p>
+        <p class="mono" style="font-size:0.76rem;color:var(--dim);margin-top:12px">
+          set-goal --type compositie --gewicht 78 --vet 15
+        </p>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:30px">
+      <strong>De spanning die het systeem moet benoemen:</strong> een stevig calorietekort
+      plus veel duurvolume is de slechtste combinatie voor spierbehoud, en een overschot
+      plus marathonvoorbereiding betekent gewichtstoename die je race kost. Daarom vraagt
+      de coach altijd: <strong>wat is primair?</strong> En hij periodiseert ze — het ene
+      blok bevoorrecht, het andere onderhoud.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. INTERFERENTIE ============ -->
+<section class="band" id="interferentie">
+  <div class="wrap">
+    <p class="eyebrow accent">02 · Het probleem</p>
+    <h2>Duurtraining en kracht<br>vechten om hetzelfde signaal.</h2>
+
+    <div class="grid g2" style="margin-top:40px;gap:40px;align-items:start">
+      <div>
+        <p style="color:var(--muted)">
+          Duurtraining activeert <strong>AMPK</strong>. Krachttraining activeert
+          <strong>mTORC1</strong> — de schakelaar voor spieropbouw. AMPK remt mTORC1.
+          Zet je ze in dezelfde sessie, dan wint de duurtraining het signaal.
+        </p>
+        <ul class="ticks" style="font-size:0.92rem;margin-top:18px">
+          <li>
+            <strong>Hickson (1980)</strong> beschreef het effect voor het eerst.
+          </li>
+          <li>
+            <strong>Wilson et al. (2012)</strong> — meta-analyse van 21 studies:
+            gelijktijdig trainen remt <strong>hypertrofie met ~31%</strong> en
+            vermogensontwikkeling met ~17%. <strong>Pure kracht blijft grotendeels gespaard.</strong>
+          </li>
+          <li class="warn">
+            <strong>Hardlopen stoort meer dan fietsen</strong> — naar verluidt tot ~39%
+            versus ~11% op spiergroei. Het loopmechanische deel telt zwaar.
+          </li>
+          <li class="warn">
+            <strong>Nuance:</strong> de getallen worden vaak overdreven, en tijdens een
+            calorietekort werkt de interferentie juist <em>in je voordeel</em> — je wilt
+            dan geen maximale hypertrofie, je wilt spier behouden.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card raised">
+        <h4 style="margin-bottom:18px">Hoe we het omzeilen</h4>
+        <div class="loop">
+          <div class="step">
+            <span class="n">01</span>
+            <div><strong>Zes uur scheiding</strong><p style="color:var(--muted);font-size:0.88rem;margin:6px 0 0">Liefst ochtend kracht, avond duur — of omgekeerd. Nooit direct achter elkaar.</p></div>
+          </div>
+          <div class="step">
+            <span class="n">02</span>
+            <div><strong>Volgorde</strong><p style="color:var(--muted);font-size:0.88rem;margin:6px 0 0">Als het toch dezelfde dag moet: kracht eerst, duur daarna. Dat beschermt het krachtsignaal het meest.</p></div>
+          </div>
+          <div class="step">
+            <span class="n">03</span>
+            <div><strong>Aparte dagen waar het kan</strong><p style="color:var(--muted);font-size:0.88rem;margin:6px 0 0">De planner probeert kracht en kwaliteitsduur nooit op dezelfde dag te leggen.</p></div>
+          </div>
+          <div class="step">
+            <span class="n">04</span>
+            <div><strong>Fase-denken</strong><p style="color:var(--muted);font-size:0.88rem;margin:6px 0 0">In het base-blok meer krachtvolume, in het peak-blok kracht op onderhoud (1–2×/week).</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. KRACHTWETENSCHAP ============ -->
+<section class="band" id="krachtwetenschap">
+  <div class="wrap">
+    <p class="eyebrow">03 · De krachtwetenschap</p>
+    <h2>Volume is de motor.<br>Frequentie verdeelt het.</h2>
+
+    <div class="grid g2" style="margin-top:40px;gap:40px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:20px">Wekelijkse sets per spiergroep</h4>
+        <div class="dose">
+          <div class="row2"><span style="color:var(--dim)">&lt; 5 sets</span><div class="dbar"><div class="dfill" style="width:20%;background:var(--dim)"></div></div><span class="dv">onder de maat</span></div>
+          <div class="row2"><span style="color:var(--fitness)">5–9 sets</span><div class="dbar"><div class="dfill" style="width:42%"></div></div><span class="dv">werkt</span></div>
+          <div class="row2"><span style="color:var(--form)">10–20 sets</span><div class="dbar"><div class="dfill" style="width:88%;background:var(--form)"></div></div><span class="dv">optimaal</span></div>
+          <div class="row2"><span style="color:var(--easy)">20+ sets</span><div class="dbar"><div class="dfill" style="width:100%;background:var(--easy)"></div></div><span class="dv">opbrengst vlakt af</span></div>
+        </div>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:16px">
+          Schoenfeld et al. (2017) · meta-regressie 2026 (67 studies, 2058 deelnemers)
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:16px">Wat de meta-analyses zeggen</h4>
+        <ul class="ticks" style="font-size:0.93rem">
+          <li>
+            <strong>Volume › uitkomst.</strong> Schoenfeld et al. (2017): een
+            dosis-respons tussen wekelijks sets en spiergroei, met het grootste effect
+            in de band van <strong>10 tot 20 sets per spiergroep per week</strong>.
+          </li>
+          <li>
+            <strong>Frequentie 2× wint.</strong> Schoenfeld, Ogborn &amp; Krieger (2016):
+            bij gelijk volume geeft <strong>2× per week per spiergroep</strong> meer groei
+            dan 1×.
+          </li>
+          <li>
+            <strong>Volume stuurt, frequentie verdeelt.</strong> De meta-regressie van
+            2026 besluit dat frequentie vooral een middel is om het volume in
+            verteerbare porties te gieten.
+          </li>
+          <li class="warn">
+            <strong>Nabij falen, niet tot falen.</strong> 6–30 reps werkt zolang je
+            dicht bij falen komt. 0–3 reps in reserve is de praktische regel. Tot falen
+            is geen vereiste en kost onnodig herstel.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. HOE DE COACH HET SAMENSTELT ============ -->
+<section class="band" id="samenstellen">
+  <div class="wrap">
+    <p class="eyebrow accent">04 · De motor</p>
+    <h2>Een blok van maanden,<br>niet een workout van vandaag.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Je vroeg om trainingen die je <em>maanden</em> volgt. Daarom werkt de krachtkant met
+      blokken, niet met losse sessies — en elk blok heeft dezelfde vorm als het
+      duurblok: opbouwen, intensiveren, deload.
+    </p>
+
+    <div class="card" style="margin-top:40px;padding:30px">
+      <div class="phase" style="grid-template-columns:120px 1fr">
+        <div class="phase-tag"><b>Wk 1–4</b><span class="dur">opbouw</span></div>
+        <div>
+          <h3>Accumulatie</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Volume omhoog, intensiteit gematigd. 3–4 sessies per week, 12–16 sets per
+            spiergroep. Compounds eerst (squat, deadlift, row, press), daarna isolatie.
+            Elke week +1 set of +2,5 kg.
+          </p>
+        </div>
+      </div>
+      <div class="phase" style="grid-template-columns:120px 1fr">
+        <div class="phase-tag"><b>Wk 5–8</b><span class="dur">intensiveren</span></div>
+        <div>
+          <h3>Intensificatie</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Volume licht omlaag, gewicht omhoog. 8–12 sets per spiergroep, 4–8 reps,
+            1–2 in reserve. Dezelfde oefeningen — <strong>progressie komt uit gewicht,
+            niet uit nieuwe oefeningen</strong>.
+          </p>
+        </div>
+      </div>
+      <div class="phase" style="grid-template-columns:120px 1fr">
+        <div class="phase-tag"><b>Wk 9</b><span class="dur">deload</span></div>
+        <div>
+          <h3>Deload</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Volume halveren, gewicht behouden. Verplicht, niet optioneel. Hierna begint
+            het volgende blok met nieuwe oefeningen of een nieuw accent.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:34px">
+      <div class="card">
+        <h4>Oefeningkeuze</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Eerst beweegpatronen: squat, hinge, push, pull, carry. Dan isolatie voor wat
+          achterblijft. De coach vraagt welke apparatuur je hebt en programmeert daarop.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Stabiliteit geldt ook hier</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Binnen een blok wisselen oefeningen <strong>niet</strong>. Je herhaalt ze 4–8
+          weken zodat je ze echt kunt laden. Variatie is het vijand van progressie.
+        </p>
+      </div>
+      <div class="card">
+        <h4>En het telt mee in je week</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Kracht gaat als <span class="mono">WeightTraining</span> in het load-model. De
+          coach zet de fitnessbijdrage bewust op 0% en de vermoeidheid op 100% — tenzij
+          je zegt dat je het anders wilt.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. OEFENINGENBIBLIOTHEEK ============ -->
+<section class="band" id="bibliotheek">
+  <div class="wrap">
+    <p class="eyebrow">05 · De oefeningen</p>
+    <h2>Opgeslagen met een<br>beeld van de uitvoering.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Je vroeg om de oefeningen op te slaan inclusief een link naar hoe je ze doet. Dat
+      hoeft niet gebouwd te worden — <strong>Hevy levert het al</strong>, en er is een
+      openbare dataset als aanvulling.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
+      <div class="card raised">
+        <h4 style="margin-bottom:6px">Hevy exercise templates</h4>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-bottom:16px">GET /v1/exercise_templates</p>
+        <div class="ex">
+          <div class="thumb">thumb<br>nail_url</div>
+          <div>
+            <strong>Barbell Bench Press</strong>
+            <div class="meta">primary_muscle_group · equipment · id</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="thumb">thumb<br>nail_url</div>
+          <div>
+            <strong>Back Squat</strong>
+            <div class="meta">primary_muscle_group · equipment · id</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:16px">
+          Elk template heeft een <span class="mono">thumbnail_url</span> — het beeld dat
+          je <em>in de app zelf</em> ook ziet. Dat is de schoonste link: het is precies de
+          oefening die je gaat loggen.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px">En als aanvulling: free-exercise-db</h4>
+        <p style="color:var(--muted);font-size:0.92rem">
+          Een openbare dataset van <strong>800+ oefeningen</strong>, Unlicense
+          (publiek domein), met per oefening <strong>twee demonstratiebeelden</strong>,
+          spiergroepen, niveau, materiaal en stap-voor-stap instructies.
+        </p>
+        <div class="tree" style="margin-top:16px;font-size:0.76rem">{
+  "name": "Back Squat",
+  "level": "intermediate",
+  "equipment": "barbell",
+  "primaryMuscles": ["quadriceps"],
+  "secondaryMuscles": ["glutes", "hamstrings"],
+  "instructions": ["Stand with your feet...", "..."],
+  "images": ["Back_Squat/0.jpg", "Back_Squat/1.jpg"]
+}</div>
+        <p class="mono" style="font-size:0.72rem;color:var(--dim);margin-top:12px">
+          github.com/yuhonas/free-exercise-db · 2k sterren · 511 forks
+        </p>
+      </div>
+    </div>
+
+    <div class="callout form" style="margin-top:34px">
+      <strong>Wat er per oefening wordt opgeslagen:</strong> de naam en het
+      Hevy-template-id, de spiergroepen, het materiaal, de voorgeschreven sets × reps en
+      het streefgewicht, de rusttijd, een notitie, en de demonstratielink. Alles in
+      markdown zodat je het kunt lezen en het model het kan gebruiken.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. DE HEVY-LUS ============ -->
+<section class="band" id="hevy">
+  <div class="wrap">
+    <p class="eyebrow accent">06 · De lus</p>
+    <h2>De coach schrijft,<br>jij doet, Hevy logt.</h2>
+
+    <div class="card" style="margin-top:40px;padding:30px">
+      <div class="loop">
+        <div class="step">
+          <span class="n">01</span>
+          <div>
+            <strong>De coach bouwt het blok</strong>
+            <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
+              Hij kiest oefeningen uit de Hevy-templates en schrijft het blok naar
+              <span class="mono">training/strength/</span> als markdown.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <div>
+            <strong>Hij zet het in Hevy</strong>
+            <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
+              <span class="mono">POST /v1/routine_folders</span> voor het blok, dan
+              <span class="mono">POST /v1/routines</span> per sessie — met template-id,
+              sets, reps, rust en notities. Jij opent Hevy en de routine staat er, met het
+              demonstratiebeeld.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <div>
+            <strong>Jij traint en logt</strong>
+            <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
+              Gewoon in Hevy, zoals je al doet. Geen nieuwe app, geen nieuw ritueel.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="n">04</span>
+          <div>
+            <strong>Het komt terug</strong>
+            <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
+              Hevy › Health Connect › intervals.icu, als
+              <span class="mono">WeightTraining</span>. Vanaf dat moment telt het mee in
+              vermoeidheid en kan de coach de volgende sessie bijstellen.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="n">05</span>
+          <div>
+            <strong>En je gewicht ook</strong>
+            <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
+              <span class="mono">POST /v1/body_measurements</span> ondersteunt gewicht,
+              vetpercentage, vetvrije massa én omtrekken (nek, borst, taille, heup, dij,
+              kuit). Dat is de meetlat voor een compositiedoel.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:30px">
+      <strong>Eerlijk over de gratis route:</strong> Hevy's <em>lees</em>-API vereist Hevy
+      Pro. De <strong>webhook en het schrijven van routines</strong> ook. Blijf je op het
+      gratis plan, dan werkt de lus andersom: de coach schrijft het blok in markdown, jij
+      typt het één keer over in Hevy, en daarna logt Hevy het via Health Connect terug naar
+      intervals.icu. Meer handwerk, nul euro. Zie <a href="backend.html#opslag">de
+      opslaglaag</a>.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. BESCHIKBAARHEID ============ -->
+<section class="band" id="beschikbaarheid">
+  <div class="wrap">
+    <p class="eyebrow">07 · De week</p>
+    <h2>Jij geeft de ruimte,<br>de coach vult hem.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Dit is JOIN's kernfunctie en het moet bij jou ook zo werken: je zegt per week wat
+      kan, inclusief andere sporten, en de coach plaatst de sessies daarbinnen.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:16px">Wat je één keer vastlegt</h4>
+        <p style="color:var(--muted);font-size:0.92rem;margin-bottom:16px">
+          Een terugkerend weeksjabloon in <span class="mono">availability.md</span>:
+        </p>
+        <div class="tree" style="font-size:0.78rem">ma  ochtend   60 min   hardlopen
+di  avond     75 min   kracht (gym)
+wo  avond     90 min   volleybal        ← telt mee!
+do  —
+vr  ochtend   60 min   hardlopen
+za  ochtend  150 min   fietsen
+zo  vrij</div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:16px">Wat je per week bijstelt</h4>
+        <p style="color:var(--muted);font-size:0.92rem;margin-bottom:16px">
+          De coach vraagt er wekelijks naar, of je zegt het gewoon:
+        </p>
+        <div class="grid" style="gap:10px">
+          <div class="card" style="padding:14px 16px">
+            <span class="mono" style="font-size:0.8rem;color:var(--fitness)">"Deze week woensdag geen volleybal"</span>
+            <p style="color:var(--muted);font-size:0.86rem;margin:8px 0 0">De woensdaglast valt weg; de coach kan die ruimte gebruiken of de week laten zoals hij is.</p>
+          </div>
+          <div class="card" style="padding:14px 16px">
+            <span class="mono" style="font-size:0.8rem;color:var(--fitness)">"Donderdag kan ik niet, verzet het"</span>
+            <p style="color:var(--muted);font-size:0.86rem;margin:8px 0 0">Herschikken binnen de week, geen inhaling elders.</p>
+          </div>
+          <div class="card" style="padding:14px 16px">
+            <span class="mono" style="font-size:0.8rem;color:var(--fitness)">"Extra potje voetbal zaterdag"</span>
+            <p style="color:var(--muted);font-size:0.86rem;margin:8px 0 0">Komt erbij als belasting; de zaterdagsessie wordt verzacht of geschrapt.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. ANDERE SPORTEN ============ -->
+<section class="band" id="anderesporten">
+  <div class="wrap">
+    <p class="eyebrow accent">08 · Vermoeidheid die niemand meet</p>
+    <h2>Volleybal is training.<br>Ook als geen horloge het ziet.</h2>
+
+    <p style="max-width:66ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
+      Dit is een echt gat in elke trainingsapp: een potje volleybal, voetbal of een dag
+      sjouwen levert <strong>echte systemische vermoeidheid</strong> op die nergens wordt
+      geregistreerd. Als het systeem dat negeert, plant het de volgende dag te veel.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:16px">Hoe het meetelt</h4>
+        <ul class="ticks" style="font-size:0.93rem">
+          <li>
+            <strong>Duur × intensiteit › load.</strong> Je geeft twee dingen op: hoe lang
+            en hoe zwaar (RPE 1–10). Daar rolt een load uit, net als bij een echte sessie.
+          </li>
+          <li>
+            <strong>Het gaat intervals.icu in als handmatige activiteit.</strong> Dan telt
+            het mee in ATL en dus in je vorm en in de beslissingen van de coach.
+          </li>
+          <li>
+            <strong>Het is geen schatting die je vergeet.</strong> De coach vraagt er
+            wekelijks naar, in dezelfde stap als je beschikbaarheid.
+          </li>
+          <li class="warn">
+            <strong>En het is onzeker, dus het zegt dat.</strong> Een geschatte load is
+            gemarkeerd als schatting. De coach weegt hem lichter dan gemeten werk.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card raised">
+        <h4 style="margin-bottom:14px">De rekenregel</h4>
+        <p style="color:var(--muted);font-size:0.9rem">
+          Voor ongemeten sport gebruiken we een RPE-gebaseerde loadsom, dezelfde familie
+          als de session-RPE-methode (Foster):
+        </p>
+        <div class="callout" style="margin-top:16px">
+          <span class="mono" style="font-size:0.9rem">load ≈ duur_minuten × RPE</span>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:16px">
+          Een volleybaluur op RPE 7 geeft dus ~420. Dat is geen exacte wetenschap — het is
+          een eerlijke orde van grootte zodat de coach niet doet alsof die dag rust was.
+        </p>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:14px">
+          Foster et al. — session-RPE als loadsmaat
+        </p>
+      </div>
+    </div>
+
+    <div class="callout form" style="margin-top:34px">
+      <strong>Dit is precies waarom cross-domain het hele punt is:</strong> JOIN kent geen
+      volleybal. REN kent geen sportschool. Een systeem dat alleen naar je horloge kijkt,
+      mist de helft van je week. Hier komt alles in één vermoeidheidsmodel — gelopen,
+      gefietst, getild en gespeeld.
+    </div>
+  </div>
+</section>
+
+<!-- ============ NAVIGATIE ============ -->
+<section class="band">
+  <div class="wrap">
+    <div class="grid g4">
+      <a class="card" href="index.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Terug</p><h3>← Voorstel</h3></a>
+      <a class="card" href="science.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Bijlage C</p><h3>Wetenschap</h3></a>
+      <a class="card" href="backend.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Bijlage A</p><h3>Backend</h3></a>
+      <a class="card" href="frontend.html" style="display:block"><p class="eyebrow" style="margin-bottom:10px">Bijlage B</p><h3>Interface</h3></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Bijlage D · Kracht &amp; doel</span>
+    <span><a href="index.html">← voorstel</a> · <a href="science.html">wetenschap</a> · <a href="backend.html">backend</a> · <a href="frontend.html">interface</a></span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

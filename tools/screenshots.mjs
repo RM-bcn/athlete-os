@@ -25,16 +25,18 @@ const CHROME = process.env.CHROME_PATH || '/usr/bin/chromium';
 const PAGES = [
   { file: 'index.html', slug: 'index', title: 'Voorstel (pitch deck)' },
   { file: 'science.html', slug: 'science', title: 'Wetenschap' },
+  { file: 'strength.html', slug: 'strength', title: 'Kracht & doel' },
   { file: 'backend.html', slug: 'backend', title: 'Backend / architectuur' },
   { file: 'frontend.html', slug: 'frontend', title: 'Interface' },
 ];
 
 // secties waar de uitlijning het meest kritisch is
 const SECTIONS = {
-  index: ['hero', 'probleem', 'kernvondst', 'setup', 'brein', 'skills', 'fasen', 'keuzes', 'opbrengst', 'grenzen', 'kosten', 'beslispunten'],
+  index: ['hero', 'probleem', 'kernvondst', 'setup', 'brein', 'skills', 'doelen', 'fasen', 'keuzes', 'opbrengst', 'grenzen', 'kosten', 'beslispunten'],
   science: ['verdeling', 'periodisering', 'loadmodel', 'niet', 'stabiliteit', 'evidentie'],
-  backend: ['architectuur', 'opslag', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
-  frontend: ['telefoon', 'herstel', 'desktop', 'ontwerp'],
+  strength: ['doelen', 'interferentie', 'krachtwetenschap', 'samenstellen', 'bibliotheek', 'hevy', 'beschikbaarheid', 'anderesporten'],
+  backend: ['architectuur', 'opslag', 'schrijfwegen', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
+  frontend: ['telefoon', 'herstel', 'kracht-beschikbaarheid', 'desktop', 'ontwerp'],
 };
 
 const VIEWPORTS = [

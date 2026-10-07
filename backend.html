@@ -18,6 +18,7 @@
     <div class="nav-links">
       <a href="index.html">Voorstel</a>
       <a href="science.html">Wetenschap</a>
+      <a href="strength.html">Kracht</a>
       <a href="backend.html" aria-current="page">Backend</a>
       <a href="frontend.html">Interface</a>
     </div>
@@ -264,6 +265,85 @@
   </div>
 </section>
 
+<!-- ============ SCHRIJFWEGEN ============ -->
+<section class="band" id="schrijfwegen">
+  <div class="wrap">
+    <p class="eyebrow">De schrijfwegen</p>
+    <h2>Waar het systeem<br>naartoe schrijft.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px">
+      Lezen is makkelijk. Dit zijn de drie plekken waar het systeem iets <em>terugzet</em> —
+      en dat is wat het van een rapportage-tool tot een coach maakt.
+    </p>
+
+    <h3 style="margin-top:44px;margin-bottom:18px">1 · intervals.icu — het plan naar je apparaten</h3>
+    <table>
+      <thead><tr><th>Endpoint</th><th>Wat het doet</th><th>Gaat naar</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="font-size:0.8rem">POST /athlete/0/events</td><td>geplande workout aanmaken</td><td>Huawei (runs) · Wahoo (ritten)</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">GET /athlete/0/events</td><td>het bestaande plan lezen</td><td>—</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">DELETE /athlete/0/events/{id}</td><td>een sessie intrekken</td><td>—</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">POST /athlete/0/activities/manual</td><td><strong>handmatige activiteit</strong> — volleybal, voetbal, ongemeten sport</td><td>het load-model</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn" style="margin-top:20px">
+      <strong>Twee regels die je moet kennen:</strong> voor hardlopen altijd een
+      <span class="mono">HR</span>- of <span class="mono">Pace</span>-suffix in de
+      beschrijving (anders leest het als watts), en intervals.icu pusht maar ~7 dagen
+      vooruit — en naar de Huawei slechts <strong>één gepland workout tegelijk</strong>.
+    </div>
+
+    <h3 style="margin-top:52px;margin-bottom:18px">2 · Hevy — het krachtblok naar je app</h3>
+    <table>
+      <thead><tr><th>Endpoint</th><th>Wat het doet</th><th>Vereist</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="font-size:0.8rem">GET /v1/exercise_templates</td><td>oefeningen + <span class="mono">thumbnail_url</span> + spiergroepen</td><td>Hevy Pro</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">POST /v1/routine_folders</td><td>een map per blok, bv. "Blok 2 · Hypertrofie"</td><td>Hevy Pro</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">POST /v1/routines</td><td>een routine per sessie — template-id, sets, reps, rust, notities</td><td>Hevy Pro</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">POST /v1/body_measurements</td><td>gewicht, vet%, vetvrije massa, omtrekken</td><td>Hevy Pro</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">GET /v1/exercise_history/{id}</td><td>wat je vorige keer tilde — voedt de progressie</td><td>Hevy Pro</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid g2" style="margin-top:24px;gap:26px">
+      <div class="callout form">
+        <strong>Als je Hevy Pro hebt:</strong> de coach schrijft het hele blok in één keer
+        naar Hevy. Jij opent de app, de routines staan klaar met het demonstratiebeeld, en
+        je logt zoals altijd.
+      </div>
+      <div class="callout">
+        <strong>Zonder Pro:</strong> de coach schrijft het blok in markdown
+        (<span class="mono">training/strength/</span>), jij typt het één keer over in Hevy,
+        en daarna loopt de terugweg gewoon via Health Connect. Meer handwerk, nul euro.
+      </div>
+    </div>
+
+    <h3 style="margin-top:52px;margin-bottom:18px">3 · De terugweg — alles komt in één model</h3>
+    <div class="card" style="padding:26px">
+      <div class="flow">
+        <div class="flow-row" style="grid-template-columns:1fr auto 1fr">
+          <span class="mono" style="font-size:0.84rem">hardlopen · fietsen</span>
+          <span class="flow-arrow">›</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Huawei / Wahoo › intervals.icu</span>
+        </div>
+        <div class="flow-row" style="grid-template-columns:1fr auto 1fr">
+          <span class="mono" style="font-size:0.84rem">kracht (Hevy)</span>
+          <span class="flow-arrow">›</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Hevy › Health Connect › intervals.icu</span>
+        </div>
+        <div class="flow-row" style="grid-template-columns:1fr auto 1fr">
+          <span class="mono" style="font-size:0.84rem">volleybal e.a.</span>
+          <span class="flow-arrow">›</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--easy)">handmatig › intervals.icu (geschat)</span>
+        </div>
+      </div>
+      <p style="color:var(--muted);font-size:0.9rem;margin-top:18px">
+        Drie bronnen, één <span class="mono">CTL/ATL/TSB</span>. Dat is het hele punt: de
+        coach ziet je werkelijke week, niet alleen wat je horloge toevallig registreerde.
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ LAGEN ============ -->
 <section class="band" id="lagen">
   <div class="wrap">
@@ -297,12 +377,16 @@
 ├── <b>athlete-os.md</b>          <span class="c"># één-pagina kaart</span>
 ├── <b>.env</b>                   <span class="c"># sleutels (in .gitignore)</span>
 │
-├── <span class="hi">goals/</span>                 <span class="c"># ← nieuw</span>
-│   └── 2027-04-12-marathon.md
+├── <span class="hi">goals/</span>                 <span class="c"># ← event + compositie</span>
+│   ├── 2027-04-12-marathon.md
+│   └── compositie.md        <span class="c"># ← streefgewicht / vet%</span>
+├── <span class="hi">availability.md</span>        <span class="c"># ← weeksjabloon per sport</span>
+├── <span class="hi">exercises.md</span>           <span class="c"># ← oefeningen + demo-links</span>
 ├── <span class="hi">training/</span>
-│   ├── season-plan.md       <span class="c"># ← periodisering</span>
-│   ├── current-week.md      <span class="c"># ← de adaptieve week</span>
-│   └── 2026-10-05-week.md
+│   ├── season-plan.md       <span class="c"># periodisering (duur)</span>
+│   ├── current-week.md      <span class="c"># de adaptieve week</span>
+│   └── <span class="hi">strength/</span>          <span class="c"># ← krachtblokken</span>
+│       └── 2026-10-blok2.md
 ├── <span class="hi">reviews/</span>               <span class="c"># append-only</span>
 ├── <span class="hi">races/</span>                 <span class="c"># dossiers + race-dagplan</span>
 ├── <span class="hi">health/</span>                <span class="c"># readiness-flags</span>
@@ -312,9 +396,10 @@
 │   ├── wiki/                <span class="c"># gelinkte notities</span>
 │   └── index.md
 │
-├── <b>.claude/skills/</b>         <span class="c"># 12 × SKILL.md</span>
+├── <b>.claude/skills/</b>         <span class="c"># 14 × SKILL.md</span>
 │   ├── set-goal/
 │   ├── build-season-plan/
+│   ├── <span class="hi">build-strength-block/</span>
 │   ├── plan-my-week/
 │   ├── adapt-week/
 │   ├── today/
@@ -324,6 +409,7 @@
 │   ├── race-analysis/
 │   ├── fuel-and-pace/
 │   ├── progress/
+│   ├── <span class="hi">log-other-sport/</span>
 │   └── strength-log/
 │
 ├── <b>scripts/</b>
@@ -424,7 +510,9 @@
     <table>
       <thead><tr><th>Skill</th><th>Leest</th><th>Schrijft</th><th>Bron</th></tr></thead>
       <tbody>
-        <tr><td class="mono" style="font-size:0.82rem">set-goal</td><td>jouw invoer</td><td class="mono" style="font-size:0.8rem">goals/&lt;datum&gt;-&lt;race&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">—</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">set-goal</td><td>jouw invoer</td><td class="mono" style="font-size:0.8rem">goals/&lt;event&gt;.md · goals/compositie.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">—</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">build-strength-block</td><td>doel + materiaal + beschikbaarheid</td><td class="mono" style="font-size:0.8rem">training/strength/&lt;blok&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">Hevy API</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">log-other-sport</td><td>duur + RPE</td><td class="mono" style="font-size:0.8rem">health/ + handmatige activiteit</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">build-season-plan</td><td>goal + profile + CTL</td><td class="mono" style="font-size:0.8rem">training/season-plan.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">plan-my-week</td><td>season-plan + beschikbaarheid</td><td class="mono" style="font-size:0.8rem">training/current-week.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">adapt-week</td><td>current-week + wat je deed</td><td class="mono" style="font-size:0.8rem">current-week.md <em>herschreven</em></td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
