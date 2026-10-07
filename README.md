@@ -1,4 +1,4 @@
-# Athlete OS — voorstel
+# Athlete Intelligence — voorstel
 
 **Live: <https://rm-bcn.github.io/athlete-os/>**
 
@@ -12,10 +12,10 @@ Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server 
 |---|---|
 | `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, doelen en domeinen, de vijf fasen, de keuzes, wat het oplevert, de grenzen, de kosten. |
 | `science.html` | **De wetenschap.** Gepolariseerde intensiteitsverdeling (80/20), periodisering, het CTL/ATL/TSB-loadmodel, wat we verwerpen (ACWR), en de stabiliteitsregels tegen plan-gerammel. |
-| `strength.html` | **Kracht &amp; doel.** Twee soorten doelen (event én lichaamscompositie), de interferentie tussen duur en kracht, de hypertrofie-wetenschap, de oefeningenbibliotheek en de lus naar Hevy. |
+| `strength.html` | **Kracht &amp; doel.** Twee soorten doelen (event én lichaamscompositie), de interferentie tussen duur en kracht, de hypertrofie-wetenschap, de oefeningenbibliotheek, de lus naar Hevy en de weegschaal-integratie. |
 | `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), schrijfwegen (intervals.icu, Hevy), lagen, datamodel, skills, adaptatieregels, schema. |
 | `frontend.html` | **De interface.** Zeven telefoonschermen (vandaag, herstel, week, voortgang, coach, kracht, beschikbaarheid) en het desktop-dashboard. |
-| `screenshots/` | 96 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
+| `screenshots/` | 98 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
 | `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
 
 ## Screenshots
@@ -78,9 +78,9 @@ Volledig met bronnen en bewijskracht per onderdeel: [`science.html`](science.htm
 
 ## Wat het kost
 
-Alles is €0 behalve het Claude-plan (verplicht voor Claude Code) en de AI-tokens voor de
-automatische taken. Geen VPS, geen abonnementen. De opslag is markdown (beslissingen) plus
-SQLite lokaal of Cloudflare D1 (metingen) — beide gratis.
+Alles is €0 behalve de **model-API** voor Opencode — geen abonnement, Opencode zelf is gratis.
+Geen VPS, geen vaste lasten. De opslag is markdown (beslissingen) plus SQLite lokaal of
+Cloudflare D1 (metingen) — beide gratis.
 
 ## Status
 

@@ -34,7 +34,7 @@ const PAGES = [
 const SECTIONS = {
   index: ['hero', 'probleem', 'kernvondst', 'setup', 'brein', 'skills', 'doelen', 'fasen', 'keuzes', 'opbrengst', 'grenzen', 'kosten', 'beslispunten'],
   science: ['verdeling', 'periodisering', 'loadmodel', 'niet', 'stabiliteit', 'evidentie'],
-  strength: ['doelen', 'interferentie', 'krachtwetenschap', 'samenstellen', 'bibliotheek', 'hevy', 'beschikbaarheid', 'anderesporten'],
+  strength: ['doelen', 'interferentie', 'krachtwetenschap', 'samenstellen', 'bibliotheek', 'hevy', 'weegschaal', 'beschikbaarheid', 'anderesporten'],
   backend: ['architectuur', 'opslag', 'schrijfwegen', 'lagen', 'structuur', 'datamodel', 'skills-io', 'regels', 'planning'],
   frontend: ['oppervlakken', 'telefoon', 'kaart', 'herstel', 'kracht-beschikbaarheid', 'desktop', 'ontwerp'],
 };

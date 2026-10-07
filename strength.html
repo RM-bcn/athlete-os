@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kracht &amp; doel — Athlete OS</title>
+<title>Kracht &amp; doel — Athlete Intelligence</title>
 <meta name="description" content="Twee soorten doelen (event en lichaamscompositie), de krachtwetenschap, de interferentie met duurtraining, de oefeningenbibliotheek en de lus naar Hevy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,7 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <span class="brand"><span class="dot"></span>Athlete&nbsp;OS</span>
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;Intelligence</span>
     <div class="nav-links">
       <a href="index.html">Voorstel</a>
       <a href="science.html">Wetenschap</a>
@@ -395,11 +395,13 @@
         <div class="step">
           <span class="n">04</span>
           <div>
-            <strong>Het komt terug</strong>
+            <strong>Het komt terug — uit twee bronnen</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              Hevy › Health Connect › intervals.icu, als
-              <span class="mono">WeightTraining</span>. Vanaf dat moment telt het mee in
-              vermoeidheid en kan de coach de volgende sessie bijstellen.
+              <strong>Hevy</strong> levert het gewicht en het volume — wat je tilde.
+              <strong>Je horloge</strong> meet de hartslag tijdens de sessie. Samen komen ze
+              binnen als <span class="mono">WeightTraining</span>. Dat is beter dan de
+              standaardaanpak: een krachtsessie krijgt een load op basis van
+              <em>tonnage én echte hartslag</em>, niet een gok uit gewicht alleen.
             </p>
           </div>
         </div>
@@ -428,10 +430,101 @@
   </div>
 </section>
 
-<!-- ============ 7. BESCHIKBAARHEID ============ -->
+<!-- ============ 7. DE WEEGSCHAAL ============ -->
+<section class="band" id="weegschaal">
+  <div class="wrap">
+    <p class="eyebrow">07 · Lichaamscompositie meten</p>
+    <h2>Je weegschaal is een<br>databron, geen eiland.</h2>
+    <p style="max-width:66ch;color:var(--muted);margin-top:20px">
+      Je Smart Life-weegschaal meet gewicht én vetpercentage. Dat is precies de meetlat voor
+      een compositiedoel — en het is op te halen. Ik heb drie routes gevonden, van nul code
+      tot volledig zelfgebouwd.
+    </p>
+
+    <div class="grid g3" style="margin-top:40px">
+      <div class="card" style="border-top:3px solid var(--form)">
+        <span class="card-num" style="color:var(--form)">ROUTE 1 · NUL CODE</span>
+        <h4>Smart Life › Health Connect</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Tuya's eigen BLE-weegschaal-oplossing ondersteunt synchronisatie met
+          <strong>Google Fit en Fitbit</strong>. Als jouw model dat doet, zet je het aan in de
+          app en komt je gewicht via Health Connect in intervals.icu.
+        </p>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
+          Eerst proberen — kost 10 minuten
+        </p>
+      </div>
+
+      <div class="card" style="border-top:3px solid var(--fitness)">
+        <span class="card-num" style="color:var(--fitness)">ROUTE 2 · KLEIN SCRIPT</span>
+        <h4>Tuya Cloud API</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Tuya heeft officiële <strong>Body Fat Scale Open API's</strong>. Je leest de
+          weeggeschiedenis uit, of laat een vetrapport genereren uit gewicht + weerstand.
+          Er bestaat een werkende Home Assistant-integratie die je kunt nabouwen.
+        </p>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
+          gratis IoT-project · service moet je aanzetten
+        </p>
+      </div>
+
+      <div class="card" style="border-top:3px solid var(--line-2)">
+        <span class="card-num">ROUTE 3 · LOKAAL</span>
+        <h4>tinytuya</h4>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
+          Puur over je eigen netwerk, zonder cloud. <strong>Maar:</strong> de meeste
+          weegschalen zijn Bluetooth, niet wifi — en dan werkt dit niet. Alleen zinvol als
+          jouw model wifi heeft.
+        </p>
+        <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
+          alleen bij een wifi-weegschaal
+        </p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:34px;gap:30px;align-items:start">
+      <div>
+        <h4 style="margin-bottom:14px">Wat je eruit haalt</h4>
+        <p style="color:var(--muted);font-size:0.92rem">
+          De Body Fat Scale API geeft meer dan gewicht en vet. Uit gewicht, lengte, leeftijd,
+          geslacht en de elektrische weerstand rekent Tuya een volledig rapport:
+        </p>
+        <div class="grid g2" style="gap:8px;margin-top:16px">
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">gewicht · vet%</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">vetvrije massa</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">spiermassa</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">lichaamswater</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">botmassa</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">eiwit</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">BMR</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">visceraal vet</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">lichaamsleeftijd</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--muted)">BMI</span>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong>En de eerlijke noot:</strong> bio-impedantie is een schatting, geen meting.
+        Vetpercentage uit een weegschaal beweegt mee met je hydratatie — een glas water of een
+        zware training verandert het getal. <strong>Kijk naar de trend over weken, niet naar
+        het getal van vandaag.</strong> Het systeem markeert het daarom als schatting, en de
+        coach vergelijkt met een 7-daags gemiddelde in plaats van met gisteren.
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:30px">
+      <strong>Waar het landt:</strong> gewicht en vet% gaan naar de wellness-laag van
+      intervals.icu (die ondersteunt <span class="mono">weight</span> al). De rest —
+      spiermassa, water, visceraal vet — gaat in je eigen <span class="mono">data/</span>,
+      want intervals.icu heeft daar geen velden voor. Je compositiedoel leest uit beide.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. BESCHIKBAARHEID ============ -->
 <section class="band" id="beschikbaarheid">
   <div class="wrap">
-    <p class="eyebrow">07 · De week</p>
+    <p class="eyebrow">08 · De week</p>
     <h2>Jij geeft de ruimte,<br>de coach vult hem.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px">
       Dit is JOIN's kernfunctie en het moet bij jou ook zo werken: je zegt per week wat
@@ -480,7 +573,7 @@ zo  vrij</div>
 <!-- ============ 8. ANDERE SPORTEN ============ -->
 <section class="band" id="anderesporten">
   <div class="wrap">
-    <p class="eyebrow accent">08 · Vermoeidheid die niemand meet</p>
+    <p class="eyebrow accent">09 · Vermoeidheid die niemand meet</p>
     <h2>Volleybal is training.<br>Ook als geen horloge het ziet.</h2>
 
     <p style="max-width:66ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
@@ -494,8 +587,10 @@ zo  vrij</div>
         <h4 style="margin-bottom:16px">Hoe het meetelt</h4>
         <ul class="ticks" style="font-size:0.93rem">
           <li>
-            <strong>Duur × intensiteit › load.</strong> Je geeft twee dingen op: hoe lang
-            en hoe zwaar (RPE 1–10). Daar rolt een load uit, net als bij een echte sessie.
+            <strong>Je logt het achteraf, met twee velden.</strong> Hoe lang het duurde en
+            hoe zwaar het voelde (RPE 1–10). Daar rolt een load uit, net als bij een echte
+            sessie. <strong>RPE is een meting, geen plan</strong> — daarom staat het bij het
+            loggen en niet bij je beschikbaarheid.
           </li>
           <li>
             <strong>Het gaat intervals.icu in als handmatige activiteit.</strong> Dan telt
@@ -503,7 +598,7 @@ zo  vrij</div>
           </li>
           <li>
             <strong>Het is geen schatting die je vergeet.</strong> De coach vraagt er
-            wekelijks naar, in dezelfde stap als je beschikbaarheid.
+            wekelijks naar — maar pas <em>nadat</em> je het gedaan hebt.
           </li>
           <li class="warn">
             <strong>En het is onzeker, dus het zegt dat.</strong> Een geschatte load is
