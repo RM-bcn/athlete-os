@@ -12,18 +12,21 @@ De bouw loopt. Wat er nu echt staat:
 
 | Fase | Stand | Wat er is |
 |---|---|---|
-| **0 · Fundament** | bijna | D1-database, Worker live, PWA live. **Mist nog: de Access-poort.** |
+| **0 · Fundament** | klaar | D1, Worker live, PWA live, en het geheel achter een login (Basic Auth). |
 | **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen, 119 activiteiten, cron elke 4 uur. Hevy en de weegschaal nog niet. |
-| **2 · Rekenregels** | bezig | readiness + 80/20 staan al in de Worker, maar nog niet als losse geteste functies. |
-| **3 · PWA** | deels | Het dashboard leeft: uitspraak, week, verdeling. Schuifjes en offline nog niet. |
+| **2 · Rekenregels** | klaar | 41 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
+| **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | leeg | nog niets |
 | **5 · Coach** | deels | De vault staat: constitutie, profiel, 7 skills. Nog geen `/api/chat`. |
 | **6 · Kracht** | leeg | alleen de skill |
 | **7 · Telegram** | deels | De bot werkt en is getest. Nog geen webhook naar de Worker. |
 
-**Live:** `https://athlete-intelligence.aq-bd6.workers.dev` — nog **publiek, zonder Access**.
+**Live:** `https://athlete-intelligence.aq-bd6.workers.dev` — **privé, achter Basic Auth**.
 **Vault:** `github.com/RM-bcn/athlete-intelligence` (private).
-**Let op:** de app-code staat nog niet in git — alleen lokaal.
+**Let op:** de app-code staat alleen **lokaal** in git — nog geen remote.
+
+**Health Connect bereikt AQ niet.** Het is een databank op de telefoon; er is geen
+server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 
 ---
 
