@@ -18,7 +18,7 @@ De bouw loopt. Wat er nu echt staat:
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
 | **5 · Coach** | werkt | De coach antwoordt **nu al**, volledig op regels: status, week, loggen, ziek melden. De model-API is optioneel en komt later. |
-| **6 · Kracht** | leeg | alleen de skill |
+| **6 · Kracht** | deels | oefeningenbibliotheek (30 oefeningen, echte demo-URL's uit free-exercise-db) + de `build-strength-block`-skill. Het echte blok wacht op **doel + materiaal + beschikbaarheid**. |
 | **7 · Telegram** | klaar | Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief. |
 
 **Live:** `https://athlete-intelligence.aq-bd6.workers.dev` — **privé, achter Basic Auth**.
@@ -177,12 +177,14 @@ voor de open oordelen.
 ### Fase 6 — Kracht
 **Levert:** een krachtblok van maanden, met oefeningen en demo's.
 
-- [ ] `exercises.md` — bibliotheek met Hevy-templates + `thumbnail_url`, `free-exercise-db` als aanvulling
-- [ ] `build-strength-block` skill — 12 weken, accumulatie › intensificatie › deload
-- [ ] Export naar markdown dat je in Hevy overtypt (geen Pro)
-- [ ] Krachtload in de week verrekenen (tonnage + hartslag)
+- [x] `exercises.md` — bibliotheek van 30 oefeningen met **echte demo-URL's** uit `free-exercise-db`
+- [x] `build-strength-block` skill — 12 weken, accumulatie › intensificatie › deload
+- [x] Export naar markdown dat je in Hevy overtypt (geen Pro)
+- [x] Krachtload in de week verrekenen (tonnage + hartslag) — `strengthLoad` in de rekenregels
+- [ ] Het echte blok — **wacht op doel + materiaal + beschikbaarheid** (één vraag tegelijk)
 
 **Klaar als:** je een blok krijgt, het in Hevy staat, en de load in je week meeweegt.
+De machinerie staat; het persoonlijke blok volgt zodra de drie invoeren er zijn.
 
 ---
 
