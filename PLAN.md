@@ -13,7 +13,7 @@ De bouw loopt. Wat er nu echt staat:
 | Fase | Stand | Wat er is |
 |---|---|---|
 | **0 · Fundament** | klaar | D1, Worker live, PWA live, en het geheel achter een login (Basic Auth). |
-| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen (mét slaap), 119 activiteiten. Sync loopt **elk uur**, plus verversen zodra je de app opent. De brug voor gewicht/Health Connect is **Health Sync → intervals.icu** (onboarding stap 4). Hevy via de handmatige AQ-log. |
+| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen (mét slaap), 119 activiteiten en rusthartslag. Sync loopt **elk uur**, plus verversen zodra je de app opent. Alles via de **Huawei-koppeling**; geen telefoon-brug nodig. Alleen het gewicht (weegschaal) is nog een **toekomstige fase**. |
 | **2 · Rekenregels** | klaar | 71 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
@@ -41,7 +41,7 @@ server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 | Push + sparren | Telegram Bot | €0 |
 | Data-spine | intervals.icu | €0 (5.000 req/dag) |
 | Kracht | Hevy (gratis plan) | €0 |
-| Weegschaal | Smart Life › Health Connect › Health Sync › intervals.icu | €0 + eenmalig Health Sync |
+| Weegschaal | lokaal via Health Connect; lichaamscompositie later via Tuya | €0 |
 | Brein | Opencode + model-API | **alleen deze post** |
 | Vault | GitHub private | €0 |
 
@@ -110,10 +110,10 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 
 **Klaar als:** je het endpoint opent en echte aantallen ziet die kloppen met wat je in de apps ziet. **Twee weken observe-only** vanaf hier.
 
-**Risico:** de weegschaal-route. **Opgelost via de brug:** Smart Life › Health Connect ›
-**Health Sync** › intervals.icu — Health Sync leest Health Connect en schrijft gewicht,
-slaap en stappen naar intervals.icu, zonder eigen code. De volledige lichaamscompositie
-(vet%, spiermassa) via **Tuya** is een **toekomstige fase**, niet nodig om te starten.
+**Risico:** de weegschaal-route. **Health Connect bereikt AQ niet** — het is on-device,
+zonder server-API. De weegschaal is dus een **toekomstige fase**: lichaamscompositie
+(gewicht, vet%, spiermassa) via de **Tuya** Body Fat Scale-service. Niet nodig om te
+starten — slaap, rusthartslag en trainingen komen al binnen via intervals.icu.
 
 ---
 
@@ -236,11 +236,9 @@ echte cijfers, **zonder één token**. Dat is precies het punt.
 
 ## Wat er nog open is
 
-- **Health Sync-brug** — Health Connect › Health Sync › intervals.icu (onboarding stap 4).
-  Eenmalige aankoop, daarna automatisch.
-- **Toekomstige fase — weegschaal (Tuya)** — de volledige lichaamscompositie (vet%,
-  spiermassa, water, visceraal vet). Gewicht komt al mee via Health Sync; dit is de
-  aanvulling, niet de basis.
+- **Toekomstige fase — weegschaal (Tuya)** — gewicht en lichaamscompositie (vet%,
+  spiermassa, water, visceraal vet). Health Connect is on-device en bereikt AQ niet, dus
+  de weegschaal koppelen we later rechtstreeks via de **Tuya** Body Fat Scale-service.
 - **Model-keuze** — welk model achter de coach. Bepaalt de kosten per oordeel; de sleutel
   gaat in de Worker-secrets (of Cloudflare AI Gateway), nooit in de app.
 - **Workouts naar het horloge** — intervals.icu pusht geplande workouts (Huawei: alleen
