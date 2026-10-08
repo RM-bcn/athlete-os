@@ -82,10 +82,11 @@
     <p class="eyebrow accent">Bijlage B</p>
     <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">De interface.</h1>
     <p class="lead" style="max-width:64ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
-      Eén scherm dat je 's ochtends opent zonder eraan herinnerd te worden. Geen navigatie,
-      geen tabs vol statistieken — alleen wat vandaag verandert. De views vandaag, week,
-      invoer en log zijn <strong>al gebouwd</strong>; de rest volgt volgens
-      <span class="mono">UI-PLAN.md</span>. De schermen hieronder zijn schetsen om te bespreken.
+      Eén scherm dat je 's ochtends opent zonder eraan herinnerd te worden. Geen dashboard vol
+      statistieken — alleen wat vandaag verandert. Veel van de schermen hieronder zijn nu
+      <strong>gebouwd</strong>: Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer en Feedback.
+      De voorbeelden op deze pagina blijven <strong>schetsen om te bespreken</strong> — ze tonen de
+      bedoeling, niet pixel voor pixel de app.
     </p>
   </div>
 </header>
@@ -105,8 +106,9 @@
         <span class="card-num">01</span>
         <h4>Telegram</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          <strong>De push en het gesprek.</strong> De ochtendbrief komt binnen als tekstbericht.
-          <em>De herstelkaart als afbeelding is gepland.</em> Je antwoordt in gewoon Nederlands:
+          <strong>De push en het gesprek.</strong> De ochtendbrief komt om 07:00 binnen, met de
+          <strong>herstelkaart als PNG-foto</strong>. Het gesprek is <strong>gedeeld met de app</strong>:
+          één geheugen. Je antwoordt in gewoon Nederlands:
           "verzet donderdag", "squat 3×8 op 110, voelde als een 8".
         </p>
       </div>
@@ -116,7 +118,7 @@
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           <strong>De visuals.</strong> Eén HTML-bestand dat je op je telefoon opent via een
           <em>privé-URL</em> (nu login met Basic Auth; Cloudflare Access later) of lokaal.
-          Hier zie je de ring, de hypnogram, de trends en de week.
+          Hier zie je de ring, de Body Battery, de trends en de week.
         </p>
       </div>
       <div class="card" style="border-top:3px solid var(--line-2)">
@@ -132,15 +134,15 @@
     <div class="callout" style="margin-top:32px">
       <strong>Dus hoe zie je die recovery score?</strong> Op drie manieren, en je kiest
       per moment:
-      <span class="mono" style="font-size:0.84rem">Telegram-bericht (nu tekst; kaart gepland)</span> ·
+      <span class="mono" style="font-size:0.84rem">Telegram-bericht, met de kaart als PNG-foto</span> ·
       <span class="mono" style="font-size:0.84rem">privé-URL op je telefoon</span> ·
       <span class="mono" style="font-size:0.84rem">health/2026-10-06.md</span>
     </div>
 
     <div class="callout warn" style="margin-top:18px">
       <strong>De schermen hieronder zijn dus het dashboard, niet Telegram.</strong>
-      Alleen het scherm met de naam <em>Coach</em> is Telegram. Ik heb dat nu in de
-      schermbalk van elk voorbeeld gezet, zodat je het verschil ziet.
+      Het scherm met de naam <em>Coach</em> zit inmiddels in de app én op Telegram — hetzelfde brein,
+      één gesprek. Ik heb dat in de schermbalk van elk voorbeeld gezet, zodat je het verschil ziet.
     </div>
   </div>
 </section>
@@ -184,6 +186,7 @@
               <div class="row"><span class="k">Rustige HR</span><span class="v" style="color:var(--easy)">54</span></div>
               <div class="row"><span class="k">Vorm (TSB)</span><span class="v">−4</span></div>
               <div class="row"><span class="k">Dagen tot doel</span><span class="v">188</span></div>
+              <div class="row"><span class="k">Body Battery</span><span class="v" style="color:var(--easy)">38% &nbsp;schatting</span></div>
             </div>
           </div>
         </div>
@@ -212,11 +215,12 @@
                 </div>
               </div>
 
-              <div class="row"><span class="k">HRV</span><span class="v" style="color:var(--easy)">52 ms &nbsp;onder basis</span></div>
+              <div class="row"><span class="k">HRV</span><span class="v" style="color:var(--dim)">ontbreekt &nbsp;geen dagwaarde via Huawei</span></div>
               <div class="row"><span class="k">Rustige hartslag</span><span class="v" style="color:var(--easy)">54 &nbsp;4 hoog</span></div>
               <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
+              <div class="row"><span class="k">Body Battery</span><span class="v" style="color:var(--easy)">62% &nbsp;schatting</span></div>
 
-              <div class="app-sub" style="margin:20px 0 4px">Slaaparchitectuur</div>
+              <div class="app-sub" style="margin:20px 0 4px">Slaaparchitectuur · gepland (Huawei levert geen fases)</div>
               <svg class="hypno" viewBox="0 0 300 72" preserveAspectRatio="none"
                    aria-label="Hypnogram: wakker boven, diepe slaap onder, over de nacht.">
                 <path d="M3 3 H7.3 V47 H22.8 V69 H46.9 V47 H59.7 V25 H69.6 V47 H88 V69 H102.2 V47 H123.4 V25 H139 V3 H142.6 V47 H159.6 V25 H180.8 V69 H189.3 V47 H209.2 V25 H233.2 V47 H247.4 V3 H250.2 V47 H265.8 V25 H284.2 V47 H297"
@@ -233,7 +237,7 @@
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>Herstel</b><span>slaap en readiness</span></div>
+        <div class="screen-label"><b>Herstel</b><span>readiness, basislijn en Body Battery</span></div>
       </div>
 
       <!-- SCHERM 2 · DE WEEK -->
@@ -310,17 +314,27 @@
                 Je drempel is 11 s/km sneller geworden sinds de base-fase. De voorspelling
                 blijft een bereik, geen punt.
               </div>
+
+              <div class="app-sub" style="margin:18px 0 4px">Doel · plan</div>
+              <p class="mono" style="font-size:0.7rem;color:var(--muted);margin:0 0 4px">
+                Halve marathon op 5:07/km · Base › Build › Peak › Taper
+              </p>
+
+              <div class="app-sub" style="margin:14px 0 4px">Patronen · je valkuilen</div>
+              <p style="font-size:0.78rem;color:var(--muted);margin:0">
+                Wat telkens terugkomt in je eigen sessie-feedback — hier zie je het.
+              </p>
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>Voortgang</b><span>naar je doel toe</span></div>
+        <div class="screen-label"><b>Trends</b><span>voortgang naar je doel</span></div>
       </div>
 
       <!-- SCHERM 4 · COACH -->
       <div>
         <div class="device">
           <div class="device-screen">
-            <div class="device-bar"><span>09:41</span><span>Telegram</span></div>
+            <div class="device-bar"><span>09:41</span><span>app · Coach</span></div>
             <div class="device-body">
               <div class="app-sub">Athlete Intelligence</div>
               <div class="app-h" style="margin-bottom:16px">Coach</div>
@@ -345,10 +359,15 @@
                 Twee korte nachten, RHR 6 slagen hoog, TSB −14. Dat is een opbouw die te snel
                 ging, geen luiheid. Volgende week staat er weer 2× kwaliteit in.
               </div>
+
+              <div class="tg-actions">
+                <span>status</span><span>week</span><span>push</span><span>plan</span>
+                <span>mijn doel is …</span><span>log</span><span>ziek</span><span>help</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>De coach</b><span>twee richting, in Telegram</span></div>
+        <div class="screen-label"><b>Coach</b><span>in de app én op Telegram · één gesprek</span></div>
       </div>
 
       <!-- SCHERM · OCHTENDBRIEF IN TELEGRAM -->
@@ -382,12 +401,12 @@
                     </div>
                   </div>
                   <div class="row" style="border-top:1px solid var(--line);margin-top:12px;padding-top:8px">
-                    <span class="k">HRV</span><span class="v" style="color:var(--easy)">52 ms</span>
+                    <span class="k">HRV</span><span class="v" style="color:var(--dim)">ontbreekt</span>
                   </div>
                   <div class="row"><span class="k">Rustige HR</span><span class="v" style="color:var(--easy)">54</span></div>
                   <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
                 </div>
-                <div class="cap">herstel-kaart.png · gepland (nu tekst)</div>
+                <div class="cap">herstel-kaart.png · verstuurd om 07:00</div>
               </div>
 
               <div class="bubble coach" style="margin-bottom:0">
@@ -399,10 +418,24 @@
                 <span>Toon dashboard</span>
                 <span>Waarom?</span>
               </div>
+
+              <div class="app-sub" style="margin:18px 0 6px">Na een training</div>
+              <div class="bubble coach">
+                <b>Athlete Intelligence</b>
+                Hoe ging je training van vanochtend? Tik en ik leg het vast.
+              </div>
+              <div class="tg-actions">
+                <span>Gepland</span>
+                <span>Iets anders</span>
+                <span>Overgeslagen</span>
+              </div>
+              <p class="mono" style="font-size:0.66rem;color:var(--dim);margin:8px 0 0">
+                inline knoppen: verdict › RPE › opslaan
+              </p>
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>Ochtendbrief</b><span>Telegram, nu als tekst · kaart gepland</span></div>
+        <div class="screen-label"><b>Ochtendbrief</b><span>Telegram, met de kaart als PNG-foto</span></div>
       </div>
 
       <!-- SCHERM · KRACHT -->
@@ -441,8 +474,8 @@
               </div>
 
               <div class="session" style="margin-top:14px;border-left-color:var(--form)">
-                <div class="t">Openen in Hevy</div>
-                <div class="d">routine staat klaar · tik en start</div>
+                <div class="t">Neem over in Hevy</div>
+                <div class="d">geen Pro, geen API op het gratis plan</div>
               </div>
             </div>
           </div>
@@ -481,7 +514,7 @@
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>Beschikbaarheid</b><span>per week, per sport</span></div>
+        <div class="screen-label"><b>Invoer</b><span>beschikbaarheid per dag, per sport</span></div>
       </div>
 
     </div>
@@ -491,8 +524,8 @@
       onderhouden, niet omdat je geen visuals kunt hebben. Telegram is gratis, heeft al je
       meldingen, en werkt twee richting via de Worker-webhook (<span class="mono">/api/telegram</span>).
       <strong>De visuals komen uit het dashboard</strong>, en het dashboard komt naar je toe:
-      als tekst in Telegram, en als privé-URL die je op je telefoon opent. De kaart als
-      afbeelding is gepland.
+      als PNG-foto in Telegram (de ochtendkaart), en als privé-URL die je op je telefoon opent.
+      De coach zelf zit nu ook in de app.
     </div>
   </div>
 </section>
@@ -500,12 +533,12 @@
 <!-- ============ HOE DE KAART IN TELEGRAM KOMT ============ -->
 <section class="band" id="kaart">
   <div class="wrap">
-    <p class="eyebrow accent">En hoe dan precies? · gepland</p>
+    <p class="eyebrow accent">En hoe dan precies? · gebouwd</p>
     <h2>Het dashboard rendert zichzelf<br>tot een plaatje.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px">
       Dit is het stukje dat de twee oppervlakken verbindt. Dezelfde HTML die je op je
-      telefoon opent, wordt 's ochtends ook als afbeelding naar Telegram gestuurd. Dat is
-      <strong>gepland</strong>: nu is de ochtendbrief tekst.
+      telefoon opent, wordt 's ochtends ook als afbeelding naar Telegram gestuurd. Dat
+      gebeurt nu: de ochtendbrief krijgt de herstelkaart als <strong>PNG-foto</strong> mee.
     </p>
 
     <div class="card" style="margin-top:40px;padding:30px">
@@ -534,12 +567,12 @@
         <div class="flow-row">
           <div>
             <h4>3 · Het plaatje</h4>
-            <p class="mono" style="font-size:0.78rem;color:var(--muted)">Playwright › PNG</p>
+            <p class="mono" style="font-size:0.78rem;color:var(--muted)">Satori + resvg-wasm › PNG</p>
           </div>
           <span class="flow-arrow">›</span>
           <div style="color:var(--muted);font-size:0.9rem">
-            Een headless browser maakt er een afbeelding van. Dat is dezelfde techniek die
-            ik gebruik om de screenshots in deze repo te maken.
+            De Worker rendert de kaart zelf tot een afbeelding — geen headless browser,
+            geen externe dienst, geen abonnement.
           </div>
         </div>
         <div class="flow-row">
@@ -549,7 +582,7 @@
           </div>
           <span class="flow-arrow">›</span>
           <div style="color:var(--muted);font-size:0.9rem">
-            De bot stuurt de PNG met een korte tekst eronder (gepland; nu tekst). Gratis, geen server.
+            De bot stuurt de PNG met een korte tekst eronder. Gratis, geen server.
           </div>
         </div>
         <div class="flow-row">
@@ -588,8 +621,8 @@
     <p class="eyebrow accent">Slaap &amp; herstel</p>
     <h2>Herstel is de eerste sessie<br>van de dag.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px">
-      Dit scherm krijgt dezelfde gewichtige plek als de training. De ring, de
-      slaaparchitectuur en de drie bijdragers komen uit de WHOOP-taal — maar de cijfers
+      Dit scherm krijgt dezelfde gewichtige plek als de training. De ring, de drie bijdragers
+      en het herstelsaldo (Body Battery) komen uit de WHOOP-taal — maar de cijfers
       zijn van jou, uit je eigen Huawei-data, en het systeem vertelt er eerlijk bij wat
       het niet weet.
     </p>
@@ -605,15 +638,23 @@
       <div class="card">
         <h4>Drie bijdragers</h4>
         <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
-          HRV, rustige hartslag en slaap. Elk met de afwijking van <em>jouw</em> basislijn,
-          niet van een populatiegemiddelde.
+          HRV, rustige hartslag en slaap. Elk met de afwijking van <em>jouw</em> 28-daagse
+          basislijn, niet van een populatiegemiddelde.
         </p>
       </div>
       <div class="card">
         <h4>De hypnogram</h4>
         <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
-          Wakker, REM, licht, diep — over de nacht, met de aandelen erbij. Zo zie je of
-          het tekort in de diepe slaap zit of in de duur.
+          Wakker, REM, licht, diep — over de nacht, met de aandelen erbij.
+          <strong>Nog niet beschikbaar:</strong> de Huawei-API levert geen slaapfases. Tot die
+          er zijn tonen we eerlijk wat er is.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Body Battery</h4>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
+          Een herstelsaldo (0–100) dat 's nachts oplaadt en overdag leegloopt met je training.
+          Eerlijk als <em>schatting</em> gelabeld — het is geen meting.
         </p>
       </div>
       <div class="card">
@@ -658,13 +699,13 @@
             streefgewicht. Eén blok, geen eindeloze lijst.
           </li>
           <li>
-            <strong>Elke oefening heeft een demonstratiebeeld.</strong> Dat komt uit Hevy's
-            eigen <span class="mono">thumbnail_url</span>, dus het is precies de oefening
-            die je gaat loggen.
+            <strong>Elke oefening heeft een demonstratiebeeld.</strong> Dat komt uit de
+            oefeningenbibliotheek (30 oefeningen uit <span class="mono">free-exercise-db</span>),
+            dus het is precies de oefening die je gaat loggen.
           </li>
           <li>
-            <strong>"Openen in Hevy"</strong> — de routine staat al klaar. Je tikt en
-            start. Geen overtypen.
+            <strong>Klaar om over te typen.</strong> De sessie staat in de app; Hevy's gratis
+            plan heeft geen API, dus je neemt hem over. Hevy blijft zo je logboek, zonder Pro.
           </li>
           <li class="warn">
             <strong>En de oefeningen wisselen niet binnen een blok.</strong> Vier tot acht
@@ -718,7 +759,7 @@
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
-        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">PWA (Worker) — vier views: vandaag · week · invoer · log</span>
+        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">PWA (Worker) — acht schermen: vandaag · herstel · week · trends · coach · kracht · invoer · feedback</span>
       </div>
 
       <div style="padding:28px">
@@ -789,10 +830,10 @@
 
     <div class="grid g3" style="margin-top:30px">
       <div class="card">
-        <h4>Vier views, geen meer</h4>
+        <h4>Drie tabs, vijf eronder</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Vandaag · week · invoer · log — zoals de gebouwde PWA ze heeft. Trends en Coach
-          zijn gepland (zie <span class="mono">UI-PLAN.md</span> fase C/D).
+          Vandaag · Trends · Coach als hoofdtabbladen, met Herstel · Week · Kracht · Invoer ·
+          Feedback eronder — zoals de gebouwde PWA ze heeft.
         </p>
       </div>
       <div class="card">
@@ -806,8 +847,11 @@
         <h4>De knoppen bellen de Worker</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           De PWA doet echte API-calls: <span class="mono">/api/today</span>,
-          <span class="mono">/api/sync</span>, <span class="mono">POST /api/log</span>,
-          <span class="mono">POST /api/sick</span> en <span class="mono">PUT /api/availability</span>.
+          <span class="mono">/api/recovery</span>, <span class="mono">/api/trends</span>,
+          <span class="mono">/api/coach</span>, <span class="mono">/api/feedback</span>,
+          <span class="mono">/api/strength</span>, <span class="mono">/api/sync</span>,
+          <span class="mono">POST /api/log</span>, <span class="mono">POST /api/sick</span> en
+          <span class="mono">PUT /api/availability</span>.
           De coach is de Worker.
         </p>
       </div>
@@ -851,9 +895,10 @@
     </ul>
 
     <div class="callout" style="margin-top:34px">
-      <strong>Dit zijn schetsen.</strong> Ze bestaan om te bespreken voordat er iets gebouwd
-      wordt. Alles is aanpasbaar — de kleuren, de tabbladen, de volgorde, wat er wel en niet
-      op het eerste scherm staat. Zeg wat je anders wilt en ik teken het opnieuw.
+      <strong>Schetsen én gebouwde schermen.</strong> Vandaag, Herstel, Week, Trends, Coach,
+      Kracht, Invoer en Feedback bestaan nu in de app. De voorbeelden hier blijven de
+      <em>bedoeling</em> tonen en zijn aanpasbaar — de kleuren, de tabbladen, de volgorde,
+      wat er wel en niet op het eerste scherm staat. Zeg wat je anders wilt en ik teken het opnieuw.
     </div>
 
     <div class="grid g2" style="margin-top:44px">

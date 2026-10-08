@@ -35,9 +35,13 @@
         <strong style="color:var(--form)">Live:</strong> de Worker en het dashboard draaien —
         <span class="mono" style="font-size:.82em">athlete-intelligence.aq-bd6.workers.dev</span> —
         <strong>achter een login</strong>. intervals.icu stroomt binnen (slaap, rusthartslag, trainingen).
-        De <strong>coach werkt</strong>: regels voor de cijfers, een model voor het oordeel, de
-        ochtendbrief om 07:00, en je kunt een <strong>.fit of screenshot</strong> aanleveren die naar je
-        horloge gaat. Alle zes onboarding-stappen zijn klaar; de weegschaal is een toekomstige fase.
+        De app heeft acht schermen — Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer en Feedback —
+        met de <strong>Body Battery</strong>, je <strong>doel + seizoensplan</strong> en de
+        <strong>feedback-lus</strong>. De <strong>coach werkt</strong>: hetzelfde brein in de app en op
+        Telegram (één gesprek), regels voor de cijfers, een model voor het oordeel, en de ochtendbrief om
+        07:00 met de <strong>herstelkaart als PNG-foto</strong>. Je kunt een <strong>.fit of screenshot</strong>
+        aanleveren die naar je horloge gaat. De rekenregels: <strong>193 tests</strong>. Alle zes
+        onboarding-stappen zijn klaar; de weegschaal is een toekomstige fase.
         Zie <span class="mono" style="font-size:.82em">PLAN.md</span> › Stand van zaken.
       </span>
     </div>
@@ -527,8 +531,9 @@
     <p class="eyebrow accent">07 · De weg ernaartoe</p>
     <h2>Acht fasen (0–7).<br>Elke fase levert iets werkends op.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
-      Fase 5 (de coach) en fase 7 (Telegram) zijn klaar, fase 6 (kracht) deels. De volledige
-      stand staat in <span class="mono">PLAN.md</span> › Stand van zaken.
+      Fase 5 (de coach) en fase 7 (Telegram) zijn klaar, fase 6 (kracht) deels. Daarnaast zijn de
+      UI-fases A–F af: design-fundament, Vandaag/Herstel, Trends/week, coach-in-app, kracht + kaart-PNG,
+      en de afwerking met drie tabs. De volledige stand staat in <span class="mono">PLAN.md</span> › Stand van zaken.
     </p>
 
     <div style="margin-top:44px">
@@ -620,8 +625,9 @@
             <span class="mono">MODEL_API_KEY</span> als secret.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
-            Levert op: sparren (<span class="mono">/api/chat</span>) en workout-invoer
-            (<span class="mono">/api/ingest</span>).
+            Levert op: de coach in de app (<span class="mono">/api/coach</span>), sparren
+            (<span class="mono">/api/chat</span>) en workout-invoer
+            (<span class="mono">/api/ingest</span>) — één geheugen met Telegram.
           </p>
         </div>
       </div>
@@ -632,8 +638,9 @@
           <h3>Kracht</h3>
           <p style="color:var(--muted);margin-top:10px">
             Oefeningenbibliotheek van 30 oefeningen uit <span class="mono">free-exercise-db</span>
-            en de <span class="mono">build-strength-block</span>-skill. Het echte blok wacht op
-            doel, materiaal en beschikbaarheid.
+            en de <span class="mono">build-strength-block</span>-skill. Het Kracht-scherm toont het
+            blok van de dag met demo-beeld per oefening (of een eerlijke lege staat). Het echte blok
+            wacht op doel, materiaal en beschikbaarheid.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
             Levert op: een krachtblok van maanden, dat meetelt in de weekload.
@@ -646,8 +653,9 @@
         <div>
           <h3>Telegram</h3>
           <p style="color:var(--muted);margin-top:10px">
-            Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief — nu
-            als tekst; de kaart als PNG is gepland.
+            Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief — met de
+            <strong>herstelkaart als PNG-foto</strong>. De coach vraagt na een nieuwe training hoe
+            het ging (inline knoppen: verdict › RPE).
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
             Levert op: het komt naar jou toe, zonder dat je eraan denkt.
@@ -803,8 +811,9 @@
           <h3>Zes stappen die jouw handen nodig hebben ›</h3>
           <p style="color:var(--muted);margin-top:10px;font-size:0.94rem">
             Inmiddels alle zes klaar. Per stap: wat je doet, waarom het nodig is, hoe je weet
-            dat het gelukt is, en wat je aan mij doorgeeft. Hevy's gratis plan heeft geen API,
-            dus kracht log je in de AQ-log (duur + RPE).
+            dat het gelukt is, en wat je aan mij doorgeeft. De coach zit nu ook <strong>in de app</strong>
+            zelf, niet alleen op Telegram. Hevy's gratis plan heeft geen API, dus kracht log je
+            via de AQ-log of het Feedback-scherm (duur + RPE).
           </p>
         </div>
         <div>
@@ -867,8 +876,8 @@
         <p class="eyebrow" style="margin-bottom:10px">Bijlage B</p>
         <h4>De interface ›</h4>
         <p style="color:var(--muted);margin-top:8px;font-size:0.88rem">
-          Acht schermen: vandaag, herstel, week, voortgang, coach, ochtendbrief, kracht en
-          beschikbaarheid.
+          Grotendeels gebouwd: Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer en Feedback
+          bestaan in de app. Nog open: het hypnogram (slaapfases) — Huawei levert die niet.
         </p>
       </a>
     </div>
