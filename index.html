@@ -51,7 +51,7 @@
     <h1>Een coach die je data leest,<br>het begrijpt, en morgen<br>je plan bijstelt.</h1>
 
     <p class="lead reveal" style="max-width:62ch;margin-top:26px;font-size:1.12rem;color:var(--muted)">
-      Gebouwd op <strong>intervals.icu</strong>. Draait op je eigen laptop. Geen abonnement,
+      Gebouwd op <strong>intervals.icu</strong>. Draait in een Cloudflare Worker. Geen abonnement,
       geen VPS, geen black box. Alleen jouw data en een plan dat zich aanpast aan wat je
       werkelijk gedaan hebt — inclusief de clubrit die je niet gepland had.
     </p>
@@ -137,7 +137,7 @@
     <div class="grid g3 reveal" style="margin-top:56px">
       <div class="stat"><div class="n" style="color:var(--form)">€0</div><div class="l">abonnementen</div></div>
       <div class="stat"><div class="n">3</div><div class="l">databronnen, één model</div></div>
-      <div class="stat"><div class="n">5</div><div class="l">fasen naar een werkend systeem</div></div>
+      <div class="stat"><div class="n">8</div><div class="l">fasen (0–7) naar een werkend systeem</div></div>
     </div>
   </div>
 </header>
@@ -239,7 +239,7 @@
       <tbody>
         <tr>
           <td><strong>Huawei Watch</strong></td>
-          <td>activiteiten, stappen, <strong>slaap</strong>, rustige hartslag, gewicht, vet%, bloeddruk, VO₂max</td>
+          <td>activiteiten, stappen, <strong>slaap</strong>, rustige hartslag, gewicht, bloeddruk, VO₂max — lichaamscompositie (vet%) komt later via de weegschaal (Tuya)</td>
           <td><span class="pill easy">alleen runs/walks</span></td>
           <td class="mono" style="color:var(--form)">€0</td>
         </tr>
@@ -525,7 +525,11 @@
 <section class="band" id="fasen">
   <div class="wrap">
     <p class="eyebrow accent">07 · De weg ernaartoe</p>
-    <h2>Vijf fasen.<br>Elke fase levert iets werkends op.</h2>
+    <h2>Acht fasen (0–7).<br>Elke fase levert iets werkends op.</h2>
+    <p style="max-width:64ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
+      Fase 5 (de coach) en fase 7 (Telegram) zijn klaar, fase 6 (kracht) deels. De volledige
+      stand staat in <span class="mono">PLAN.md</span> › Stand van zaken.
+    </p>
 
     <div style="margin-top:44px">
       <div class="phase">
@@ -581,8 +585,9 @@
         <div>
           <h3>Automatisering</h3>
           <p style="color:var(--muted);margin-top:10px">
-            Lokale cron voor de ochtendbrief en de wekelijkse review. GitHub als vangnet
-            voor als je laptop uit staat. Telegram voor de ochtendmelding.
+            De Worker-cron <span class="mono">0 * * * *</span> doet het: elk uur syncen, om
+            07:00 lokaal de ochtendbrief, en dagelijks de modelcontrole. Telegram voor de
+            melding. Geen eigen machine die aan moet staan.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
             Levert op: je hoeft er niet meer aan te denken. Het komt naar jou toe.
@@ -595,11 +600,57 @@
         <div>
           <h3>Het dashboard</h3>
           <p style="color:var(--muted);margin-top:10px">
-            Eén statisch HTML-bestand: vandaag, de week, de trend, en de voortgang naar je doel.
-            Werkt offline, geen CDN, geen server. Run + fiets + kracht in één beeld.
+            De PWA met vandaag, de week, invoer en log — geserveerd door de Worker. Werkt
+            offline met de laatste snapshot, geen CDN. Run + fiets + kracht in één beeld.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
             Levert op: één scherm dat je 's ochtends opent zonder eraan herinnerd te worden.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 5</b><span class="dur">klaar</span></div>
+        <div>
+          <h3>De coach</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Regels voor de cijfers, een model voor het oordeel. Standaard
+            <span class="mono">deepseek-v4-flash</span> via OpenCode Go, met een automatische
+            fallback-keten. De model-aanroep gebeurt in de Worker, met
+            <span class="mono">MODEL_API_KEY</span> als secret.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: sparren (<span class="mono">/api/chat</span>) en workout-invoer
+            (<span class="mono">/api/ingest</span>).
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 6</b><span class="dur">deels</span></div>
+        <div>
+          <h3>Kracht</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Oefeningenbibliotheek van 30 oefeningen uit <span class="mono">free-exercise-db</span>
+            en de <span class="mono">build-strength-block</span>-skill. Het echte blok wacht op
+            doel, materiaal en beschikbaarheid.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: een krachtblok van maanden, dat meetelt in de weekload.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-tag"><b>Fase 7</b><span class="dur">klaar</span></div>
+        <div>
+          <h3>Telegram</h3>
+          <p style="color:var(--muted);margin-top:10px">
+            Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief — nu
+            als tekst; de kaart als PNG is gepland.
+          </p>
+          <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
+            Levert op: het komt naar jou toe, zonder dat je eraan denkt.
           </p>
         </div>
       </div>
@@ -624,14 +675,14 @@
           <td>Een account, één API-key. 5.000 requests/dag; wij gebruiken er ~20.</td>
         </tr>
         <tr>
-          <td><strong>Markdown als geheugen</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen database</span></td>
-          <td>Één sporter heeft geen Postgres nodig. Bestanden zijn grepbaar, versioneerbaar en je bezit ze.</td>
-          <td>Niets. Het is ook nog eens sneller.</td>
+          <td><strong>Markdown als geheugen</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">beslissingen; D1 voor metingen</span></td>
+          <td>Beslissingen zijn bestanden: grepbaar, versioneerbaar en je bezit ze. De metingen — wellness en activiteiten — staan in <strong>Cloudflare D1</strong>.</td>
+          <td>Niets. Beide gratis.</td>
         </tr>
         <tr>
-          <td><strong>Lokaal draaien</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen VPS</span></td>
-          <td>Een cronjob op je eigen laptop doet hetzelfde als een server van €5/mnd.</td>
-          <td>Je laptop moet aan staan voor de automatische taken. GitHub vangt de rest op.</td>
+          <td><strong>Draaien in de cloud</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen eigen server</span></td>
+          <td>De Worker-cron <span class="mono">0 * * * *</span> draait in de cloud: elk uur syncen en om 07:00 lokaal de ochtendbrief.</td>
+          <td>Niets. Je laptop hoeft niet aan te staan.</td>
         </tr>
         <tr>
           <td><strong>LLM in plaats van ML</strong><br><span class="mono" style="font-size:0.74rem;color:var(--dim)">geen black box</span></td>
@@ -644,9 +695,9 @@
           <td>Iets meer werk: de grafieken zijn met de hand getekende SVG.</td>
         </tr>
         <tr>
-          <td><strong>ACWR als trend, niet als wet</strong></td>
-          <td>De acute:chronic ratio is omstreden. De cursus bakt hem in als doctrine.</td>
-          <td>We moeten zelf nadenken over de grenswaarden in plaats van ze te kopiëren.</td>
+          <td><strong>ACWR als blessurevoorspeller verworpen</strong></td>
+          <td>De acute:chronic ratio is wiskundig ondeugdelijk als voorspeller (AUC 0,55–0,65). De cursus bakt hem in als doctrine. Zie <a href="science.html">Bijlage C</a>.</td>
+          <td>We gebruiken trends en subjectieve readiness in plaats van een ratio.</td>
         </tr>
       </tbody>
     </table>
@@ -720,9 +771,9 @@
         <tr><td>Wahoo ELEMNT</td><td>ritten + gestructureerde fietsworkouts</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Hevy › AQ-log</td><td>krachtload in het model</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Opslag</td><td>markdown + SQLite in een private git-repo</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td>Automatisering</td><td>lokale cron + GitHub Actions als vangnet</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Automatisering</td><td>Worker-cron <span class="mono">0 * * * *</span> (elk uur sync, 07:00 brief)</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Meldingen</td><td>Telegram, uitgaand</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td><strong>Model-API</strong></td><td>het brein — Opencode met het model van jouw keuze</td><td class="mono" style="text-align:right;color:var(--fatigue)"><strong>per gebruik</strong></td></tr>
+        <tr><td><strong>Model-API</strong></td><td>het oordeel van de coach in de Worker</td><td class="mono" style="text-align:right;color:var(--fatigue)"><strong>per gebruik</strong></td></tr>
       </tbody>
     </table>
 
@@ -737,10 +788,10 @@
 <section class="band" id="beslispunten">
   <div class="wrap">
     <p class="eyebrow accent">12 · De volgende stap</p>
-    <h2>De besluiten staan.<br>Nu de acht stappen.</h2>
+    <h2>De besluiten staan.<br>Nu de zes stappen.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
       De vijf besluiten zijn genomen — cloud-PWA, D1, Telegram blijft, geen Hevy Pro, en
-      rekenen als regels. Wat overblijft zijn acht dingen die jouw handen nodig hebben:
+      rekenen als regels. Wat overblijft zijn zes dingen die jouw handen nodig hebben:
       een login, een QR-scan, een account.
     </p>
 
@@ -816,7 +867,7 @@
         <p class="eyebrow" style="margin-bottom:10px">Bijlage B</p>
         <h4>De interface ›</h4>
         <p style="color:var(--muted);margin-top:8px;font-size:0.88rem">
-          Zeven schermen: vandaag, herstel, week, voortgang, coach, kracht en
+          Acht schermen: vandaag, herstel, week, voortgang, coach, ochtendbrief, kracht en
           beschikbaarheid.
         </p>
       </a>

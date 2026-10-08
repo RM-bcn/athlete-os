@@ -13,8 +13,8 @@ De bouw loopt. Wat er nu echt staat:
 | Fase | Stand | Wat er is |
 |---|---|---|
 | **0 · Fundament** | klaar | D1, Worker live, PWA live, en het geheel achter een login (Basic Auth). |
-| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen (mét slaap), 119 activiteiten en rusthartslag. Sync loopt **elk uur**, plus verversen zodra je de app opent. Alles via de **Huawei-koppeling**; geen telefoon-brug nodig. Alleen het gewicht (weegschaal) is nog een **toekomstige fase**. |
-| **2 · Rekenregels** | klaar | 71 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
+| **1 · Data** | loopt | intervals.icu stroomt binnen — 122 wellness-dagen (mét slaap), 119 activiteiten en rusthartslag. Sync loopt **elk uur**, plus verversen zodra je de app opent. Alles via de **Huawei-koppeling**; geen telefoon-brug nodig. Alleen het gewicht (weegschaal) is nog een **toekomstige fase**. |
+| **2 · Rekenregels** | klaar | 78 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
 | **5 · Coach** | klaar | Regels voor de cijfers, een **model** voor het oordeel. Standaard **deepseek-v4-flash** (via OpenCode Go), met een **automatische fallback-keten** (mimo-v2.6-flash › glm-5.3-flash › minimax-m3). Valt het voorkeursmodel weg, dan waarschuwt de coach via Telegram en maakt een workboard-kaart. |
@@ -34,15 +34,15 @@ server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 
 | Laag | Keuze | Kosten |
 |---|---|---|
-| PWA | Cloudflare Pages | €0 |
+| PWA | Cloudflare Workers (static assets) | €0 |
 | API | Cloudflare Worker | €0 (100k req/dag) |
 | Database | Cloudflare D1 (SQLite) | €0 (5 GB, 5M rijen lezen/dag) |
-| Privé-toegang | Cloudflare Access (e-mailcode) | €0 (tot 50 gebruikers) |
+| Privé-toegang | HTTP Basic Auth in de Worker (Cloudflare Access later) | €0 |
 | Push + sparren | Telegram Bot | €0 |
 | Data-spine | intervals.icu | €0 (5.000 req/dag) |
 | Kracht | Hevy (gratis plan) | €0 |
 | Weegschaal | toekomstige fase; lichaamscompositie via de Tuya Cloud API | €0 |
-| Brein | Opencode + model-API | **alleen deze post** |
+| Brein | de coach in de Worker + model-API | **alleen deze post** |
 | Vault | GitHub private | €0 |
 
 **Het leidende principe:** rekenen is **code**, oordelen zijn **tokens**. Zie bijlage E §03.
@@ -53,28 +53,24 @@ server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 
 ```
 athlete-intelligence/
-├── worker/                 # Cloudflare Worker — API + rekenregels
-│   ├── src/index.ts        # routes
-│   ├── src/rules/          # ← de rekenmachine, puur en getest
-│   │   ├── load.ts         # CTL/ATL/TSB, RPE-load
-│   │   ├── readiness.ts    # slaap + RHR + load → oordeel
-│   │   └── trends.ts       # 7/28-daags, drift
-│   ├── src/sources/        # intervals.icu, Hevy, weegschaal
-│   ├── src/coach.ts        # de dunne brug naar het model
+├── app/                    # de Worker + de PWA
+│   ├── src/                # rekenregels + routes
+│   │   ├── rules/          # ← de rekenmachine, puur en getest
+│   │   │   ├── load.ts     # CTL/ATL/TSB, RPE-load
+│   │   │   ├── readiness.ts# slaap + RHR + load → oordeel
+│   │   │   └── trends.ts   # 7/28-daags, drift
+│   │   ├── sources/        # intervals.icu, Hevy, weegschaal
+│   │   └── coach.ts        # de dunne brug naar het model
+│   ├── public/             # de PWA (static assets)
+│   │   ├── index.html      # vandaag · week · invoer · log
+│   │   ├── manifest.webmanifest
+│   │   └── sw.js           # offline
 │   └── schema.sql          # D1
-├── pwa/                    # de PWA (Pages)
-│   ├── index.html          # vandaag
-│   ├── week.html
-│   ├── availability.html   # ← de schuifjes
-│   ├── log.html            # ← ná de sessie
-│   ├── manifest.webmanifest
-│   └── sw.js               # offline
 ├── brain/                  # de markdown-vault (gesynct met GitHub)
 │   ├── AGENTS.md
 │   ├── athlete-profile.md
 │   ├── training/ · reviews/ · races/ · health/ · goals/
-│   └── .opencode/skills/   # de skills voor Opencode
-├── tests/                  # de rekenregels, met vaste invoer
+│   └── .opencode/skills/   # de 8 skills voor de coach
 └── docs/
 ```
 
@@ -86,16 +82,16 @@ Elke fase is één workboard-kaart. Niet groter, niet kleiner. Een fase is klaar
 acceptatiecriteria aantoonbaar gehaald zijn.
 
 ### Fase 0 — Fundament
-**Levert:** een lege maar werkende keten: Worker live, D1 aangemaakt, PWA live, Access ervoor.
+**Levert:** een lege maar werkende keten: Worker live, D1 aangemaakt, PWA live, login ervoor.
 
 - [ ] Cloudflare-account, `wrangler` geïnstalleerd
 - [ ] D1-database aangemaakt, `schema.sql` gemigreerd
 - [ ] Worker gedeployed met één endpoint: `GET /api/health` → `{ok:true}`
-- [ ] Pages-project gekoppeld aan `pwa/`, `index.html` toont "hallo"
-- [ ] Access-policy: alleen jouw e-mailadres
+- [ ] Worker met static assets uit `public/`, `index.html` toont "hallo"
+- [ ] Toegang: HTTP Basic Auth in de Worker (Cloudflare Access later)
 - [ ] GitHub-repo private, eerste commit
 
-**Klaar als:** je op je telefoon `https://<project>.pages.dev` opent, een inlogscherm krijgt, inlogt met een e-mailcode, en "hallo" ziet.
+**Klaar als:** je op je telefoon `https://<worker>.workers.dev` opent, een login krijgt, inlogt met Basic Auth, en "hallo" ziet.
 
 ---
 
@@ -105,8 +101,8 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 - [ ] `sources/intervals.ts` — activiteiten + wellness ophalen
 - [ ] `sources/hevy.ts` — workouts + body measurements
 - [ ] `sources/scale.ts` — gewicht + vet% (toekomstige fase, via de Tuya Cloud API)
-- [ ] Cron-trigger in de Worker: dagelijks syncen
-- [ ] `GET /api/debug/sources` → toon wat er per bron binnenkwam
+- [ ] Cron-trigger in de Worker: elk uur syncen (`0 * * * *`)
+- [ ] verifieer via `GET /api/health` + `GET /api/wellness`
 
 **Klaar als:** je het endpoint opent en echte aantallen ziet die kloppen met wat je in de apps ziet. **Twee weken observe-only** vanaf hier.
 
@@ -162,7 +158,7 @@ starten — slaap, rusthartslag en trainingen komen al binnen via intervals.icu.
 ---
 
 ### Fase 5 — De coach
-**Levert:** Opencode doet het zware denkwerk, en de regels doen de rest.
+**Levert:** de coach doet het zware denkwerk, en de regels doen de rest.
 
 - [x] `brain/AGENTS.md` + `athlete-profile.md`
 - [x] Skills in `.opencode/skills/`: `set-goal`, `build-season-plan`, `plan-my-week`, `adapt-week`, `weekly-review`
@@ -211,12 +207,12 @@ De machinerie staat; het persoonlijke blok volgt zodra de drie invoeren er zijn.
 | | |
 |---|---|
 | `/ai-phase <n>` | voert één fase uit volgens dit plan en stopt bij de acceptatiecriteria |
-| `/ai-deploy` | `wrangler deploy` + Pages deploy + verificatie van de live URL |
+| `/ai-deploy` | `wrangler deploy` + verificatie van de live URL |
 | `/ai-test` | draait de rekenregel-tests (moet altijd groen zijn vóór een deploy) |
-| agent `athlete-ai` | de domeinkennis: wetenschap, load-model, Hevy-API, Tuula-routes |
+| agent `athlete-ai` | de domeinkennis: wetenschap, load-model, Hevy-API, Tuya-routes |
 
-En de skills uit `brain/.opencode/skills/` zijn de coach-skills — die gebruiken Opencode
-tijdens het draaien, niet tijdens het bouwen.
+En de skills uit `brain/.opencode/skills/` zijn de coach-skills — instructies die de coach
+gebruikt, niet het bouwgereedschap.
 
 ---
 
@@ -297,7 +293,7 @@ sleutel erin is een sleutel voor iedereen.
 |---|---|---|
 | **Worker-secret** (aanbevolen) | `wrangler secret put MODEL_API_KEY` | Versleuteld, alleen in de Worker-runtime, nooit in de code |
 | **Cloudflare AI Gateway** | vóór de Worker | Houdt de providersleutel zelf, plus rate-limiting, caching, logging en kosten |
-| **OpenCode (het brein)** | op je eigen machine, buiten de repo | `opencode auth login`; de sleutel verlaat je machine niet |
+| **Opencode (de vault)** | lokaal, buiten de repo | het geheugen: `AGENTS.md` en de skills. De **model-aanroep zelf gebeurt in de Worker**, niet lokaal |
 
-Zet daarnaast een **uitgavenlimiet** bij de provider. De coach werkt nu al zonder model;
-de sleutel is alleen voor de zware oordelen (plannen, reviews, sparren).
+Zet daarnaast een **uitgavenlimiet** bij de provider. De coach gebruikt het model nu al voor
+sparren (`POST /api/chat`) en workout-invoer (`POST /api/ingest`) — de zware oordelen.

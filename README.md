@@ -2,21 +2,22 @@
 
 **Live: <https://rm-bcn.github.io/athlete-os/>**
 
-Vijf pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken **voordat** er iets
-gebouwd wordt. Geen productcode — een voorstel, een wetenschappelijke onderbouwing, een
-architectuur en een interface-schets.
+Vijf pagina's om een zelfgebouwd, adaptief trainingssysteem te bespreken — met een flink
+deel dat inmiddels **gebouwd** is (zie [`PLAN.md`](PLAN.md)). Deze repo is het voorstel:
+wetenschap, architectuur en interface-schets. De productcode (Worker + PWA) staat in de
+app-repo.
 
 Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server nodig, geen build stap.
 
 | Bestand | Wat het is |
 |---|---|
-| `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, doelen en domeinen, de vijf fasen, de keuzes, wat het oplevert, de grenzen, de kosten. |
+| `index.html` | **Het voorstel.** Scroll-door pitch: probleem, kernvondst, de adaptieve lus, doelen en domeinen, de acht fasen (0–7), de keuzes, wat het oplevert, de grenzen, de kosten. |
 | `science.html` | **De wetenschap.** Gepolariseerde intensiteitsverdeling (80/20), periodisering, het CTL/ATL/TSB-loadmodel, wat we verwerpen (ACWR), en de stabiliteitsregels tegen plan-gerammel. |
 | `strength.html` | **Kracht &amp; doel.** Twee soorten doelen (event én lichaamscompositie), de interferentie tussen duur en kracht, de hypertrofie-wetenschap, de oefeningenbibliotheek, de lus naar Hevy en de weegschaal-integratie. |
 | `pwa.html` | **PWA &amp; architectuur.** De vijf vastgeklikte besluiten, de cloud-architectuur, en het principe dat rekenen regels zijn en alleen oordelen tokens kosten. |
 | `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), schrijfwegen (intervals.icu, Hevy), lagen, datamodel, skills, adaptatieregels, schema. |
-| `PLAN.md` | **Het bouwplan.** Zeven fasen met acceptatiecriteria, de repo-indeling en de Opencode-tooling. |
-| `frontend.html` | **De interface.** Zeven telefoonschermen (vandaag, herstel, week, voortgang, coach, kracht, beschikbaarheid) en het desktop-dashboard. |
+| `PLAN.md` | **Het bouwplan.** Acht fasen (0–7) met acceptatiecriteria, de repo-indeling en de Opencode-tooling. |
+| `frontend.html` | **De interface.** Acht telefoonschermen (vandaag, herstel, week, voortgang, coach, ochtendbrief, kracht, beschikbaarheid) en het desktop-dashboard. |
 | `screenshots/` | 114 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
 | `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
 
@@ -47,12 +48,13 @@ apparaten leest *én* geplande workouts terugschrijft *én* fitness/vermoeidheid
 
 | | |
 |---|---|
-| **Telegram** | de push en het gesprek — de ochtendbrief komt binnen **met de herstelkaart als afbeelding** |
-| **Het dashboard** | de visuals — één HTML-bestand op een privé-URL (Cloudflare Access) of lokaal |
+| **Telegram** | de push en het gesprek — de ochtendbrief komt binnen als tekst (de herstelkaart als afbeelding is **gepland**) |
+| **Het dashboard** | de visuals — één HTML-bestand op een privé-URL (nu login met Basic Auth; Cloudflare Access later) of lokaal |
 | **De bestanden** | de bron — markdown op je schijf, alles leesbaar en aanvechtbaar |
 
 De herstelkaart wordt 's ochtends uit dezelfde HTML gerenderd tot een PNG (Playwright) en
-meegestuurd met het Telegram-bericht. Zie [`frontend.html#oppervlakken`](frontend.html)
+meegestuurd met het Telegram-bericht — dat is **gepland**; nu is de ochtendbrief tekst. Zie
+[`frontend.html#oppervlakken`](frontend.html)
 en [`frontend.html#kaart`](frontend.html).
 
 Twee dingen die de broncursus mist en hier wél in zitten:
@@ -81,20 +83,23 @@ Volledig met bronnen en bewijskracht per onderdeel: [`science.html`](science.htm
 ## Wat het kost
 
 Alles is €0 behalve de **model-API** voor Opencode — geen abonnement, Opencode zelf is gratis.
-Geen VPS, geen vaste lasten. De opslag is markdown (beslissingen) plus SQLite lokaal of
-Cloudflare D1 (metingen) — beide gratis.
+Geen VPS, geen vaste lasten. De opslag is markdown (beslissingen) plus **Cloudflare D1**
+(metingen; SQLite lokaal als alternatief) — beide gratis.
 
 ## Status
 
 - [x] Lesmateriaal bestudeerd (199 lessen, geverifieerd tegen de bron)
 - [x] Wetenschappelijke basis uitgewerkt en geciteerd
 - [x] Architectuur en interface uitgewerkt
+- [x] Fase 0 — fundament (Worker + D1, live achter Basic Auth)
+- [x] Fase 1 — data naar binnen (intervals.icu)
+- [x] Fase 2 — rekenregels (78 tests)
+- [x] Fase 3 — PWA
+- [x] Fase 4 — invoer
+- [x] Fase 5 — coach (met een model)
+- [ ] Fase 6 — kracht (deels; wacht op doel + materiaal)
+- [x] Fase 7 — Telegram
 - [ ] Jouw twee antwoorden: **doel** en **beschikbare uren/dagen**
-- [ ] Fase 0 — aansluiten
-- [ ] Fase 1 — het brein
-- [ ] Fase 2 — de adaptieve lus
-- [ ] Fase 3 — automatisering
-- [ ] Fase 4 — het dashboard
 
 ## Technisch
 

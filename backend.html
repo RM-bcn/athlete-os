@@ -31,8 +31,9 @@
     <p class="eyebrow accent">Bijlage A</p>
     <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">De backend.</h1>
     <p class="lead" style="max-width:64ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
-      Eén ruggengraat, drie bronnen, één brein, platte bestanden. Geen database, geen server,
-      geen queue. De hele architectuur past op één pagina — dat is opzettelijk.
+      Eén ruggengraat, drie bronnen, één brein, platte bestanden. Geen eigen server, geen
+      queue — metingen in Cloudflare D1. De hele architectuur past op één pagina — dat is
+      opzettelijk.
     </p>
   </div>
 </header>
@@ -45,7 +46,7 @@
 
     <div class="chart-shell" style="padding:26px">
       <svg viewBox="0 0 980 800" class="chart-svg" role="img"
-           aria-label="Architectuurdiagram: Huawei, Wahoo en Hevy leveren data aan intervals.icu; intervals.icu voedt het brein (Opencode met skills); het brein schrijft naar de opslag; intervals.icu stuurt geplande workouts terug naar de apparaten.">
+           aria-label="Architectuurdiagram: Huawei, Wahoo en Hevy leveren data aan intervals.icu; intervals.icu voedt het brein (de coach in de Worker, met de markdown-vault als geheugen); het brein schrijft naar de opslag; intervals.icu stuurt geplande workouts terug naar de apparaten.">
         <defs>
           <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill="#5c5c6b"/>
@@ -97,7 +98,7 @@
 
         <!-- C · HET BREIN -->
         <rect x="70" y="406" width="360" height="156" rx="14" fill="#13131a" stroke="#26262f"/>
-        <text x="94" y="434" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">HET BREIN · CLAUDE CODE</text>
+        <text x="94" y="434" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5c5c6b" letter-spacing="1.6">HET BREIN · DE COACH (WORKER)</text>
         <g font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#ececf1">
           <text x="94" y="460">AGENTS.md</text>
           <text x="392" y="460" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5c5c6b">constitutie + 4 harde regels</text>
@@ -106,7 +107,7 @@
         </g>
         <rect x="94" y="496" width="312" height="48" rx="8" fill="#0e1a14" stroke="#00d68f" stroke-opacity="0.35"/>
         <text x="106" y="515" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#00d68f">.opencode/skills/</text>
-        <text x="106" y="532" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#8b8b9a">12 skills · elk een SKILL.md</text>
+        <text x="106" y="532" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#8b8b9a">8 skills · elk een SKILL.md</text>
 
         <!-- pijl C <-> D -->
         <line x1="242" y1="562" x2="242" y2="608" stroke="#5c5c6b" stroke-width="1.5" marker-end="url(#ah)"/>
@@ -119,7 +120,7 @@
         <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#8b8b9a">
           <text x="94" y="666"><tspan fill="#00d68f">beslissingen</tspan>  training/ · reviews/ · races/ · health/</text>
           <text x="94" y="684">brain/  <tspan fill="#5c5c6b">raw · wiki · index</tspan></text>
-          <text x="94" y="706"><tspan fill="#3d7bff">metingen</tspan>     athlete.db  <tspan fill="#5c5c6b">SQLite · wellness · activiteiten · dedup</tspan></text>
+          <text x="94" y="706"><tspan fill="#3d7bff">metingen</tspan>     D1  <tspan fill="#5c5c6b">Cloudflare · wellness · activiteiten · dedup</tspan></text>
           <text x="94" y="728">git  <tspan fill="#5c5c6b">› private repo (vangnet)</tspan></text>
         </g>
 
@@ -152,7 +153,7 @@
         </p>
       </div>
       <div class="card">
-        <h4>SQLite voor metingen</h4>
+        <h4>D1 voor metingen</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           Wellness en activiteiten zijn tijdreeksen. "HRV laatste 90 dagen" hoort een
           <strong>index</strong> te hebben, niet een herlezing van alle JSON. Plus een
@@ -160,10 +161,10 @@
         </p>
       </div>
       <div class="card">
-        <h4>En als het in de cloud moet</h4>
+        <h4>En de cloud is de default</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Draait het 24/7 in een Cloudflare Worker, dan is de laptop niet bereikbaar.
-          Dan wordt SQLite <strong>Cloudflare D1</strong> — gratis, en dezelfde SQL.
+          De Worker draait 24/7, dus de metingen staan in <strong>Cloudflare D1</strong> —
+          gratis, en dezelfde SQL. Wil je alles lokaal, dan kan SQLite als alternatief.
         </p>
       </div>
     </div>
@@ -198,10 +199,11 @@
       </div>
 
       <div>
-        <h4 style="margin-bottom:16px;color:var(--fitness)">SQLite — metingen</h4>
+        <h4 style="margin-bottom:16px;color:var(--fitness)">D1 — metingen</h4>
         <p style="color:var(--muted);font-size:0.92rem">
           Wellness (slaap, HRV, RHR) en activiteiten. Tijdreeksen die je steeds opnieuw
-          over een venster bevraagt.
+          over een venster bevraagt. In de Worker: Cloudflare D1 (SQLite lokaal is het
+          alternatief).
         </p>
         <ul class="ticks" style="font-size:0.9rem;margin-top:14px">
           <li><strong>Indexen.</strong> "HRV laatste 90 dagen" is een query, geen herlezing van alle JSON</li>
@@ -217,14 +219,14 @@
       <thead><tr><th>Optie</th><th>Gratis tier</th><th>Wanneer</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>SQLite lokaal</strong> <span class="pill go" style="margin-left:6px">default</span></td>
-          <td class="mono" style="font-size:0.8rem">onbeperkt · een bestand</td>
-          <td>als het brein op je laptop draait. Snelst, geen account, geen limiet, portable</td>
+          <td><strong>Cloudflare D1</strong> <span class="pill go" style="margin-left:6px">default</span></td>
+          <td class="mono" style="font-size:0.8rem">5 GB · 5M rijen lezen/dag · 100k schrijven/dag</td>
+          <td>de metingen in de Worker, 24/7. Zelfde SQL als lokaal</td>
         </tr>
         <tr>
-          <td><strong>Cloudflare D1</strong></td>
-          <td class="mono" style="font-size:0.8rem">5 GB · 5M rijen lezen/dag · 100k schrijven/dag</td>
-          <td>als de Worker 24/7 draait en de laptop niet bereikbaar is. Zelfde SQL</td>
+          <td><strong>SQLite lokaal</strong></td>
+          <td class="mono" style="font-size:0.8rem">onbeperkt · een bestand</td>
+          <td>alternatief als je alles op je laptop wilt draaien. Snelst, geen account, portable</td>
         </tr>
         <tr>
           <td><strong>Turso</strong> (libSQL)</td>
@@ -243,7 +245,7 @@
       <strong>De rekenkundige check:</strong> één sporter, ~1.400 rijen per jaar, ~15 rijen
       per dagelijkse lezing. Tegen D1's 5 miljoen rijen per dag is dat <strong>0,1%</strong>.
       Elke gratis optie hier is ruim overbemeten. De keuze gaat dus niet over capaciteit
-      maar over <em>waar het draait</em>: laptop › SQLite, cloud › D1.
+      maar over <em>waar het draait</em>: cloud (default) › D1, lokaal › SQLite.
     </div>
 
     <div class="grid g2" style="margin-top:34px;gap:26px">
@@ -283,7 +285,7 @@
         <tr><td class="mono" style="font-size:0.8rem">POST /athlete/0/events</td><td>geplande workout aanmaken</td><td>Huawei (runs) · Wahoo (ritten)</td></tr>
         <tr><td class="mono" style="font-size:0.8rem">GET /athlete/0/events</td><td>het bestaande plan lezen</td><td>—</td></tr>
         <tr><td class="mono" style="font-size:0.8rem">DELETE /athlete/0/events/{id}</td><td>een sessie intrekken</td><td>—</td></tr>
-        <tr><td class="mono" style="font-size:0.8rem">POST /athlete/0/activities/manual</td><td><strong>handmatige activiteit</strong> — volleybal, voetbal, ongemeten sport</td><td>het load-model</td></tr>
+        <tr><td class="mono" style="font-size:0.8rem">POST /api/log › D1</td><td><strong>handmatige activiteit</strong> — volleybal, voetbal, ongemeten sport</td><td>D1 (activities, source=handmatig); telt mee in week en load. De intervals-schrijfweg is nog niet gebouwd</td></tr>
       </tbody>
     </table>
     <div class="callout warn" style="margin-top:20px">
@@ -329,7 +331,7 @@
         <div class="flow-row" style="grid-template-columns:1fr auto 1fr">
           <span class="mono" style="font-size:0.84rem">kracht — gewicht + hartslag</span>
           <span class="flow-arrow">›</span>
-          <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Hevy + horloge › AQ-log › intervals.icu</span>
+          <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Hevy + horloge › AQ-log › D1</span>
         </div>
         <div class="flow-row" style="grid-template-columns:1fr auto 1fr">
           <span class="mono" style="font-size:0.84rem">gewicht · vet% (weegschaal)</span>
@@ -363,9 +365,9 @@
       <tbody>
         <tr><td><strong>Bron</strong></td><td>levert de ruwe signalen</td><td class="mono" style="font-size:0.8rem">Huawei · Wahoo · Hevy (AQ-log) · weegschaal (Tuya, later)</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td><strong>Ruggengraat</strong></td><td>aggregeert, rekent CTL/ATL/TSB, schrijft workouts terug</td><td class="mono" style="font-size:0.8rem">intervals.icu REST API v1</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td><strong>Brein</strong></td><td>interpreteert, plant, adapteert</td><td class="mono" style="font-size:0.8rem">Opencode + AGENTS.md + skills</td><td class="mono" style="text-align:right;color:var(--fatigue)">plan + tokens</td></tr>
-        <tr><td><strong>Geheugen</strong></td><td>bewaart wat er gebeurde en waarom</td><td class="mono" style="font-size:0.8rem">markdown + SQLite</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td><strong>Planning</strong></td><td>laat de taken draaien zonder jou</td><td class="mono" style="font-size:0.8rem">cron/launchd + GitHub Actions</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Brein</strong></td><td>interpreteert, plant, adapteert</td><td class="mono" style="font-size:0.8rem">de coach in de Worker · model-aanroep via MODEL_API_KEY; AGENTS.md is geheugen</td><td class="mono" style="text-align:right;color:var(--fatigue)">plan + tokens</td></tr>
+        <tr><td><strong>Geheugen</strong></td><td>bewaart wat er gebeurde en waarom</td><td class="mono" style="font-size:0.8rem">markdown (beslissingen) + D1 (metingen)</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td><strong>Planning</strong></td><td>laat de taken draaien zonder jou</td><td class="mono" style="font-size:0.8rem">Worker-cron · 0 * * * *</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td><strong>Oppervlak</strong></td><td>laat je het zien</td><td class="mono" style="font-size:0.8rem">statische HTML + Telegram</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
       </tbody>
     </table>
@@ -379,17 +381,24 @@
     <h2 style="margin-bottom:36px">Alles op één plek.</h2>
 
     <div class="grid g2" style="gap:28px;align-items:start">
-      <div class="tree"><b>athlete-os/</b>
+      <div class="tree"><b>athlete-intelligence/</b>
 ├── <b>AGENTS.md</b>              <span class="c"># constitutie + 4 harde regels</span>
 ├── <b>athlete-profile.md</b>     <span class="c"># wie je bent, zones, grenzen</span>
-├── <b>athlete-os.md</b>          <span class="c"># één-pagina kaart</span>
-├── <b>.env</b>                   <span class="c"># sleutels (in .gitignore)</span>
+│
+├── <span class="hi">app/</span>                   <span class="c"># de Worker + PWA</span>
+│   ├── <b>src/</b>                  <span class="c"># rekenregels + routes</span>
+│   │   ├── rules/           <span class="c"># CTL/ATL/TSB, readiness, trends</span>
+│   │   ├── sources/         <span class="c"># intervals.icu, Hevy, weegschaal</span>
+│   │   └── coach.ts         <span class="c"># de brug naar het model</span>
+│   ├── <b>public/</b>               <span class="c"># de PWA (static assets)</span>
+│   │   ├── index.html       <span class="c"># vandaag · week · invoer · log</span>
+│   │   ├── manifest.webmanifest
+│   │   └── sw.js            <span class="c"># offline</span>
+│   └── schema.sql           <span class="c"># D1</span>
 │
 ├── <span class="hi">goals/</span>                 <span class="c"># ← event + compositie</span>
 │   ├── 2027-04-12-marathon.md
 │   └── compositie.md        <span class="c"># ← streefgewicht / vet%</span>
-├── <span class="hi">availability.md</span>        <span class="c"># ← weeksjabloon per sport</span>
-├── <span class="hi">exercises.md</span>           <span class="c"># ← oefeningen + demo-links</span>
 ├── <span class="hi">training/</span>
 │   ├── season-plan.md       <span class="c"># periodisering (duur)</span>
 │   ├── current-week.md      <span class="c"># de adaptieve week</span>
@@ -404,33 +413,15 @@
 │   ├── wiki/                <span class="c"># gelinkte notities</span>
 │   └── index.md
 │
-├── <b>.opencode/skills/</b>         <span class="c"># 14 × SKILL.md</span>
-│   ├── set-goal/
-│   ├── build-season-plan/
-│   ├── <span class="hi">build-strength-block/</span>
-│   ├── plan-my-week/
-│   ├── adapt-week/
-│   ├── today/
-│   ├── recovery-check/
-│   ├── weekly-review/
-│   ├── run-analysis/
-│   ├── race-analysis/
-│   ├── fuel-and-pace/
-│   ├── progress/
-│   ├── <span class="hi">log-other-sport/</span>
-│   └── strength-log/
-│
-├── <b>scripts/</b>
-│   ├── pull_intervals.py    <span class="c"># de spine uitlezen</span>
-│   ├── push_workout.py      <span class="c"># plan › horloge</span>
-│   └── build_dashboard.py   <span class="c"># › dashboard.html</span>
-│
-├── <b>data/</b>
-│   ├── activities.json
-│   ├── wellness.json
-│   └── athlete.db           <span class="c"># SQLite</span>
-│
-└── <b>dashboard.html</b>          <span class="c"># statisch, offline</span></div>
+└── <b>.opencode/skills/</b>         <span class="c"># 8 × SKILL.md</span>
+    ├── set-goal/
+    ├── build-season-plan/
+    ├── <span class="hi">build-strength-block/</span>
+    ├── plan-my-week/
+    ├── adapt-week/
+    ├── recovery-check/
+    ├── weekly-review/
+    └── <span class="hi">log-other-sport/</span></div>
 
       <div>
         <h4 style="margin-bottom:14px">Drie principes</h4>
@@ -445,7 +436,7 @@
           <span class="mono" style="font-size:0.82rem">goals/</span>,
           <span class="mono" style="font-size:0.82rem">season-plan.md</span>,
           <span class="mono" style="font-size:0.82rem">current-week.md</span>,
-          <span class="mono" style="font-size:0.82rem">brain/</span> en vijf van de twaalf skills.
+          <span class="mono" style="font-size:0.82rem">brain/</span> en de acht skills hierboven.
           De rest is herbouwd op intervals.icu in plaats van Strava.
         </div>
       </div>
@@ -520,19 +511,13 @@
       <thead><tr><th>Skill</th><th>Leest</th><th>Schrijft</th><th>Bron</th></tr></thead>
       <tbody>
         <tr><td class="mono" style="font-size:0.82rem">set-goal</td><td>jouw invoer</td><td class="mono" style="font-size:0.8rem">goals/&lt;event&gt;.md · goals/compositie.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">—</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">build-strength-block</td><td>doel + materiaal + beschikbaarheid</td><td class="mono" style="font-size:0.8rem">training/strength/&lt;blok&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">Hevy API</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">log-other-sport</td><td>duur + RPE</td><td class="mono" style="font-size:0.8rem">health/ + handmatige activiteit</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">build-season-plan</td><td>goal + profile + CTL</td><td class="mono" style="font-size:0.8rem">training/season-plan.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">build-strength-block</td><td>doel + materiaal + beschikbaarheid</td><td class="mono" style="font-size:0.8rem">training/strength/&lt;blok&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">free-exercise-db</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">plan-my-week</td><td>season-plan + beschikbaarheid</td><td class="mono" style="font-size:0.8rem">training/current-week.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">adapt-week</td><td>current-week + wat je deed</td><td class="mono" style="font-size:0.8rem">current-week.md <em>herschreven</em></td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">today</td><td>wellness + current-week</td><td class="mono" style="font-size:0.8rem">health/ (alleen bij flag)</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">recovery-check</td><td>wellness + load</td><td class="mono" style="font-size:0.8rem">health/YYYY-MM-DD.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
         <tr><td class="mono" style="font-size:0.82rem">weekly-review</td><td>week + vorige reviews</td><td class="mono" style="font-size:0.8rem">reviews/YYYY-MM-DD.md</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">run-analysis</td><td>activiteit + streams</td><td class="mono" style="font-size:0.8rem">reviews/ (op verzoek)</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">strength-log</td><td>Hevy-sessies</td><td class="mono" style="font-size:0.8rem">data/ + week-load</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">AQ-log</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">progress</td><td>wellness-historie</td><td class="mono" style="font-size:0.8rem">dashboard + samenvatting</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">intervals.icu</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">fuel-and-pace</td><td>races/ + profile</td><td class="mono" style="font-size:0.8rem">races/&lt;race&gt;-dagplan.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">web</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">race-analysis</td><td>splits + races/</td><td class="mono" style="font-size:0.8rem">races/&lt;datum&gt;.md</td><td class="mono" style="font-size:0.78rem;color:var(--dim)">jij plakt</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem;color:var(--form)">log-other-sport</td><td>duur + RPE</td><td class="mono" style="font-size:0.8rem">D1 (activities, source=handmatig) · health/</td><td class="mono" style="font-size:0.78rem;color:var(--fitness)">D1</td></tr>
       </tbody>
     </table>
   </div>
@@ -611,29 +596,26 @@
     <table>
       <thead><tr><th>Taak</th><th>Wanneer</th><th>Waar</th><th>Doet</th></tr></thead>
       <tbody>
-        <tr><td class="mono" style="font-size:0.82rem">sync</td><td class="mono" style="font-size:0.82rem">05:00 dagelijks</td><td>lokaal</td><td>intervals.icu uitlezen › <span class="mono" style="font-size:0.8rem">data/</span></td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">render</td><td class="mono" style="font-size:0.82rem">06:25 dagelijks</td><td>lokaal</td><td><span class="mono" style="font-size:0.8rem">card.html</span> › PNG (Playwright) — de herstelkaart</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">today</td><td class="mono" style="font-size:0.82rem">06:30 dagelijks</td><td>lokaal › Telegram</td><td>readiness-poort + de sessie, <strong>met de PNG als bijlage</strong></td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">adapt-week</td><td class="mono" style="font-size:0.82rem">na elke sessie</td><td>lokaal</td><td>week herverdelen als er iets veranderde</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">weekly-review</td><td class="mono" style="font-size:0.82rem">ma 06:00</td><td>lokaal › Telegram</td><td>oordeel over de week + volgende week</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">dashboard</td><td class="mono" style="font-size:0.82rem">na de review</td><td>lokaal</td><td><span class="mono" style="font-size:0.8rem">dashboard.html</span> herbouwen › privé-URL</td></tr>
-        <tr><td class="mono" style="font-size:0.82rem">vangnet</td><td class="mono" style="font-size:0.82rem">ma 07:00</td><td>GitHub Actions</td><td>draait de review als de laptop uit stond</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">sync</td><td class="mono" style="font-size:0.82rem">elk uur (0 * * * *)</td><td>Worker-cron</td><td>intervals.icu uitlezen › <span class="mono" style="font-size:0.8rem">D1</span></td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">ochtendbrief</td><td class="mono" style="font-size:0.82rem">07:00 lokaal</td><td>Worker › Telegram</td><td>readiness-poort + de sessie, als tekst (de kaart als PNG is gepland)</td></tr>
+        <tr><td class="mono" style="font-size:0.82rem">modelcontrole</td><td class="mono" style="font-size:0.82rem">dagelijks</td><td>Worker-cron</td><td>controleert of het coach-model nog beschikbaar is</td></tr>
       </tbody>
     </table>
 
     <div class="grid g2" style="margin-top:34px">
       <div class="card">
-        <h4>Waarom lokaal eerst</h4>
+        <h4>Waarom één Worker-cron</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Een cronjob op je eigen machine doet exact hetzelfde als een server van €5 per maand,
-          maar dan met je data thuis. De GitHub Action is een vangnet, niet de motor.
+          Eén cron-trigger <span class="mono">0 * * * *</span> in de Worker doet alles: elk
+          uur syncen, om 07:00 lokaal de ochtendbrief, en dagelijks de modelcontrole. Geen
+          launchd, geen GitHub Actions, en je laptop hoeft niet aan te staan.
         </p>
       </div>
       <div class="card">
-        <h4>Wat je moet weten over GitHub-cron</h4>
+        <h4>Wat je moet weten over de Worker-cron</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          <span class="mono">schedule</span> is alleen UTC en kan tot ~15 minuten vertragen bij
-          drukte. Zet de ochtendtaak op 05:45 UTC, dan is hij vroeg in plaats van laat.
+          De trigger loopt elk uur; de code bepaalt welke taak op dat moment aan de beurt is
+          (07:00 lokaal de ochtendbrief). Alles draait in de cloud, niet op je eigen machine.
         </p>
       </div>
     </div>

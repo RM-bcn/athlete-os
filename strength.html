@@ -294,13 +294,13 @@
     <h2>Opgeslagen met een<br>beeld van de uitvoering.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px">
       Je vroeg om de oefeningen op te slaan inclusief een link naar hoe je ze doet. Dat
-      hoeft niet gebouwd te worden — <strong>Hevy levert het al</strong>, en er is een
-      openbare dataset als aanvulling.
+      hoeft niet gebouwd te worden — de bibliotheek komt uit <strong>free-exercise-db</strong>
+      (30 oefeningen). Hevy's eigen templates zijn er alleen met Pro, als aanvulling.
     </p>
 
     <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
       <div class="card raised">
-        <h4 style="margin-bottom:6px">Hevy exercise templates</h4>
+        <h4 style="margin-bottom:6px">Hevy exercise templates <span class="pill off" style="margin-left:6px">alleen met Pro</span></h4>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-bottom:16px">GET /v1/exercise_templates</p>
         <div class="ex">
           <div class="thumb">thumb<br>nail_url</div>
@@ -318,17 +318,18 @@
         </div>
         <p style="color:var(--muted);font-size:0.88rem;margin-top:16px">
           Elk template heeft een <span class="mono">thumbnail_url</span> — het beeld dat
-          je <em>in de app zelf</em> ook ziet. Dat is de schoonste link: het is precies de
-          oefening die je gaat loggen.
+          je <em>in de app zelf</em> ook ziet. Maar deze route vereist Hevy Pro; op het
+          gratis plan komt de bibliotheek uit free-exercise-db.
         </p>
       </div>
 
       <div>
-        <h4 style="margin-bottom:14px">En als aanvulling: free-exercise-db</h4>
+        <h4 style="margin-bottom:14px">De primaire bron: free-exercise-db</h4>
         <p style="color:var(--muted);font-size:0.92rem">
-          Een openbare dataset van <strong>800+ oefeningen</strong>, Unlicense
-          (publiek domein), met per oefening <strong>twee demonstratiebeelden</strong>,
-          spiergroepen, niveau, materiaal en stap-voor-stap instructies.
+          Onze bibliotheek telt <strong>30 oefeningen</strong> uit free-exercise-db, een
+          openbare dataset (Unlicense, publiek domein) met per oefening
+          <strong>twee demonstratiebeelden</strong>, spiergroepen, niveau, materiaal en
+          stap-voor-stap instructies.
         </p>
         <div class="tree" style="margin-top:16px;font-size:0.76rem">{
   "name": "Back Squat",
@@ -346,8 +347,8 @@
     </div>
 
     <div class="callout form" style="margin-top:34px">
-      <strong>Wat er per oefening wordt opgeslagen:</strong> de naam en het
-      Hevy-template-id, de spiergroepen, het materiaal, de voorgeschreven sets × reps en
+      <strong>Wat er per oefening wordt opgeslagen:</strong> de naam en het oefening-id (uit
+      free-exercise-db), de spiergroepen, het materiaal, de voorgeschreven sets × reps en
       het streefgewicht, de rusttijd, een notitie, en de demonstratielink. Alles in
       markdown zodat je het kunt lezen en het model het kan gebruiken.
     </div>
@@ -367,7 +368,7 @@
           <div>
             <strong>De coach bouwt het blok</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              Hij kiest oefeningen uit de Hevy-templates en schrijft het blok naar
+              Hij kiest oefeningen uit free-exercise-db en schrijft het blok naar
               <span class="mono">training/strength/</span> als markdown.
             </p>
           </div>
@@ -375,8 +376,10 @@
         <div class="step">
           <span class="n">02</span>
           <div>
-            <strong>Hij zet het in Hevy</strong>
+            <strong>Jij typt het over in Hevy</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
+              De coach schrijft het blok in markdown; jij typt het één keer over in Hevy.
+              Alleen met <strong>Hevy Pro</strong> kan het automatisch:
               <span class="mono">POST /v1/routine_folders</span> voor het blok, dan
               <span class="mono">POST /v1/routines</span> per sessie — met template-id,
               sets, reps, rust en notities. Jij opent Hevy en de routine staat er, met het
@@ -411,9 +414,10 @@
           <div>
             <strong>En je gewicht ook</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              <span class="mono">POST /v1/body_measurements</span> ondersteunt gewicht,
-              vetpercentage, vetvrije massa én omtrekken (nek, borst, taille, heup, dij,
-              kuit). Dat is de meetlat voor een compositiedoel.
+              Met Hevy Pro ondersteunt <span class="mono">POST /v1/body_measurements</span>
+              gewicht, vetpercentage, vetvrije massa én omtrekken (nek, borst, taille, heup,
+              dij, kuit). Zonder Pro komt lichaamscompositie later via de weegschaal (Tuya).
+              Dat is de meetlat voor een compositiedoel.
             </p>
           </div>
         </div>
@@ -527,9 +531,9 @@
     </div>
 
     <div class="callout" style="margin-top:30px">
-      <strong>Waar het landt:</strong> gewicht en vet% gaan naar de wellness-laag van
-      intervals.icu (die ondersteunt <span class="mono">weight</span> al). De rest —
-      spiermassa, water, visceraal vet — gaat in je eigen <span class="mono">data/</span>,
+      <strong>Waar het landt (toekomstige fase):</strong> gewicht en vet% komen in de
+      wellness-laag terecht (intervals.icu ondersteunt <span class="mono">weight</span> al).
+      De rest — spiermassa, water, visceraal vet — gaat in <span class="mono">D1</span>,
       want intervals.icu heeft daar geen velden voor. Je compositiedoel leest uit beide.
     </div>
   </div>
@@ -547,9 +551,9 @@
 
     <div class="grid g2" style="margin-top:40px;gap:34px;align-items:start">
       <div>
-        <h4 style="margin-bottom:16px">Wat je één keer vastlegt</h4>
+        <h4 style="margin-bottom:16px">Wat je per week vastlegt</h4>
         <p style="color:var(--muted);font-size:0.92rem;margin-bottom:16px">
-          Een terugkerend weeksjabloon in <span class="mono">availability.md</span>:
+          Je beschikbaarheid per week, in de app (opgeslagen in <span class="mono">D1</span>):
         </p>
         <div class="tree" style="font-size:0.78rem">ma  ochtend   60 min   hardlopen
 di  avond     75 min   kracht (gym)
@@ -607,8 +611,9 @@ zo  vrij</div>
             loggen en niet bij je beschikbaarheid.
           </li>
           <li>
-            <strong>Het gaat intervals.icu in als handmatige activiteit.</strong> Dan telt
-            het mee in ATL en dus in je vorm en in de beslissingen van de coach.
+            <strong>Het gaat in D1 en telt daar mee.</strong> Duur × RPE wordt een load die
+            meetelt in de week en in de beslissingen van de coach. De intervals-schrijfweg
+            voor handmatige sport is nog niet gebouwd.
           </li>
           <li>
             <strong>Het is geen schatting die je vergeet.</strong> De coach vraagt er

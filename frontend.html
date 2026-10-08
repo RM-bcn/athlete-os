@@ -83,8 +83,9 @@
     <h1 style="font-size:clamp(2.2rem,5.4vw,4rem)">De interface.</h1>
     <p class="lead" style="max-width:64ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
       Eén scherm dat je 's ochtends opent zonder eraan herinnerd te worden. Geen navigatie,
-      geen tabs vol statistieken — alleen wat vandaag verandert. Dit zijn schetsen, geen
-      gebouwde app: ze bestaan om te bespreken voordat er iets wordt gemaakt.
+      geen tabs vol statistieken — alleen wat vandaag verandert. De views vandaag, week,
+      invoer en log zijn <strong>al gebouwd</strong>; de rest volgt volgens
+      <span class="mono">UI-PLAN.md</span>. De schermen hieronder zijn schetsen om te bespreken.
     </p>
   </div>
 </header>
@@ -104,8 +105,8 @@
         <span class="card-num">01</span>
         <h4>Telegram</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          <strong>De push en het gesprek.</strong> De ochtendbrief komt binnen als bericht,
-          <em>met de herstelkaart als afbeelding</em>. Je antwoordt in gewoon Nederlands:
+          <strong>De push en het gesprek.</strong> De ochtendbrief komt binnen als tekstbericht.
+          <em>De herstelkaart als afbeelding is gepland.</em> Je antwoordt in gewoon Nederlands:
           "verzet donderdag", "squat 3×8 op 110, voelde als een 8".
         </p>
       </div>
@@ -114,8 +115,8 @@
         <h4>Het dashboard</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           <strong>De visuals.</strong> Eén HTML-bestand dat je op je telefoon opent via een
-          <em>privé-URL</em> (Cloudflare Access) of lokaal. Hier zie je de ring, de
-          hypnogram, de trends en de week.
+          <em>privé-URL</em> (nu login met Basic Auth; Cloudflare Access later) of lokaal.
+          Hier zie je de ring, de hypnogram, de trends en de week.
         </p>
       </div>
       <div class="card" style="border-top:3px solid var(--line-2)">
@@ -131,7 +132,7 @@
     <div class="callout" style="margin-top:32px">
       <strong>Dus hoe zie je die recovery score?</strong> Op drie manieren, en je kiest
       per moment:
-      <span class="mono" style="font-size:0.84rem">Telegram-bericht (met afbeelding)</span> ·
+      <span class="mono" style="font-size:0.84rem">Telegram-bericht (nu tekst; kaart gepland)</span> ·
       <span class="mono" style="font-size:0.84rem">privé-URL op je telefoon</span> ·
       <span class="mono" style="font-size:0.84rem">health/2026-10-06.md</span>
     </div>
@@ -147,7 +148,7 @@
 <!-- ============ TELEFOON ============ -->
 <section class="band" id="telefoon">
   <div class="wrap">
-    <p class="eyebrow">Zeven schermen</p>
+    <p class="eyebrow">Acht schermen</p>
     <h2 style="margin-bottom:44px">De kern in je zak.</h2>
 
     <div class="screens">
@@ -386,7 +387,7 @@
                   <div class="row"><span class="k">Rustige HR</span><span class="v" style="color:var(--easy)">54</span></div>
                   <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
                 </div>
-                <div class="cap">herstel-kaart.png · gegenereerd uit je eigen data</div>
+                <div class="cap">herstel-kaart.png · gepland (nu tekst)</div>
               </div>
 
               <div class="bubble coach" style="margin-bottom:0">
@@ -401,7 +402,7 @@
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>Ochtendbrief</b><span>Telegram, met de kaart als beeld</span></div>
+        <div class="screen-label"><b>Ochtendbrief</b><span>Telegram, nu als tekst · kaart gepland</span></div>
       </div>
 
       <!-- SCHERM · KRACHT -->
@@ -488,9 +489,10 @@
     <div class="callout form" style="max-width:820px;margin:52px auto 0">
       <strong>Waarom Telegram en niet een eigen app?</strong> Omdat je geen app wilt
       onderhouden, niet omdat je geen visuals kunt hebben. Telegram is gratis, heeft al je
-      meldingen, en werkt twee richting zonder server. <strong>De visuals komen uit het
-      dashboard</strong>, en het dashboard komt naar je toe: als afbeelding in Telegram,
-      en als privé-URL die je op je telefoon opent.
+      meldingen, en werkt twee richting via de Worker-webhook (<span class="mono">/api/telegram</span>).
+      <strong>De visuals komen uit het dashboard</strong>, en het dashboard komt naar je toe:
+      als tekst in Telegram, en als privé-URL die je op je telefoon opent. De kaart als
+      afbeelding is gepland.
     </div>
   </div>
 </section>
@@ -498,11 +500,12 @@
 <!-- ============ HOE DE KAART IN TELEGRAM KOMT ============ -->
 <section class="band" id="kaart">
   <div class="wrap">
-    <p class="eyebrow accent">En hoe dan precies?</p>
+    <p class="eyebrow accent">En hoe dan precies? · gepland</p>
     <h2>Het dashboard rendert zichzelf<br>tot een plaatje.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px">
       Dit is het stukje dat de twee oppervlakken verbindt. Dezelfde HTML die je op je
-      telefoon opent, wordt 's ochtends ook als afbeelding naar Telegram gestuurd.
+      telefoon opent, wordt 's ochtends ook als afbeelding naar Telegram gestuurd. Dat is
+      <strong>gepland</strong>: nu is de ochtendbrief tekst.
     </p>
 
     <div class="card" style="margin-top:40px;padding:30px">
@@ -546,7 +549,7 @@
           </div>
           <span class="flow-arrow">›</span>
           <div style="color:var(--muted);font-size:0.9rem">
-            De bot stuurt de PNG met een korte tekst eronder. Gratis, geen server.
+            De bot stuurt de PNG met een korte tekst eronder (gepland; nu tekst). Gratis, geen server.
           </div>
         </div>
         <div class="flow-row">
@@ -557,7 +560,7 @@
           <span class="flow-arrow">›</span>
           <div style="color:var(--muted);font-size:0.9rem">
             Tik je op de kaart, dan opent het volledige dashboard — op een URL die alleen
-            jij kunt bereiken (Cloudflare Access).
+            jij kunt bereiken (nu login met Basic Auth; Cloudflare Access volgt later).
           </div>
         </div>
       </div>
@@ -683,9 +686,9 @@
             is geen voetnoot — het is een regel in je week.
           </li>
           <li>
-            <strong>En het telt mee als belasting.</strong> Duur × RPE › load, als
-            handmatige activiteit naar intervals.icu. Anders doet de coach alsof die dag
-            rust was.
+            <strong>En het telt mee als belasting.</strong> Duur × RPE › load, naar
+            <strong>D1</strong> (telt mee in week en load). De intervals-schrijfweg voor
+            handmatige sport is nog niet gebouwd. Anders doet de coach alsof die dag rust was.
           </li>
           <li class="warn">
             <strong>Vrije dagen worden niet automatisch gevuld.</strong> De coach vraagt
@@ -715,7 +718,7 @@
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
-        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">dashboard.html — lokaal, offline</span>
+        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">PWA (Worker) — vier views: vandaag · week · invoer · log</span>
       </div>
 
       <div style="padding:28px">
@@ -786,10 +789,10 @@
 
     <div class="grid g3" style="margin-top:30px">
       <div class="card">
-        <h4>Drie tabbladen, geen meer</h4>
+        <h4>Vier views, geen meer</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Vandaag · Trends · Coach. De cursus belooft precies dit en levert het ook — wij
-          voegen kracht en fietsen toe aan de mix.
+          Vandaag · week · invoer · log — zoals de gebouwde PWA ze heeft. Trends en Coach
+          zijn gepland (zie <span class="mono">UI-PLAN.md</span> fase C/D).
         </p>
       </div>
       <div class="card">
@@ -800,10 +803,12 @@
         </p>
       </div>
       <div class="card">
-        <h4>Knoppen kopiëren, ze bellen niets</h4>
+        <h4>De knoppen bellen de Worker</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Een statisch bestand kan geen agent aansturen. Knoppen zetten het commando op je
-          klembord; jij plakt het in Opencode. Simpel en veilig.
+          De PWA doet echte API-calls: <span class="mono">/api/today</span>,
+          <span class="mono">/api/sync</span>, <span class="mono">POST /api/log</span>,
+          <span class="mono">POST /api/sick</span> en <span class="mono">PUT /api/availability</span>.
+          De coach is de Worker.
         </p>
       </div>
     </div>
