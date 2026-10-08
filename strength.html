@@ -424,9 +424,9 @@
       <strong>Eerlijk over de gratis route:</strong> Hevy's <em>lees</em>-API vereist Hevy
       Pro. De <strong>webhook en het schrijven van routines</strong> ook. Blijf je op het
       gratis plan, dan werkt de lus andersom: de coach schrijft het blok in markdown, jij
-      typt het één keer over in Hevy, en daarna logt Hevy het via Health Connect terug naar
-      intervals.icu. Meer handwerk, nul euro. Zie <a href="backend.html#opslag">de
-      opslaglaag</a>.
+      typt het één keer over in Hevy, en daarna log je de sessie over in de AQ-log (duur +
+      RPE). De hartslag tijdens kracht komt van het horloge via intervals.icu. Meer handwerk,
+      nul euro. Zie <a href="backend.html#opslag">de opslaglaag</a>.
     </div>
   </div>
 </section>
@@ -438,27 +438,27 @@
     <h2>Je weegschaal is een<br>databron, geen eiland.</h2>
     <p style="max-width:66ch;color:var(--muted);margin-top:20px">
       Je Smart Life-weegschaal meet gewicht én vetpercentage. Dat is precies de meetlat voor
-      een compositiedoel — en het is op te halen. Ik heb drie routes gevonden, van nul code
-      tot volledig zelfgebouwd.
+      een compositiedoel. Dit is een toekomstige fase: het aansluiten loopt via de Tuya
+      Cloud API, van een klein script tot lokaal. Health Connect is puur on-device en bereikt
+      AQ niet — het is geen dataroute.
     </p>
 
     <div class="grid g3" style="margin-top:40px">
       <div class="card" style="border-top:3px solid var(--form)">
-        <span class="card-num" style="color:var(--form)">ROUTE 1 · NUL CODE</span>
-        <h4>Smart Life › Health Connect</h4>
+        <span class="card-num" style="color:var(--form)">TOEKOMSTIGE FASE</span>
+        <h4>De weegschaal (toekomstige fase)</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Tuya's eigen BLE-weegschaal-oplossing ondersteunt synchronisatie met
-          <strong>Google Fit en Fitbit</strong>. Kijk in de app onder
-          <strong>Ik › Derden</strong>. Staat het er, dan komt je gewicht via Health Connect
-          in intervals.icu — zonder één regel code.
+          Health Connect is puur on-device en bereikt AQ niet, dus het is geen dataroute.
+          Lichaamscompositie komt later via de Tuya Cloud API. Google Fit wordt eind 2026
+          uitgezet; die gebruiken we niet.
         </p>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
-          Eerst proberen — kost 10 minuten
+          later · via de Tuya Cloud API
         </p>
       </div>
 
       <div class="card" style="border-top:3px solid var(--fitness)">
-        <span class="card-num" style="color:var(--fitness)">ROUTE 2 · KLEIN SCRIPT</span>
+        <span class="card-num" style="color:var(--fitness)">ROUTE 1 · KLEIN SCRIPT</span>
         <h4>Tuya IoT Cloud</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           Tuya heeft officiële <strong>Body Fat Scale Open API's</strong>. Je leest de
@@ -471,7 +471,7 @@
       </div>
 
       <div class="card" style="border-top:3px solid var(--line-2)">
-        <span class="card-num">ROUTE 3 · LOKAAL</span>
+        <span class="card-num">ROUTE 2 · LOKAAL</span>
         <h4>tinytuya</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           Puur over je eigen netwerk, zonder cloud. <strong>Maar:</strong> de meeste
@@ -493,7 +493,7 @@
       <em>"0 devices under the app account"</em>.
       <br><br>
       <strong>Dus:</strong> zet de weegschaal in <strong>Smart Life</strong>, niet in LSC.
-      Dan kun je hem zowel aan de Tuya-cloud koppelen als aan Google Fit.
+      Dan kun je hem aan de Tuya-cloud koppelen.
     </div>
 
     <div class="grid g2" style="margin-top:34px;gap:30px;align-items:start">

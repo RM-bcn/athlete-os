@@ -41,7 +41,7 @@ server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 | Push + sparren | Telegram Bot | €0 |
 | Data-spine | intervals.icu | €0 (5.000 req/dag) |
 | Kracht | Hevy (gratis plan) | €0 |
-| Weegschaal | lokaal via Health Connect; lichaamscompositie later via Tuya | €0 |
+| Weegschaal | toekomstige fase; lichaamscompositie via de Tuya Cloud API | €0 |
 | Brein | Opencode + model-API | **alleen deze post** |
 | Vault | GitHub private | €0 |
 
@@ -104,7 +104,7 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 
 - [ ] `sources/intervals.ts` — activiteiten + wellness ophalen
 - [ ] `sources/hevy.ts` — workouts + body measurements
-- [ ] `sources/scale.ts` — gewicht + vet% (Smart Life → Health Connect, of Tuya API)
+- [ ] `sources/scale.ts` — gewicht + vet% (toekomstige fase, via de Tuya Cloud API)
 - [ ] Cron-trigger in de Worker: dagelijks syncen
 - [ ] `GET /api/debug/sources` → toon wat er per bron binnenkwam
 
