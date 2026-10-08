@@ -35,14 +35,16 @@
         <strong style="color:var(--form)">Live:</strong> de Worker en het dashboard draaien —
         <span class="mono" style="font-size:.82em">athlete-intelligence.aq-bd6.workers.dev</span> —
         <strong>achter een login</strong>. intervals.icu stroomt binnen (slaap, rusthartslag, trainingen).
-        De app heeft acht schermen — Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer en Feedback —
-        met de <strong>Body Battery</strong>, je <strong>doel + seizoensplan</strong> en de
-        <strong>feedback-lus</strong>. De <strong>coach werkt</strong>: hetzelfde brein in de app en op
-        Telegram (één gesprek), regels voor de cijfers, een model voor het oordeel, en de ochtendbrief om
-        07:00 met de <strong>herstelkaart als PNG-foto</strong>. Je kunt een <strong>.fit of screenshot</strong>
-        aanleveren die naar je horloge gaat. De rekenregels: <strong>193 tests</strong>. Alle zes
-        onboarding-stappen zijn klaar; de weegschaal is een toekomstige fase.
-        Zie <span class="mono" style="font-size:.82em">PLAN.md</span> › Stand van zaken.
+        De app heeft <strong>negen schermen</strong> — Vandaag, Herstel, Week, Trends, Coach, Kracht,
+        Invoer, Feedback en Profiel — met de <strong>Body Battery</strong> (nu ook over de dag:
+        "nog X% nu"), je <strong>doel + seizoensplan</strong>, <strong>kracht-logg in de app</strong>
+        en de <strong>feedback-lus</strong> (je landt op je training). De <strong>coach werkt</strong>:
+        hetzelfde brein in de app en op Telegram (één gesprek), regels voor de cijfers, een model voor
+        het oordeel, en de ochtendbrief om 07:00 met de <strong>herstelkaart als PNG-foto</strong>.
+        Je kunt een <strong>.fit of screenshot</strong> aanleveren die naar je horloge gaat. De
+        rekenregels: <strong>264 tests</strong>. Alle zes onboarding-stappen zijn klaar; nog open:
+        het hypnogram (Huawei levert geen slaapfases), Cloudflare Access en de weegschaal (Tuya) —
+        die wachten op jou. Zie <span class="mono" style="font-size:.82em">PLAN.md</span> › Stand van zaken.
       </span>
     </div>
   </div>
@@ -254,8 +256,8 @@
           <td class="mono" style="color:var(--form)">€0</td>
         </tr>
         <tr>
-          <td><strong>Hevy</strong></td>
-          <td>krachtsessies via de AQ-log › als <span class="mono">WeightTraining</span></td>
+          <td><strong>Kracht (app / Hevy)</strong></td>
+          <td>kracht-logg in de app — oefeningen + sets (reps + kg) › als <span class="mono">WeightTraining</span>; Hevy kan als logboek</td>
           <td><span class="pill off">nee</span></td>
           <td class="mono" style="color:var(--form)">€0</td>
         </tr>
@@ -297,7 +299,7 @@
           <div class="flow-row" style="grid-template-columns:1fr auto 1fr;padding:14px 0">
             <span class="mono" style="font-size:0.84rem">kracht</span>
             <span class="flow-arrow">›</span>
-            <span class="mono" style="font-size:0.84rem;color:var(--fitness)">Hevy (logboek)</span>
+            <span class="mono" style="font-size:0.84rem;color:var(--fitness)">app kracht-logg</span>
           </div>
         </div>
         <p style="font-size:0.85rem;color:var(--muted);margin-top:16px">
@@ -458,8 +460,9 @@
           <div class="skill" style="border-color:var(--line-2)"><span class="name new">progress</span><p>Voortgang naar doel: eFTP-trend, CTL-curve, weeksamenvatting.</p></div>
         </div>
         <div class="callout" style="margin-top:20px">
-          <span class="mono" style="font-size:0.82rem">strength-log</span> leest je Hevy-sessies
-          en verrekent de krachtload in de week — iets wat geen enkele hardloop- of fietsapp doet.
+          <span class="mono" style="font-size:0.82rem">strength-log</span> leest je kracht-logg
+          (in de app, of Hevy als logboek) en verrekent de krachtload in de week — iets wat geen
+          enkele hardloop- of fietsapp doet.
         </div>
       </div>
     </div>
@@ -486,7 +489,7 @@
         <h4>Lichaamscompositie</h4>
         <p style="color:var(--muted);font-size:0.92rem;margin-top:8px">
           Streefgewicht, vetpercentage of spiermassa. Met een krachtblok van maanden, niet
-          losse sessies — en de oefeningen in je Hevy, met een beeld van de uitvoering.
+          losse sessies — en de oefeningen in de app (of in je Hevy), met een beeld van de uitvoering.
         </p>
       </div>
     </div>
@@ -502,7 +505,7 @@
       </div>
       <div class="card">
         <h4 style="font-size:0.95rem">Kracht</h4>
-        <p style="color:var(--muted);font-size:0.86rem;margin-top:6px">Hevy › AQ-log</p>
+        <p style="color:var(--muted);font-size:0.86rem;margin-top:6px">app kracht-logg (of Hevy) › load</p>
       </div>
       <div class="card" style="border-color:var(--line-2)">
         <h4 style="font-size:0.95rem;color:var(--easy)">Volleybal e.a.</h4>
@@ -533,7 +536,9 @@
     <p style="max-width:64ch;color:var(--muted);margin-top:20px;font-size:1.04rem">
       Fase 5 (de coach) en fase 7 (Telegram) zijn klaar, fase 6 (kracht) deels. Daarnaast zijn de
       UI-fases A–F af: design-fundament, Vandaag/Herstel, Trends/week, coach-in-app, kracht + kaart-PNG,
-      en de afwerking met drie tabs. De volledige stand staat in <span class="mono">PLAN.md</span> › Stand van zaken.
+      en de afwerking met drie tabs. Daarna volgde een latere UX-/feature-ronde: feedback als
+      detailweergave, beschikbaarheid als week-overzicht, Body Battery intraday en kracht-logg in de
+      app. De volledige stand staat in <span class="mono">PLAN.md</span> › Stand van zaken.
     </p>
 
     <div style="margin-top:44px">
@@ -544,7 +549,7 @@
           <p style="color:var(--muted);margin-top:10px">
             intervals.icu-account, Huawei koppelen, <strong>Health Service Kit aanzetten</strong>
             in de Huawei-app (vergeet je dit, dan komt er niets binnen), Wahoo koppelen,
-            Hevy via de AQ-log.
+            en kracht loggen in de app.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
             Levert op: al je data op één plek, en je weet dat de koppelingen echt werken.
@@ -637,9 +642,11 @@
         <div>
           <h3>Kracht</h3>
           <p style="color:var(--muted);margin-top:10px">
-            Oefeningenbibliotheek van 30 oefeningen uit <span class="mono">free-exercise-db</span>
-            en de <span class="mono">build-strength-block</span>-skill. Het Kracht-scherm toont het
-            blok van de dag met demo-beeld per oefening (of een eerlijke lege staat). Het echte blok
+            Oefeningenbibliotheek van 30 oefeningen uit <span class="mono">free-exercise-db</span>,
+            de <span class="mono">build-strength-block</span>-skill, en <strong>kracht loggen in de
+            app</strong> — oefeningen kiezen en sets toevoegen (reps + kg); de tonnage en de load
+            rekenen mee in je week. Het Kracht-scherm toont het blok van de dag met demo-beeld per
+            oefening (of een eerlijke lege staat). Het echte blok
             wacht op doel, materiaal en beschikbaarheid.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
@@ -753,6 +760,8 @@
       <li class="no"><strong>Geen gepolijste mobiele app.</strong> Een statisch dashboard en Telegram. Functioneel, niet mooi-als-een-app.</li>
       <li class="no"><strong>Geen medisch advies.</strong> Het systeem signaleert patronen. Het is geen arts en het zegt dat zelf ook.</li>
       <li class="no"><strong>Geen HRV in de eerste versie.</strong> De Huawei-API geeft het niet. Slaap en rustige hartslag dragen de readiness-poort; HRV komt later, als Huawei een dagwaarde gaat leveren (nu alleen een curve).</li>
+      <li class="no"><strong>Geen slaapfases (hypnogram).</strong> De Huawei-API levert geen slaapfases, dus wakker, REM, licht en diep tonen we niet. Wel: slaapduur en slaapbehoefte.</li>
+      <li class="no"><strong>Nog geen Cloudflare Access of weegschaal.</strong> De poort is nu HTTP Basic Auth, en lichaamscompositie via de Tuya-weegschaal is een toekomstige fase — beide wachten op de gebruiker.</li>
       <li class="no"><strong>Eerste twee weken observe-only.</strong> Een nieuwe databron is twee weken onbetrouwbaar. Tot die tijd kijkt het mee en grijpt het niet in.</li>
     </ul>
 
@@ -777,7 +786,7 @@
         <tr><td>intervals.icu</td><td>ruggengraat: leest alles, schrijft terug, rekent CTL/ATL/TSB</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Huawei › intervals.icu</td><td>activiteiten, slaap, rustige hartslag</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Wahoo ELEMNT</td><td>ritten + gestructureerde fietsworkouts</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td>Hevy › AQ-log</td><td>krachtload in het model</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Kracht in de app</td><td>krachtload in het model (of Hevy als logboek)</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Opslag</td><td>markdown + SQLite in een private git-repo</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Automatisering</td><td>Worker-cron <span class="mono">0 * * * *</span> (elk uur sync, 07:00 brief)</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Meldingen</td><td>Telegram, uitgaand</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
@@ -812,8 +821,8 @@
           <p style="color:var(--muted);margin-top:10px;font-size:0.94rem">
             Inmiddels alle zes klaar. Per stap: wat je doet, waarom het nodig is, hoe je weet
             dat het gelukt is, en wat je aan mij doorgeeft. De coach zit nu ook <strong>in de app</strong>
-            zelf, niet alleen op Telegram. Hevy's gratis plan heeft geen API, dus kracht log je
-            via de AQ-log of het Feedback-scherm (duur + RPE).
+            zelf, niet alleen op Telegram. Kracht log je nu in de app (oefeningen + sets); Hevy kan
+            als logboek blijven.
           </p>
         </div>
         <div>
@@ -826,8 +835,8 @@
             <span class="mono" style="font-size:0.78rem;color:var(--form)">6 · Model-API — klaar</span>
           </div>
           <p class="mono" style="font-size:0.72rem;color:var(--dim);margin-top:14px">
-            Hevy: kracht via de AQ-log (duur + RPE) · de weegschaal (Tuya, lichaamscompositie)
-            is een toekomstige fase
+            Kracht: loggen in de app (reps + kg) of via de AQ-log · de weegschaal (Tuya,
+            lichaamscompositie) is een toekomstige fase
           </p>
         </div>
       </div>
@@ -876,8 +885,11 @@
         <p class="eyebrow" style="margin-bottom:10px">Bijlage B</p>
         <h4>De interface ›</h4>
         <p style="color:var(--muted);margin-top:8px;font-size:0.88rem">
-          Grotendeels gebouwd: Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer en Feedback
-          bestaan in de app. Nog open: het hypnogram (slaapfases) — Huawei levert die niet.
+          Gebouwd: Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer, Feedback en Profiel.
+          Feedback is een detailweergave (je landt op je training), beschikbaarheid is een
+          week-overzicht, Body Battery loopt ook intraday ("nog X% nu") en kracht log je in de app.
+          Nog open: het hypnogram (slaapfases) — Huawei levert die niet — plus Cloudflare Access
+          en de Tuya-weegschaal, die op jou wachten.
         </p>
       </a>
     </div>

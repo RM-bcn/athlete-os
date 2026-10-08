@@ -14,16 +14,20 @@ De bouw loopt. Wat er nu echt staat:
 |---|---|---|
 | **0 · Fundament** | klaar | D1, Worker live, PWA live, en het geheel achter een login (Basic Auth). Cloudflare Access staat nog op **later**. |
 | **1 · Data** | loopt | intervals.icu stroomt binnen — 122 wellness-dagen (mét slaap), 119 activiteiten en rusthartslag. Sync loopt **elk uur**, plus verversen zodra je de app opent. Alles via de **Huawei-koppeling**; geen telefoon-brug nodig. Alleen het gewicht (weegschaal) is nog een **toekomstige fase**. |
-| **2 · Rekenregels** | klaar | **193 tests groen**. Puur, deterministisch, en de Worker gebruikt ze. |
-| **3 · PWA** | klaar | De acht schermen: **Vandaag · Herstel · Week · Trends · Coach · Kracht · Invoer · Feedback**. Installeerbaar, offline met de laatste snapshot. De oude losse log-pagina is uit de nav; **Feedback** vervangt die. |
-| **4 · Invoer** | klaar | Beschikbaarheid per dag en per sport, en **Feedback**: kies een afgeronde training en geef **RPE**, een **score 0–100%** (hoe accuraat t.o.v. het plan), **gepland/iets anders/overgeslagen**, een notitie en **plan-vs-gedaan**. |
+| **2 · Rekenregels** | klaar | **264 tests groen**. Puur, deterministisch, en de Worker gebruikt ze. |
+| **3 · PWA** | klaar | De **negen schermen**: **Vandaag · Herstel · Week · Trends · Coach · Kracht · Invoer · Feedback · Profiel**. Installeerbaar, offline met de laatste snapshot. De service worker is nu **netwerk-eerst voor de schil**, zodat een nieuwe versie meteen doorkomt. De oude losse log-pagina is uit de nav; **Feedback** vervangt die. |
+| **4 · Invoer** | klaar | Beschikbaarheid als **week-overzicht**: 7 dagkaarten met een samenvatting en het week-totaal; tik een dag open om de drie dagdelen te bewerken (minuten + sport, incl. "anders" zoals volleybal), met **"kopieer vorige week"** en **"week leegmaken"**. En **Feedback** als **detailweergave**: je klikt op een afgeronde training en **landt op die training** (`/feedback?id=<activity_id>`) — bovenaan de cijfers van wat je deed (duur, afstand, gem./max HR, load, tempo), daaronder **plan vs. gedaan**, en dan jouw oordeel: **RPE 1–10**, **score 0–100%** (hoe accuraat t.o.v. het plan), **gepland/iets anders/overgeslagen**, een notitie en opslaan met bevestiging + "laatst vastgelegd". De lijst blijft de index. |
 | **5 · Coach** | klaar | Regels voor de cijfers, een **model** voor het oordeel. Standaard **deepseek-v4-flash** (via OpenCode Go), met een **automatische fallback-keten** (mimo-v2.6-flash › glm-5.3-flash › minimax-m3). De coach zit nu ook **in de app** (`POST /api/coach`) en deelt **één geheugen** met Telegram. Valt het voorkeursmodel weg, dan waarschuwt de coach via Telegram en maakt een workboard-kaart. |
-| **6 · Kracht** | deels | oefeningenbibliotheek (30 oefeningen, echte demo-URL's uit free-exercise-db) + de `build-strength-block`-skill. Het **Kracht-scherm** toont het blok van de dag met demo-beeld per oefening (of een eerlijke lege staat). Het echte blok wacht op **doel + materiaal + beschikbaarheid**. |
+| **6 · Kracht** | deels | oefeningenbibliotheek (30 oefeningen, echte demo-URL's uit free-exercise-db) + de `build-strength-block`-skill. **Kracht log je nu in de app**: kies oefeningen uit de bibliotheek en voeg sets toe (reps + kg); **tonnage = som reps × gewicht**, de **load** rekent de server (`strengthLoad`), en de sessie telt mee in je week/load/coach. Plus een **"recent gelogd"**-lijst; Hevy overtypen is daardoor niet meer nodig. Het **Kracht-scherm** toont het blok van de dag met demo-beeld per oefening (of een eerlijke lege staat). Het echte blok wacht op **doel + materiaal + beschikbaarheid**. |
 | **7 · Telegram** | klaar | Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief — nu met de **herstelkaart als PNG-foto**. De coach **vraagt na een nieuwe training hoe het ging** (inline knoppen: verdict › RPE). |
 
 **Body Battery** is er: een herstelsaldo (0–100) dat 's nachts oplaadt (slaap, rust-HR en HRV
 tegen je eigen basislijn) en overdag leegloopt met je training — eerlijk als **schatting**
-gelabeld. Je kunt je **doel** tegen de coach zeggen ("mijn doel is de halve marathon op 5:07/km
+gelabeld. De batterij loopt nu ook **over de dag** leeg (intraday): naast de dagwaarde is er
+**"nog X% nu"**, met `saldo = ochtend − drains van je trainingen tot nu − rust-drain
+(07:00–23:00)`. Te zien op **Vandaag** ("nog X% nu", met de dagwaarde als context) en als
+**gauge op Herstel**. Eerlijk als schatting gelabeld — Huawei levert geen dagcurve, dus het is
+benaderd met de **starttijden** van je activiteiten. Je kunt je **doel** tegen de coach zeggen ("mijn doel is de halve marathon op 5:07/km
 op …"); hij zet het **vast** in D1 en bouwt de **periodisering** (Base › Build › Peak › Taper),
 zichtbaar in Trends. Meerdere doelen kunnen naast elkaar staan. De **feedback-lus**
 (`session_feedback` in D1) haalt je valkuilen op in het blok **Patronen** in Trends. Het
@@ -31,15 +35,18 @@ zichtbaar in Trends. Meerdere doelen kunnen naast elkaar staan. De **feedback-lu
 
 De **UI-fases A–F** zijn af: het design-fundament (A), Vandaag + Herstel (B), Trends + de week (C),
 de coach in de app (D), Kracht + de ochtendkaart als PNG (E), en de afwerking met de drie
-hoofdtabbladen (F). De bouwkaarten lopen tot `aq-039` (doelen en het seizoensplan) en `aq-040`
-(een doel uit vrije tekst halen en de periodisering bouwen).
+hoofdtabbladen (F). Daarna volgde een **latere UX-/feature-ronde**: **Feedback** als
+detailweergave per training, **beschikbaarheid** als week-overzicht, **Body Battery intraday**
+("nog X% nu") en **kracht-logg in de app**. De bouwkaarten lopen tot `aq-039` (doelen en het
+seizoensplan) en `aq-040` (een doel uit vrije tekst halen en de periodisering bouwen).
 
 **Live:** `https://athlete-intelligence.aq-bd6.workers.dev` — **privé, achter Basic Auth**.
 **Telegram:** [@AthleteIntelligencebot](https://t.me/AthleteIntelligencebot).
 **Vault + app:** `github.com/RM-bcn/athlete-intelligence` (private) — de Worker en PWA staan in `app/`.
 
 **Health Connect bereikt AQ niet.** Het is een databank op de telefoon; er is geen
-server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
+server-API. De weegschaal loopt via **Tuya**, kracht log je in de **app** (Hevy kan als
+logboek blijven).
 
 ---
 
@@ -53,7 +60,7 @@ server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 | Privé-toegang | HTTP Basic Auth in de Worker (Cloudflare Access later) | €0 |
 | Push + sparren | Telegram Bot | €0 |
 | Data-spine | intervals.icu | €0 (5.000 req/dag) |
-| Kracht | Hevy (gratis plan) | €0 |
+| Kracht | in de app loggen (Hevy optioneel als logboek) | €0 |
 | Weegschaal | toekomstige fase; lichaamscompositie via de Tuya Cloud API | €0 |
 | Brein | de coach in de Worker + model-API | **alleen deze post** |
 | Vault | GitHub private | €0 |
@@ -72,10 +79,10 @@ athlete-intelligence/
 │   │   │   ├── load.ts     # CTL/ATL/TSB, RPE-load
 │   │   │   ├── readiness.ts# slaap + RHR + load → oordeel
 │   │   │   └── trends.ts   # 7/28-daags, drift
-│   │   ├── sources/        # intervals.icu, Hevy, weegschaal
+│   │   ├── sources/        # intervals.icu, kracht-logg, weegschaal
 │   │   └── coach.ts        # de dunne brug naar het model
 │   ├── public/             # de PWA (static assets)
-│   │   ├── index.html      # de acht schermen als tabs (vandaag › herstel › week › trends › coach › kracht › invoer › feedback)
+│   │   ├── index.html      # de negen schermen als tabs (vandaag › herstel › week › trends › coach › kracht › invoer › feedback › profiel)
 │   │   ├── manifest.webmanifest
 │   │   └── sw.js           # offline
 │   └── schema.sql          # D1
@@ -109,10 +116,10 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 ---
 
 ### Fase 1 — De data naar binnen
-**Levert:** intervals.icu, Hevy en de weegschaal komen in D1.
+**Levert:** intervals.icu, de kracht-logg en de weegschaal komen in D1.
 
 - [ ] `sources/intervals.ts` — activiteiten + wellness ophalen
-- [ ] `sources/hevy.ts` — workouts + body measurements
+- [ ] kracht-logg in de app — sets (reps + kg) › tonnage › `strengthLoad`
 - [ ] `sources/scale.ts` — gewicht + vet% (toekomstige fase, via de Tuya Cloud API)
 - [ ] Cron-trigger in de Worker: elk uur syncen (`0 * * * *`)
 - [ ] verifieer via `GET /api/health` + `GET /api/wellness`
@@ -146,9 +153,10 @@ starten — slaap, rusthartslag en trainingen komen al binnen via intervals.icu.
 
 - [x] `manifest.webmanifest` + service worker
 - [x] `GET /api/today` → readiness + de sessie
-- [x] `index.html` — de PWA met acht schermen als tabs (vandaag › herstel › week › trends › coach › kracht › invoer › feedback)
+- [x] `index.html` — de PWA met negen schermen als tabs (vandaag › herstel › week › trends › coach › kracht › invoer › feedback › profiel)
 - [x] Offline: laatste snapshot in de cache
 - [x] Installeerbaar op je beginscherm
+- [x] Service worker netwerk-eerst voor de schil — een nieuwe versie komt meteen door
 
 **Klaar als:** je hem installeert, in vliegtuigmodus opent, en je dag nog ziet.
 
@@ -157,9 +165,9 @@ starten — slaap, rusthartslag en trainingen komen al binnen via intervals.icu.
 ### Fase 4 — Invoer
 **Levert:** jij kunt iets teruggeven aan het systeem.
 
-- [x] `availability.html` — beschikbaarheid per dag en per sport (minuten + sport)
+- [x] beschikbaarheid als **week-overzicht** — 7 dagkaarten met week-totaal; tik een dag open voor de drie dagdelen (minuten + sport), plus "kopieer vorige week" en "week leegmaken"
 - [x] `PUT /api/availability`
-- [x] `feedback.html` — **ná** de sessie: RPE, score 0–100%, gepland/iets anders/overgeslagen, notitie en plan-vs-gedaan
+- [x] `feedback.html` — **detailweergave**: klik een afgeronde training aan en land erop (`/feedback?id=<activity_id>`), met de cijfers, **plan vs. gedaan**, RPE 1–10, score 0–100%, gepland/iets anders/overgeslagen en een notitie
 - [x] `POST /api/feedback` + `session_feedback` in D1
 - [x] `POST /api/sick` — ziek melden → dag op pauze
 
@@ -192,12 +200,13 @@ waarschuwt hij je.
 
 - [x] `exercises.md` — bibliotheek van 30 oefeningen met **echte demo-URL's** uit `free-exercise-db`
 - [x] `build-strength-block` skill — 12 weken, accumulatie › intensificatie › deload
-- [x] Export naar markdown dat je in Hevy overtypt (geen Pro)
+- [x] Export naar markdown (voor wie wil) — loggen kan nu ook direct in de app, dus Hevy overtypen is niet meer nodig
 - [x] Krachtload in de week verrekenen (tonnage + hartslag) — `strengthLoad` in de rekenregels
 - [x] Kracht-scherm in de PWA: het blok van de dag met demo-beeld per oefening (of een eerlijke lege staat)
+- [x] **Kracht loggen in de app**: oefeningen kiezen uit de bibliotheek, sets toevoegen (reps + kg), tonnage + load, en een "recent gelogd"-lijst
 - [ ] Het echte blok — **wacht op doel + materiaal + beschikbaarheid** (één vraag tegelijk)
 
-**Klaar als:** je een blok krijgt, het in Hevy staat, en de load in je week meeweegt.
+**Klaar als:** je een blok krijgt, je het logt (in de app, of in Hevy als logboek), en de load in je week meeweegt.
 De machinerie staat; het persoonlijke blok volgt zodra de drie invoeren er zijn.
 
 ---
@@ -248,14 +257,17 @@ echte cijfers, **zonder één token**. Dat is precies het punt.
 
 ## Roadmap
 
-**Nu (in gebruik).** Het dashboard (PWA, offline, achter login) met de acht schermen —
-**Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer en Feedback**. De data via
-intervals.icu (slaap, rusthartslag, trainingen), de rekenregels (**193 tests**), de invoer
-(beschikbaarheid, feedback, ziek melden), de coach met een echt model (+ automatische fallback)
+**Nu (in gebruik).** Het dashboard (PWA, offline, achter login) met de **negen schermen** —
+**Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer, Feedback en Profiel**. De data via
+intervals.icu (slaap, rusthartslag, trainingen), de rekenregels (**264 tests**), de invoer
+(beschikbaarheid als **week-overzicht**, **feedback per training** als detailweergave, ziek
+melden), de coach met een echt model (+ automatische fallback)
 die **ook in de app** zit en **één geheugen deelt** met Telegram, de ochtendbrief om 07:00 met de
 **herstelkaart als PNG-foto**, en de workout-invoer: een `.fit` of screenshot › de coach leest en
-vertaalt › workout op de kalender › horloge. Plus het `push`-commando. Daar horen de **Body
-Battery** bij (een herstelsaldo, eerlijk als schatting gelabeld) en je **doel + seizoensplan**:
+vertaalt › workout op de kalender › horloge. Plus het `push`-commando. Ook **kracht log je nu in
+de app** (oefeningen + sets, tonnage en load) — Hevy overtypen is niet meer nodig. Daar horen de
+**Body Battery** bij (de dagwaarde én de **intraday-regel "nog X% nu"**, eerlijk als schatting
+gelabeld) en je **doel + seizoensplan**:
 je zegt het tegen de coach, hij zet het vast in D1 en periodiseert het — zichtbaar in Trends.
 
 **Volgende.** De coach past je week écht aan (verplaatsen, verzachten) in plaats van alleen
@@ -268,6 +280,11 @@ en het echte krachtblok zodra doel en materiaal bekend zijn.
 
 ## Wat er nog open is
 
+- **Slaapfases (hypnogram)** — de Huawei-API levert **geen slaapfases**, dus het hypnogram
+  (wakker, REM, licht, diep) staat nog open. Tot die er zijn tonen we eerlijk wat er wél is:
+  slaapduur en slaapbehoefte.
+- **Cloudflare Access** — de nettere poort dan Basic Auth. Dit wacht op de gebruiker; nu zit
+  het geheel achter HTTP Basic Auth in de Worker.
 - **Toekomstige fase — weegschaal (Tuya)** — gewicht en lichaamscompositie (vet%,
   spiermassa, water, visceraal vet). Health Connect is on-device en bereikt AQ niet, dus
   de weegschaal koppelen we later rechtstreeks via de **Tuya** Body Fat Scale-service.
@@ -289,10 +306,10 @@ intervals.icu-kalender; intervals.icu pusht die naar je toestel zodra daar
 |---|---|
 | **Huawei** (lopen) | alleen **lopen, wandelen en hiken** — de rest wordt overgeslagen |
 | **Wahoo ELEMNT** (fietsen) | volledige gestructureerde workouts (via de ELEMNT-app) |
-| **Kracht** | niet naar het horloge — dat loopt via Hevy |
+| **Kracht** | niet naar het horloge — dat loopt via de app (of Hevy als logboek) |
 
 Dus de coach kan je **loop-** en **fietsworkouts** naar het horloge sturen. Kracht blijft
-in Hevy. De API-kant is `POST /api/v1/athlete/{id}/events` met de workout-stappen in
+in de app (of in Hevy als logboek). De API-kant is `POST /api/v1/athlete/{id}/events` met de workout-stappen in
 `description`; intervals.icu parseert die naar een gestructureerde workout.
 
 **Gebouwd (08/10):** stuur een **`.fit`** of een **screenshot** naar de bot. De coach leest
