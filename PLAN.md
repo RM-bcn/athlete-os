@@ -13,7 +13,7 @@ De bouw loopt. Wat er nu echt staat:
 | Fase | Stand | Wat er is |
 |---|---|---|
 | **0 · Fundament** | klaar | D1, Worker live, PWA live, en het geheel achter een login (Basic Auth). |
-| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen (mét slaap), 119 activiteiten. Sync loopt **elk uur**, plus verversen zodra je de app opent. Hevy en de weegschaal nog niet. |
+| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen (mét slaap), 119 activiteiten. Sync loopt **elk uur**, plus verversen zodra je de app opent. De brug voor gewicht/Health Connect is **Health Sync → intervals.icu** (onboarding stap 4). Hevy via de handmatige AQ-log. |
 | **2 · Rekenregels** | klaar | 71 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
@@ -41,7 +41,7 @@ server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
 | Push + sparren | Telegram Bot | €0 |
 | Data-spine | intervals.icu | €0 (5.000 req/dag) |
 | Kracht | Hevy (gratis plan) | €0 |
-| Weegschaal | Smart Life → Health Connect | €0 |
+| Weegschaal | Smart Life › Health Connect › Health Sync › intervals.icu | €0 + eenmalig Health Sync |
 | Brein | Opencode + model-API | **alleen deze post** |
 | Vault | GitHub private | €0 |
 
@@ -110,7 +110,10 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 
 **Klaar als:** je het endpoint opent en echte aantallen ziet die kloppen met wat je in de apps ziet. **Twee weken observe-only** vanaf hier.
 
-**Risico:** de weegschaal-route. Probeer eerst Smart Life → Health Connect (nul code). Werkt dat niet, dan Tuya Cloud API met de Body Fat Scale-service.
+**Risico:** de weegschaal-route. **Opgelost via de brug:** Smart Life › Health Connect ›
+**Health Sync** › intervals.icu — Health Sync leest Health Connect en schrijft gewicht,
+slaap en stappen naar intervals.icu, zonder eigen code. De volledige lichaamscompositie
+(vet%, spiermassa) via **Tuya** is een **toekomstige fase**, niet nodig om te starten.
 
 ---
 
@@ -233,6 +236,46 @@ echte cijfers, **zonder één token**. Dat is precies het punt.
 
 ## Wat er nog open is
 
-- **Weegschaal-route** — eerst Smart Life → Health Connect proberen; de Tuya Cloud API is de terugval.
-- **Model-keuze** — welk model achter Opencode. Bepaalt de kosten per oordeel.
-- **Cloudflare-account** — bestaat die al, of moet die nog?
+- **Health Sync-brug** — Health Connect › Health Sync › intervals.icu (onboarding stap 4).
+  Eenmalige aankoop, daarna automatisch.
+- **Toekomstige fase — weegschaal (Tuya)** — de volledige lichaamscompositie (vet%,
+  spiermassa, water, visceraal vet). Gewicht komt al mee via Health Sync; dit is de
+  aanvulling, niet de basis.
+- **Model-keuze** — welk model achter de coach. Bepaalt de kosten per oordeel; de sleutel
+  gaat in de Worker-secrets (of Cloudflare AI Gateway), nooit in de app.
+- **Workouts naar het horloge** — intervals.icu pusht geplande workouts (Huawei: alleen
+  lopen/wandelen/hiken; Wahoo: volledige workouts). Zie de notitie hieronder.
+
+---
+
+## Workouts naar het horloge (kan dit?)
+
+**Ja — via intervals.icu.** De Worker schrijft een workout als **event** op je
+intervals.icu-kalender; intervals.icu pusht die naar je toestel zodra daar
+"Upload planned workouts" aanstaat (Settings › Connections).
+
+| Toestel | Wat er gepusht wordt |
+|---|---|
+| **Huawei** (lopen) | alleen **lopen, wandelen en hiken** — de rest wordt overgeslagen |
+| **Wahoo ELEMNT** (fietsen) | volledige gestructureerde workouts (via de ELEMNT-app) |
+| **Kracht** | niet naar het horloge — dat loopt via Hevy |
+
+Dus de coach kan je **loop-** en **fietsworkouts** naar het horloge sturen. Kracht blijft
+in Hevy. De API-kant is `POST /api/v1/athlete/{id}/events` met de workout-stappen in
+`description`; intervals.icu parseert die naar een gestructureerde workout.
+
+---
+
+## Waar de model-API veilig staat
+
+De sleutel hoort **nooit** in de app of in git. De app is statisch en downloadbaar; een
+sleutel erin is een sleutel voor iedereen.
+
+| Optie | Waar | Waarom |
+|---|---|---|
+| **Worker-secret** (aanbevolen) | `wrangler secret put MODEL_API_KEY` | Versleuteld, alleen in de Worker-runtime, nooit in de code |
+| **Cloudflare AI Gateway** | vóór de Worker | Houdt de providersleutel zelf, plus rate-limiting, caching, logging en kosten |
+| **OpenCode (het brein)** | op je eigen machine, buiten de repo | `opencode auth login`; de sleutel verlaat je machine niet |
+
+Zet daarnaast een **uitgavenlimiet** bij de provider. De coach werkt nu al zonder model;
+de sleutel is alleen voor de zware oordelen (plannen, reviews, sparren).
