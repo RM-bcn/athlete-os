@@ -17,7 +17,7 @@ De bouw loopt. Wat er nu echt staat:
 | **2 · Rekenregels** | klaar | 71 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
-| **5 · Coach** | werkt | De coach antwoordt **nu al**, volledig op regels: status, week, loggen, ziek melden. De model-API is optioneel en komt later. |
+| **5 · Coach** | klaar | Regels voor de cijfers, een **model** voor het oordeel. Standaard **deepseek-v4-flash** (via OpenCode Go), met een **automatische fallback-keten** (mimo-v2.6-flash › glm-5.3-flash › minimax-m3). Valt het voorkeursmodel weg, dan waarschuwt de coach via Telegram en maakt een workboard-kaart. |
 | **6 · Kracht** | deels | oefeningenbibliotheek (30 oefeningen, echte demo-URL's uit free-exercise-db) + de `build-strength-block`-skill. Het echte blok wacht op **doel + materiaal + beschikbaarheid**. |
 | **7 · Telegram** | klaar | Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief. |
 
@@ -167,13 +167,14 @@ starten — slaap, rusthartslag en trainingen komen al binnen via intervals.icu.
 - [x] `brain/AGENTS.md` + `athlete-profile.md`
 - [x] Skills in `.opencode/skills/`: `set-goal`, `build-season-plan`, `plan-my-week`, `adapt-week`, `weekly-review`
 - [x] `coach.ts` — de brug: regels waar het kan, model waar het moet
-- [x] sparren via Telegram (`status`, `week`, `log …`, `ik ben ziek`)
+- [x] sparren via Telegram (`status`, `week`, `log …`, `ik ben ziek`) én vrije tekst
 - [x] ziek melden → dag op pauze (regel) + advies
-- [ ] `POST /api/chat` + het model voor plannen/reviews — **wacht op de model-API**
+- [x] `POST /api/chat` + het model voor de open oordelen (deepseek-v4-flash, met fallback)
 
 **Klaar als:** je "ik ben ziek" stuurt, de dag op pauze gaat (regel), en je een advies
-terugkrijgt. **Dat werkt nu** — het advies komt uit de regels; het model vervangt dat later
-voor de open oordelen.
+terugkrijgt. **Dat werkt** — de cijfers komen uit de regels, het oordeel uit het model.
+Valt een model weg, dan zakt de coach automatisch naar het volgende goedkope model en
+waarschuwt hij je.
 
 ---
 
@@ -239,8 +240,9 @@ echte cijfers, **zonder één token**. Dat is precies het punt.
 - **Toekomstige fase — weegschaal (Tuya)** — gewicht en lichaamscompositie (vet%,
   spiermassa, water, visceraal vet). Health Connect is on-device en bereikt AQ niet, dus
   de weegschaal koppelen we later rechtstreeks via de **Tuya** Body Fat Scale-service.
-- **Model-keuze** — welk model achter de coach. Bepaalt de kosten per oordeel; de sleutel
-  gaat in de Worker-secrets (of Cloudflare AI Gateway), nooit in de app.
+- **Model-keuze** — **klaar**: de coach draait op **deepseek-v4-flash** via OpenCode Go,
+  met een automatische fallback-keten en een waarschuwing (Telegram + workboard) als een
+  model wordt uitgefaseerd. Kosten: fracties van een cent per antwoord.
 - **Workouts naar het horloge** — intervals.icu pusht geplande workouts (Huawei: alleen
   lopen/wandelen/hiken; Wahoo: volledige workouts). Zie de notitie hieronder.
 
