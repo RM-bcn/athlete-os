@@ -235,6 +235,22 @@ echte cijfers, **zonder één token**. Dat is precies het punt.
 
 ---
 
+## Roadmap
+
+**Nu (in gebruik).** Het dashboard (PWA, offline, achter login), de data via intervals.icu
+(slaap, rusthartslag, trainingen), de rekenregels, de invoer (beschikbaarheid, loggen, ziek
+melden), de coach met een echt model (+ automatische fallback), de ochtendbrief om 07:00, en
+de workout-invoer: een `.fit` of screenshot › de coach leest en vertaalt › workout op de
+kalender › horloge. Plus het `push`-commando.
+
+**Volgende.** De coach past je week écht aan (verplaatsen, verzachten) in plaats van alleen
+adviseren; alles ook in de app; een meerdaags plan in één keer; en de weekreview met het model.
+
+**Later.** De weegschaal (Tuya) voor lichaamscompositie; Cloudflare Access als nettere poort;
+en het echte krachtblok zodra doel en materiaal bekend zijn.
+
+---
+
 ## Wat er nog open is
 
 - **Toekomstige fase — weegschaal (Tuya)** — gewicht en lichaamscompositie (vet%,
