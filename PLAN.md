@@ -264,6 +264,12 @@ Dus de coach kan je **loop-** en **fietsworkouts** naar het horloge sturen. Krac
 in Hevy. De API-kant is `POST /api/v1/athlete/{id}/events` met de workout-stappen in
 `description`; intervals.icu parseert die naar een gestructureerde workout.
 
+**Gebouwd (08/10):** stuur een **`.fit`** of een **screenshot** naar de bot. De coach leest
+hem (FIT-decoder respectievelijk een vision-model), vertaalt naar doel/effect en een
+intervals.icu-workout, en zet hem op je kalender. Staat "Upload planned workouts" aan, dan
+gaat hij door naar je horloge. Nog open: de coach past de **rest van de week** echt aan, en
+het kan later ook vanuit de app.
+
 ---
 
 ## Waar de model-API veilig staat
