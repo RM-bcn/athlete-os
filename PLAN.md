@@ -6,24 +6,24 @@
 
 ---
 
-## Stand van zaken — 7 oktober 2026
+## Stand van zaken — 8 oktober 2026
 
 De bouw loopt. Wat er nu echt staat:
 
 | Fase | Stand | Wat er is |
 |---|---|---|
 | **0 · Fundament** | klaar | D1, Worker live, PWA live, en het geheel achter een login (Basic Auth). |
-| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen, 119 activiteiten, cron elke 4 uur. Hevy en de weegschaal nog niet. |
-| **2 · Rekenregels** | klaar | 41 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
+| **1 · Data** | loopt | intervals.icu stroomt binnen — 121 wellness-dagen (mét slaap), 119 activiteiten. Sync loopt **elk uur**, plus verversen zodra je de app opent. Hevy en de weegschaal nog niet. |
+| **2 · Rekenregels** | klaar | 71 tests groen. Puur, deterministisch, en de Worker gebruikt ze. |
 | **3 · PWA** | klaar | Vandaag + week, installeerbaar, offline met de laatste snapshot. |
 | **4 · Invoer** | klaar | Beschikbaarheid (7×3 schuifjes), loggen ná de sessie (duur + RPE), ziek melden. |
-| **5 · Coach** | deels | De vault staat: constitutie, profiel, 7 skills. Nog geen `/api/chat`. |
+| **5 · Coach** | werkt | De coach antwoordt **nu al**, volledig op regels: status, week, loggen, ziek melden. De model-API is optioneel en komt later. |
 | **6 · Kracht** | leeg | alleen de skill |
-| **7 · Telegram** | deels | De bot werkt en is getest. Nog geen webhook naar de Worker. |
+| **7 · Telegram** | klaar | Webhook live, de coach appt terug, en elke ochtend om 07:00 de herstelbrief. |
 
 **Live:** `https://athlete-intelligence.aq-bd6.workers.dev` — **privé, achter Basic Auth**.
-**Vault:** `github.com/RM-bcn/athlete-intelligence` (private).
-**Let op:** de app-code staat alleen **lokaal** in git — nog geen remote.
+**Telegram:** [@AthleteIntelligencebot](https://t.me/AthleteIntelligencebot).
+**Vault + app:** `github.com/RM-bcn/athlete-intelligence` (private) — de Worker en PWA staan in `app/`.
 
 **Health Connect bereikt AQ niet.** Het is een databank op de telefoon; er is geen
 server-API. De weegschaal loopt via **Tuya**, Hevy via de handmatige AQ-log.
@@ -161,13 +161,16 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 ### Fase 5 — De coach
 **Levert:** Opencode doet het zware denkwerk, en de regels doen de rest.
 
-- [ ] `brain/AGENTS.md` + `athlete-profile.md`
-- [ ] Skills in `.opencode/skills/`: `set-goal`, `build-season-plan`, `plan-my-week`, `adapt-week`, `weekly-review`
-- [ ] `coach.ts` — de dunne brug: stuurt alleen wat een oordeel vraagt
-- [ ] `POST /api/chat` — sparren
-- [ ] `POST /api/sick` roept het model alleen voor het advies
+- [x] `brain/AGENTS.md` + `athlete-profile.md`
+- [x] Skills in `.opencode/skills/`: `set-goal`, `build-season-plan`, `plan-my-week`, `adapt-week`, `weekly-review`
+- [x] `coach.ts` — de brug: regels waar het kan, model waar het moet
+- [x] sparren via Telegram (`status`, `week`, `log …`, `ik ben ziek`)
+- [x] ziek melden → dag op pauze (regel) + advies
+- [ ] `POST /api/chat` + het model voor plannen/reviews — **wacht op de model-API**
 
-**Klaar als:** je "ik ben ziek" stuurt, de dag op pauze gaat (regel), en je een advies terugkrijgt (model).
+**Klaar als:** je "ik ben ziek" stuurt, de dag op pauze gaat (regel), en je een advies
+terugkrijgt. **Dat werkt nu** — het advies komt uit de regels; het model vervangt dat later
+voor de open oordelen.
 
 ---
 
@@ -186,13 +189,14 @@ acceptatiecriteria aantoonbaar gehaald zijn.
 ### Fase 7 — Telegram
 **Levert:** het komt naar jou toe.
 
-- [ ] Bot aangemaakt, webhook naar de Worker
-- [ ] `render` — `card.html` → PNG (Playwright)
-- [ ] Ochtendbrief met de kaart als bijlage
-- [ ] Twee-richting: "verzet donderdag", "squat 3×8 op 110"
+- [x] Bot aangemaakt, webhook naar de Worker (buiten de Basic Auth-poort, met eigen geheim)
+- [x] Twee-richting: `status`, `week`, `log loop 45 6`, `ik ben ziek`
+- [x] Ochtendbrief om 07:00 lokaal (elke dag één bericht)
+- [ ] `render` — kaart als PNG (Playwright) in plaats van tekst
 - [ ] Weekreview op maandag
 
-**Klaar als:** je 's ochtends een bericht met de herstelkaart krijgt zonder iets te doen.
+**Klaar als:** je 's ochtends een bericht met de herstelbrief krijgt zonder iets te doen.
+**Dat werkt nu** — als tekst; de PNG-kaart volgt.
 
 ---
 
