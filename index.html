@@ -30,12 +30,15 @@
 <section class="band" id="stand" style="padding:22px 0;border-top:0">
   <div class="wrap">
     <div class="card raised" style="display:flex;flex-wrap:wrap;gap:8px 26px;align-items:baseline">
-      <span class="eyebrow accent" style="margin:0">Stand · 2026-10-07</span>
+      <span class="eyebrow accent" style="margin:0">Stand · 2026-10-08</span>
       <span style="font-size:.9rem;color:var(--muted)">
         <strong style="color:var(--form)">Live:</strong> de Worker en het dashboard draaien —
         <span class="mono" style="font-size:.82em">athlete-intelligence.aq-bd6.workers.dev</span> —
-        <strong>achter een login</strong>. intervals.icu stroomt binnen. Fase 0 t/m 4 staan;
-        Fase 2 is gekeurd. Zie <span class="mono" style="font-size:.82em">PLAN.md</span> › Stand van zaken.
+        <strong>achter een login</strong>. intervals.icu stroomt binnen (slaap, rusthartslag, trainingen).
+        De <strong>coach werkt</strong>: regels voor de cijfers, een model voor het oordeel, de
+        ochtendbrief om 07:00, en je kunt een <strong>.fit of screenshot</strong> aanleveren die naar je
+        horloge gaat. Alle zes onboarding-stappen zijn klaar; de weegschaal is een toekomstige fase.
+        Zie <span class="mono" style="font-size:.82em">PLAN.md</span> › Stand van zaken.
       </span>
     </div>
   </div>
@@ -248,7 +251,7 @@
         </tr>
         <tr>
           <td><strong>Hevy</strong></td>
-          <td>krachtsessies via Health Connect › als <span class="mono">WeightTraining</span></td>
+          <td>krachtsessies via de AQ-log › als <span class="mono">WeightTraining</span></td>
           <td><span class="pill off">nee</span></td>
           <td class="mono" style="color:var(--form)">€0</td>
         </tr>
@@ -495,7 +498,7 @@
       </div>
       <div class="card">
         <h4 style="font-size:0.95rem">Kracht</h4>
-        <p style="color:var(--muted);font-size:0.86rem;margin-top:6px">Hevy › Health Connect</p>
+        <p style="color:var(--muted);font-size:0.86rem;margin-top:6px">Hevy › AQ-log</p>
       </div>
       <div class="card" style="border-color:var(--line-2)">
         <h4 style="font-size:0.95rem;color:var(--easy)">Volleybal e.a.</h4>
@@ -532,7 +535,7 @@
           <p style="color:var(--muted);margin-top:10px">
             intervals.icu-account, Huawei koppelen, <strong>Health Service Kit aanzetten</strong>
             in de Huawei-app (vergeet je dit, dan komt er niets binnen), Wahoo koppelen,
-            Hevy via Health Connect.
+            Hevy via de AQ-log.
           </p>
           <p class="mono" style="font-size:0.8rem;color:var(--form);margin-top:12px">
             Levert op: al je data op één plek, en je weet dat de koppelingen echt werken.
@@ -715,7 +718,7 @@
         <tr><td>intervals.icu</td><td>ruggengraat: leest alles, schrijft terug, rekent CTL/ATL/TSB</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Huawei › intervals.icu</td><td>activiteiten, slaap, rustige hartslag</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Wahoo ELEMNT</td><td>ritten + gestructureerde fietsworkouts</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td>Hevy › Health Connect</td><td>krachtload in het model</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Hevy › AQ-log</td><td>krachtload in het model</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Opslag</td><td>markdown + SQLite in een private git-repo</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Automatisering</td><td>lokale cron + GitHub Actions als vangnet</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>Meldingen</td><td>Telegram, uitgaand</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
@@ -746,34 +749,32 @@
       <div class="grid g2" style="gap:26px;align-items:center">
         <div>
           <p class="eyebrow" style="margin-bottom:10px;color:var(--fitness)">Onboarding · live</p>
-          <h3>Acht dingen die jouw handen nodig hebben ›</h3>
+          <h3>Zes stappen die jouw handen nodig hebben ›</h3>
           <p style="color:var(--muted);margin-top:10px;font-size:0.94rem">
-            Per stap: wat je doet, waarom het nodig is, hoe je weet dat het gelukt is, en
-            wat je aan mij doorgeeft. Plus de valkuilen die iedereen overkomt.
+            Inmiddels alle zes klaar. Per stap: wat je doet, waarom het nodig is, hoe je weet
+            dat het gelukt is, en wat je aan mij doorgeeft.
           </p>
         </div>
         <div>
           <div class="grid g2" style="gap:10px">
             <span class="mono" style="font-size:0.78rem;color:var(--form)">1 · Cloudflare — klaar</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">2 · intervals.icu</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">3 · Health Connect</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">4 · Tuya + weegschaal</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">5 · Telegram-bot</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">6 · Hevy</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">7 · GitHub-vault</span>
-            <span class="mono" style="font-size:0.78rem;color:var(--muted)">8 · Model-API</span>
+            <span class="mono" style="font-size:0.78rem;color:var(--form)">2 · intervals.icu + Huawei — klaar</span>
+            <span class="mono" style="font-size:0.78rem;color:var(--form)">3 · Telegram — klaar</span>
+            <span class="mono" style="font-size:0.78rem;color:var(--form)">4 · Hevy + AQ-log — klaar</span>
+            <span class="mono" style="font-size:0.78rem;color:var(--form)">5 · GitHub + app — klaar</span>
+            <span class="mono" style="font-size:0.78rem;color:var(--form)">6 · Model-API — klaar</span>
           </div>
           <p class="mono" style="font-size:0.72rem;color:var(--dim);margin-top:14px">
-            ~45 minuten · daarna is het mijn beurt
+            de weegschaal (Tuya) is een toekomstige fase
           </p>
         </div>
       </div>
     </a>
 
     <div class="callout form" style="margin-top:26px">
-      <strong>En de kaarten staan klaar.</strong> De negen bouwkaarten — onboarding plus de
-      zeven fasen, elk met acceptatiecriteria — staan op het workboard onder
-      <span class="mono">Athlete Intelligence</span>. Zeg <span class="mono">/board</span>
+      <strong>En de kaarten staan klaar.</strong> De bouwkaarten — onboarding plus de fasen
+      en features, elk met een notitie — staan op het workboard onder
+      <span class="mono">Athlete Intelligence (aq)</span>. Zeg <span class="mono">/board</span>
       om ze te zien.
     </div>
 
