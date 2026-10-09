@@ -56,7 +56,7 @@
     <p class="lead" style="max-width:66ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
       Het systeem moet twee soorten doelen aankunnen — een event <em>en</em> een
       lichaamscompositie — en het moet kracht kunnen periodiseren met oefeningen die je
-      daadwerkelijk in Hevy terugziet, inclusief hoe je ze uitvoert.
+      daadwerkelijk logt (in de app, of geïmporteerd uit Hevy), inclusief hoe je ze uitvoert.
     </p>
   </div>
 </header>
@@ -376,48 +376,35 @@
         <div class="step">
           <span class="n">02</span>
           <div>
-            <strong>Jij typt het over in Hevy</strong>
+            <strong>Jij logt het in de app</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              De coach schrijft het blok in markdown; jij typt het één keer over in Hevy.
-              Alleen met <strong>Hevy Pro</strong> kan het automatisch:
-              <span class="mono">POST /v1/routine_folders</span> voor het blok, dan
-              <span class="mono">POST /v1/routines</span> per sessie — met template-id,
-              sets, reps, rust en notities. Jij opent Hevy en de routine staat er, met het
-              demonstratiebeeld.
+              Kies de oefening uit de bibliotheek en voeg sets toe (reps + kg); de
+              <strong>tonnage</strong> en de <strong>load</strong> rekent de server. Wil je
+              je historie meenemen, dan <strong>importeer je een Hevy data-dump</strong>
+              (CSV/JSON) in één keer. Hevy Pro is nergens voor nodig.
             </p>
           </div>
         </div>
         <div class="step">
           <span class="n">03</span>
           <div>
-            <strong>Jij traint en logt</strong>
+            <strong>Het komt terug — uit twee bronnen</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              Gewoon in Hevy, zoals je al doet. Geen nieuwe app, geen nieuw ritueel.
+              Het <strong>getilde gewicht</strong> (app-log of Hevy-dump) en de
+              <strong>echte hartslag</strong> (horloge, via intervals.icu) komen samen in één
+              krachtsessie. Dat is beter dan de standaardaanpak: een load op basis van
+              <em>tonnage én echte hartslag</em>, niet een gok uit gewicht alleen.
             </p>
           </div>
         </div>
         <div class="step">
           <span class="n">04</span>
           <div>
-            <strong>Het komt terug — uit twee bronnen</strong>
-            <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              <strong>Hevy</strong> levert het gewicht en het volume — wat je tilde.
-              <strong>Je horloge</strong> meet de hartslag tijdens de sessie. Samen komen ze
-              binnen als <span class="mono">WeightTraining</span>. Dat is beter dan de
-              standaardaanpak: een krachtsessie krijgt een load op basis van
-              <em>tonnage én echte hartslag</em>, niet een gok uit gewicht alleen.
-            </p>
-          </div>
-        </div>
-        <div class="step">
-          <span class="n">05</span>
-          <div>
             <strong>En je gewicht ook</strong>
             <p style="color:var(--muted);font-size:0.9rem;margin:6px 0 0">
-              Met Hevy Pro ondersteunt <span class="mono">POST /v1/body_measurements</span>
-              gewicht, vetpercentage, vetvrije massa én omtrekken (nek, borst, taille, heup,
-              dij, kuit). Zonder Pro komt lichaamscompositie later via de weegschaal (Tuya).
-              Dat is de meetlat voor een compositiedoel.
+              Je koppelt je weegschaal via <strong>Web Bluetooth</strong> in de PWA; het gewicht
+              gaat meteen naar <span class="mono">wellness</span>. Dat is de meetlat voor een
+              compositiedoel. (Hevy Pro kan dit ook, maar is niet nodig.)
             </p>
           </div>
         </div>
@@ -425,12 +412,11 @@
     </div>
 
     <div class="callout warn" style="margin-top:30px">
-      <strong>Eerlijk over de gratis route:</strong> Hevy's <em>lees</em>-API vereist Hevy
-      Pro. De <strong>webhook en het schrijven van routines</strong> ook. Blijf je op het
-      gratis plan, dan werkt de lus andersom: de coach schrijft het blok in markdown, jij
-      typt het één keer over in Hevy, en daarna log je de sessie over in de AQ-log (duur +
-      RPE). De hartslag tijdens kracht komt van het horloge via intervals.icu. Meer handwerk,
-      nul euro. Zie <a href="backend.html#opslag">de opslaglaag</a>.
+      <strong>Eerlijk over de routes:</strong> loggen in de app is de standaard en kost niets.
+      Een <strong>Hevy data-dump</strong> importeren werkt ook (CSV/JSON). Hevy's eigen
+      <em>lees</em>-API en het schrijven van routines vereisen Hevy Pro — maar dat heb je niet
+      nodig. De hartslag tijdens kracht komt van het horloge via intervals.icu. Zie
+      <a href="backend.html#opslag">de opslaglaag</a>.
     </div>
   </div>
 </section>
@@ -441,63 +427,61 @@
     <p class="eyebrow">07 · Lichaamscompositie meten</p>
     <h2>Je weegschaal is een<br>databron, geen eiland.</h2>
     <p style="max-width:66ch;color:var(--muted);margin-top:20px">
-      Je Smart Life-weegschaal meet gewicht én vetpercentage. Dat is precies de meetlat voor
-      een compositiedoel. Dit is een toekomstige fase: het aansluiten loopt via de Tuya
-      Cloud API, van een klein script tot lokaal. Health Connect is puur on-device en bereikt
-      AQ niet — het is geen dataroute.
+      Je weegschaal meet gewicht én vetpercentage. Dat is precies de meetlat voor een
+      compositiedoel. De weegschaal is <strong>gebouwd</strong>: hij leest rechtstreeks uit via
+      <strong>Web Bluetooth</strong> in de PWA (Chrome op Android), en het gewicht gaat naar
+      <span class="mono">wellness</span>. Health Connect is puur on-device en bereikt AQ niet —
+      het is geen dataroute.
     </p>
 
     <div class="grid g3" style="margin-top:40px">
       <div class="card" style="border-top:3px solid var(--form)">
-        <span class="card-num" style="color:var(--form)">TOEKOMSTIGE FASE</span>
-        <h4>De weegschaal (toekomstige fase)</h4>
+        <span class="card-num" style="color:var(--form)">GEBOUWD</span>
+        <h4>Web Bluetooth (BLE)</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Health Connect is puur on-device en bereikt AQ niet, dus het is geen dataroute.
-          Lichaamscompositie komt later via de Tuya Cloud API. Google Fit wordt eind 2026
-          uitgezet; die gebruiken we niet.
+          De standaard Bluetooth-weegservice (0x181D) en de Weight Measurement-karakteristiek
+          (0x2A9D). Een tik op "Koppel weegschaal", op de weegschaal gaan, en het gewicht staat
+          in je data. Geen cloud, geen omweg.
         </p>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
-          later · via de Tuya Cloud API
+          nu · Chrome op Android
         </p>
       </div>
 
       <div class="card" style="border-top:3px solid var(--fitness)">
-        <span class="card-num" style="color:var(--fitness)">ROUTE 1 · KLEIN SCRIPT</span>
+        <span class="card-num" style="color:var(--fitness)">ALTERNATIEF</span>
         <h4>Tuya IoT Cloud</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Tuya heeft officiële <strong>Body Fat Scale Open API's</strong>. Je leest de
-          weeggeschiedenis uit, of laat een vetrapport genereren uit gewicht + weerstand.
-          Er bestaat een werkende Home Assistant-integratie die je kunt nabouwen.
+          Gebruikt je weegschaal een eigen protocol (geen standaard BLE-weegservice), dan is de
+          Tuya-route er nog: officiële <strong>Body Fat Scale Open API's</strong> voor de
+          weeggeschiedenis en een vetrapport uit gewicht + weerstand.
         </p>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
-          gratis IoT-project · service aanzetten
+          als BLE niet lukt · Smart Life vereist
         </p>
       </div>
 
       <div class="card" style="border-top:3px solid var(--line-2)">
-        <span class="card-num">ROUTE 2 · LOKAAL</span>
-        <h4>tinytuya</h4>
+        <span class="card-num">EERLIJK</span>
+        <h4>En als het niet lukt</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          Puur over je eigen netwerk, zonder cloud. <strong>Maar:</strong> de meeste
-          weegschalen zijn Bluetooth, niet wifi — en dan werkt dit niet. Alleen zinvol als
-          jouw model wifi heeft.
+          Weet de browser of de weegschaal het niet, dan zegt de app dat en vul je het gewicht
+          handmatig in intervals.icu in. We verzinnen geen verbinding die er niet is.
         </p>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:12px">
-          alleen bij een wifi-weegschaal
+          handmatige terugval
         </p>
       </div>
     </div>
 
     <div class="callout warn" style="margin-top:26px">
-      <strong>De vondst die het uitmaakt — LSC is een Tuya-kloon.</strong> Jouw weegschaal
-      werkt met Smart Life én met LSC Smart Connect, en dat klopt: <strong>LSC Smart Connect
-      is een white-label van Tuya</strong>, net zoals Calex dat is. Maar de koppeling naar de
+      <strong>En de vondst die de Tuya-route verklaart — LSC is een Tuya-kloon.</strong> Jouw
+      weegschaal werkt met Smart Life én met LSC Smart Connect, en dat klopt: <strong>LSC Smart
+      Connect is een white-label van Tuya</strong>, net zoals Calex dat is. De koppeling naar de
       Tuya-cloud werkt via een QR-code die je met <strong>Smart Life of Tuya Smart</strong>
       scant — niet met LSC. Wie het via LSC probeert krijgt letterlijk
-      <em>"0 devices under the app account"</em>.
-      <br><br>
-      <strong>Dus:</strong> zet de weegschaal in <strong>Smart Life</strong>, niet in LSC.
-      Dan kun je hem aan de Tuya-cloud koppelen.
+      <em>"0 devices under the app account"</em>. Voor de BLE-route maakt dat niet uit; die gaat
+      rechtstreeks.
     </div>
 
     <div class="grid g2" style="margin-top:34px;gap:30px;align-items:start">
@@ -531,10 +515,11 @@
     </div>
 
     <div class="callout" style="margin-top:30px">
-      <strong>Waar het landt (toekomstige fase):</strong> gewicht en vet% komen in de
-      wellness-laag terecht (intervals.icu ondersteunt <span class="mono">weight</span> al).
-      De rest — spiermassa, water, visceraal vet — gaat in <span class="mono">D1</span>,
-      want intervals.icu heeft daar geen velden voor. Je compositiedoel leest uit beide.
+      <strong>Waar het landt:</strong> het gewicht uit de weegschaal komt in de wellness-laag
+      terecht (intervals.icu ondersteunt <span class="mono">weight</span> al, en de Worker schrijft
+      het via <span class="mono">POST /api/weight</span>). De rest — spiermassa, water, visceraal
+      vet — is een bio-impedantie-<em>schatting</em>; die benutten we in een latere fase verder.
+      Je compositiedoel leest uit beide.
     </div>
   </div>
 </section>
@@ -567,7 +552,7 @@ zo  vrij</div>
       <div>
         <h4 style="margin-bottom:16px">Wat je per week bijstelt</h4>
         <p style="color:var(--muted);font-size:0.92rem;margin-bottom:16px">
-          De coach vraagt er wekelijks naar, of je zegt het gewoon:
+          De coach plant de week zelf (ma–wo) binnen je beschikbaarheid, of je zegt het gewoon:
         </p>
         <div class="grid" style="gap:10px">
           <div class="card" style="padding:14px 16px">

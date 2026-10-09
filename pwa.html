@@ -91,8 +91,8 @@
       <div class="decision">
         <span class="tick">4</span>
         <div>
-          <h4>Geen Hevy Pro</h4>
-          <p>De coach schrijft het krachtblok in markdown. Jij typt het één keer over in Hevy, daarna log je het over in de AQ-log (duur + RPE).</p>
+          <h4>Geen Hevy Pro nodig</h4>
+          <p>Je logt kracht in de app zelf (oefeningen + sets, tonnage en load), of importeert een Hevy data-dump in één keer. Hevy Pro is nergens voor nodig.</p>
         </div>
       </div>
       <div class="decision">
@@ -167,7 +167,7 @@
           <rect x="566" y="100" width="350" height="24" rx="6" fill="#1b1b24"/>
           <text x="578" y="117">Hevy</text><text x="904" y="117" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5c5c6b">gewicht</text>
           <rect x="566" y="128" width="350" height="24" rx="6" fill="#1b1b24"/>
-          <text x="578" y="145">weegschaal (Smart Life)</text><text x="904" y="145" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5c5c6b">toekomstige fase</text>
+          <text x="578" y="145">weegschaal (Web Bluetooth)</text><text x="904" y="145" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5c5c6b">gewicht › wellness</text>
           <rect x="566" y="156" width="350" height="24" rx="6" fill="#1b1b24"/>
           <text x="578" y="173">horloge</text><text x="904" y="173" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5c5c6b">hartslag</text>
         </g>
@@ -224,10 +224,14 @@
         <ul>
           <li>CTL / ATL / TSB uit de wellness-reeks</li>
           <li>Readiness-score uit slaap + RHR + load</li>
+          <li>Body Battery: continu en waak-verankerd</li>
           <li>Load schatten uit duur × RPE</li>
           <li>Krachtload uit tonnage + hartslag</li>
           <li>Trends: 7- en 28-daags gemiddelden, drift</li>
           <li>Beschikbaarheid naar weekschema</li>
+          <li><span class="mono" style="font-size:0.82rem">validateWeekPlan</span>: de weekplanning toetsen</li>
+          <li>Autoplanner, test-bibliotheek, seizoen, voortgang</li>
+          <li>De plan-diff en de accuratie (basis)</li>
           <li>Het hele dashboard renderen</li>
           <li>80/20-verdeling bewaken</li>
         </ul>
@@ -242,10 +246,12 @@
         <ul>
           <li>Sparren: "ik ben ziek, wat nu?" <em>· nu, via /api/chat</em></li>
           <li>Workout lezen: .fit of screenshot <em>· nu, via /api/ingest</em></li>
-          <li>Het seizoensplan opstellen <em>· gepland</em></li>
+          <li>De week plannen en herplannen <em>· nu, aq-042/060/061</em></li>
+          <li>De accuratie van een training beoordelen <em>· nu, aq-041</em></li>
+          <li>Een voorkeur uit vrije tekst halen <em>· nu, aq-050</em></li>
+          <li>Het seizoensplan opstellen <em>· nu, aq-039/040</em></li>
           <li>De weekreview schrijven <em>· gepland</em></li>
           <li>Een race-dossier onderzoeken <em>· gepland</em></li>
-          <li>Ongewone situaties duiden <em>· gepland</em></li>
         </ul>
         <p class="mono" style="font-size:0.74rem;color:var(--dim);margin-top:16px">
           alleen als er echt iets te wegen valt
@@ -368,17 +374,19 @@
           <div class="flow-row" style="grid-template-columns:1fr auto 1fr;padding:13px 0">
             <span class="mono" style="font-size:0.8rem">2 · de rest van de week</span>
             <span class="flow-arrow">›</span>
-            <span class="mono" style="font-size:0.8rem;color:var(--form)">blijft staan (nog geen herverdeling)</span>
+            <span class="mono" style="font-size:0.8rem;color:var(--form)">de coach stelt een herziene week voor</span>
           </div>
           <div class="flow-row" style="grid-template-columns:1fr auto 1fr;padding:13px 0">
             <span class="mono" style="font-size:0.8rem">3 · de coach</span>
             <span class="flow-arrow">›</span>
-            <span class="mono" style="font-size:0.8rem;color:var(--fatigue)">advies, via Telegram</span>
+            <span class="mono" style="font-size:0.8rem;color:var(--fatigue)">advies + diff, met [Opslaan][Aanpassen]</span>
           </div>
         </div>
         <p style="color:var(--muted);font-size:0.88rem;margin-top:16px">
-          Stap 1 en 2 zijn <strong>regels</strong> — die kosten niets en zijn altijd
-          hetzelfde. Het advies (stap 3) komt via Telegram, niet via de app-route.
+          Stap 1 is een <strong>regel</strong> — die kost niets en is altijd hetzelfde. Het
+          herplan-voorstel (stap 2) toetst de regels (<span class="mono">validateWeekPlan</span>),
+          toont een <strong>diff</strong> en verandert <strong>niets zonder bevestiging</strong>
+          (stap 3). De tekst-diff komt via Telegram én de app.
         </p>
         <div class="callout warn" style="margin-top:18px">
           <strong>En de grens:</strong> koorts met myocarditis-risico, aanhoudende
@@ -400,21 +408,30 @@
       <thead><tr><th>Endpoint</th><th>Doet</th><th>Regel of model</th></tr></thead>
       <tbody>
         <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/today</span></td><td>readiness + de sessie van vandaag</td><td><span class="pill go">regels</span></td></tr>
-        <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/week</span></td><td>de week met de geplaatste sessies</td><td><span class="pill go">regels</span></td></tr>
-        <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/wellness</span></td><td>de bestaande herstel- en wellness-reeks voor de grafiek</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/week</span></td><td>de week met de geplaatste sessies, samengevoegd</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/recovery</span></td><td>readiness + de herstel-curves</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/trends</span></td><td>seizoen, voortgang en het vermogensprofiel</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">GET</span> <span class="p">/api/planned</span></td><td>één geplande sessie (opbouw) voor het sessiescherm</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/planned/push</span></td><td>één sessie naar intervals.icu (› horloge)</td><td><span class="pill go">regels</span></td></tr>
         <tr><td class="ep"><span class="m">PUT</span> <span class="p">/api/availability</span></td><td>je weekschema opslaan</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">GET/PUT</span> <span class="p">/api/preferences</span></td><td>je trainingsvoorkeuren lezen/opslaan</td><td><span class="pill go">regels</span></td></tr>
         <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/log</span></td><td>duur + RPE van een andere sport</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/strength/log</span></td><td>een krachtsessie loggen (sets › load)</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/strength/import</span></td><td>een Hevy data-dump importeren (CSV/JSON)</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/weight</span></td><td>gewicht uit de weegschaal › wellness</td><td><span class="pill go">regels</span></td></tr>
         <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/sick</span></td><td>ziek melden › dag op pauze (advies via Telegram)</td><td><span class="pill go">regels</span></td></tr>
+        <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/coach</span></td><td>de coach in de app (plant, beoordeelt, stelt voor)</td><td><span class="pill rest">model</span></td></tr>
         <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/chat</span></td><td>sparren met de coach</td><td><span class="pill rest">model</span></td></tr>
         <tr><td class="ep"><span class="m">POST</span> <span class="p">/api/ingest</span></td><td>een workout lezen (.fit of screenshot)</td><td><span class="pill rest">model</span></td></tr>
       </tbody>
     </table>
 
     <div class="callout" style="margin-top:30px">
-      <strong>Zes van de acht endpoints kosten niets.</strong> <span class="mono">/api/sick</span>
-      is volledig regels — het advies komt via Telegram, niet via deze route. Alleen
-      <span class="mono">/api/chat</span> en <span class="mono">/api/ingest</span> raken een
-      taalmodel. Dat is de hele winst van §03 in één tabel.
+      <strong>Bijna alle endpoints kosten niets.</strong> <span class="mono">/api/sick</span>
+      is volledig regels — het advies komt via Telegram, niet via deze route. De coach-route
+      gebruikt een model, maar de <strong>regels toetsen elk voorstel</strong>
+      (<span class="mono">validateWeekPlan</span>, de diff, de accuratie-basis) voordat er iets
+      verandert. Dat is de hele winst van §03 in één tabel.
     </div>
   </div>
 </section>
@@ -436,13 +453,14 @@
         <tr><td>Telegram Bot</td><td class="mono" style="font-size:0.8rem">onbeperkt</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>intervals.icu</td><td class="mono" style="font-size:0.8rem">5.000 req/dag</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td>GitHub (private)</td><td class="mono" style="font-size:0.8rem">onbeperkt</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
-        <tr><td>Hevy</td><td class="mono" style="font-size:0.8rem">gratis plan volstaat</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Hevy</td><td class="mono" style="font-size:0.8rem">gratis plan volstaat (of dump importeren)</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
+        <tr><td>Weegschaal (Web Bluetooth)</td><td class="mono" style="font-size:0.8rem">rechtstreeks in de PWA, geen cloud</td><td class="mono" style="text-align:right;color:var(--form)">€0</td></tr>
         <tr><td><strong>Model-API</strong> <span class="pill rest" style="margin-left:6px">alleen oordelen</span></td><td class="mono" style="font-size:0.8rem">per gebruik</td><td class="mono" style="text-align:right;color:var(--fatigue)"><strong>de enige post</strong></td></tr>
       </tbody>
     </table>
 
     <div class="callout form" style="margin-top:32px">
-      Negen gratis onderdelen, één betaald. En door §03 wordt die ene post <strong>kleiner
+      Tien gratis onderdelen, één betaald. En door §03 wordt die ene post <strong>kleiner
       naarmate het systeem rijpt</strong> — want elk oordeel dat zich stabiliseert, verhuist
       naar de rekenmachine.
     </div>

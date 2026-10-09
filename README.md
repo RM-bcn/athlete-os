@@ -17,7 +17,7 @@ Open `index.html` in je browser, of gebruik de live-link hierboven. Geen server 
 | `pwa.html` | **PWA &amp; architectuur.** De vijf vastgeklikte besluiten, de cloud-architectuur, en het principe dat rekenen regels zijn en alleen oordelen tokens kosten. |
 | `backend.html` | **De architectuur.** Datastroom-diagram, de opslaglaag (markdown vs SQLite/D1), schrijfwegen (intervals.icu, Hevy), lagen, datamodel, skills, adaptatieregels, schema. |
 | `PLAN.md` | **Het bouwplan.** Acht fasen (0–7) met acceptatiecriteria, de repo-indeling en de Opencode-tooling. |
-| `frontend.html` | **De interface.** Acht telefoonschermen (vandaag, herstel, week, voortgang, coach, ochtendbrief, kracht, beschikbaarheid) en het desktop-dashboard. |
+| `frontend.html` | **De interface.** Tien telefoonschermen (vandaag, herstel, week, voortgang, coach, ochtendbrief, kracht, beschikbaarheid, profiel, weegschaal) en het desktop-dashboard. |
 | `screenshots/` | 114 renders — desktop (1440) en mobiel (390 @2x), volledige pagina's plus per sectie. |
 | `tools/screenshots.mjs` | Waarmee die renders gemaakt worden. |
 
@@ -48,14 +48,13 @@ apparaten leest *én* geplande workouts terugschrijft *én* fitness/vermoeidheid
 
 | | |
 |---|---|
-| **Telegram** | de push en het gesprek — de ochtendbrief komt binnen als tekst (de herstelkaart als afbeelding is **gepland**) |
-| **Het dashboard** | de visuals — één HTML-bestand op een privé-URL (nu login met Basic Auth; Cloudflare Access later) of lokaal |
+| **Telegram** | de push en het gesprek — de ochtendbrief komt binnen als tekst én met de **herstelkaart als PNG-foto** |
+| **Het dashboard** | de visuals — de PWA op een privé-URL (nu login met Basic Auth; Cloudflare Access later) of lokaal |
 | **De bestanden** | de bron — markdown op je schijf, alles leesbaar en aanvechtbaar |
 
-De herstelkaart wordt 's ochtends uit dezelfde HTML gerenderd tot een PNG (Playwright) en
-meegestuurd met het Telegram-bericht — dat is **gepland**; nu is de ochtendbrief tekst. Zie
-[`frontend.html#oppervlakken`](frontend.html)
-en [`frontend.html#kaart`](frontend.html).
+De herstelkaart wordt zodra de slaap van vannacht binnen is uit dezelfde HTML gerenderd tot een
+PNG (Satori + resvg-wasm in de Worker) en meegestuurd met het Telegram-bericht — dat is
+**gebouwd**. Zie [`frontend.html#oppervlakken`](frontend.html) en [`frontend.html#kaart`](frontend.html).
 
 Twee dingen die de broncursus mist en hier wél in zitten:
 
@@ -93,12 +92,12 @@ Geen VPS, geen vaste lasten. De opslag is markdown (beslissingen) plus **Cloudfl
 - [x] Architectuur en interface uitgewerkt
 - [x] Fase 0 — fundament (Worker + D1, live achter Basic Auth)
 - [x] Fase 1 — data naar binnen (intervals.icu)
-- [x] Fase 2 — rekenregels (78 tests)
-- [x] Fase 3 — PWA
+- [x] Fase 2 — rekenregels (**494 tests**)
+- [x] Fase 3 — PWA (tien schermen)
 - [x] Fase 4 — invoer
-- [x] Fase 5 — coach (met een model)
+- [x] Fase 5 — coach (plant de week, beoordeelt, herplant met bevestiging)
 - [ ] Fase 6 — kracht (deels; wacht op doel + materiaal)
-- [x] Fase 7 — Telegram
+- [x] Fase 7 — Telegram (brief wacht op de slaap; herstelkaart als PNG)
 - [ ] Jouw twee antwoorden: **doel** en **beschikbare uren/dagen**
 
 ## Technisch

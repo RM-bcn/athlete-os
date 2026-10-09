@@ -84,7 +84,8 @@
     <p class="lead" style="max-width:64ch;margin-top:22px;font-size:1.08rem;color:var(--muted)">
       Eén scherm dat je 's ochtends opent zonder eraan herinnerd te worden. Geen dashboard vol
       statistieken — alleen wat vandaag verandert. Veel van de schermen hieronder zijn nu
-      <strong>gebouwd</strong>: Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer, Feedback en Profiel.
+      <strong>gebouwd</strong>: Vandaag, Herstel, Week, Trends, Coach, Kracht, Invoer, Feedback,
+      Profiel en Weegschaal.
       De voorbeelden op deze pagina blijven <strong>schetsen om te bespreken</strong> — ze tonen de
       bedoeling, niet pixel voor pixel de app.
     </p>
@@ -106,7 +107,8 @@
         <span class="card-num">01</span>
         <h4>Telegram</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
-          <strong>De push en het gesprek.</strong> De ochtendbrief komt om 07:00 binnen, met de
+          <strong>De push en het gesprek.</strong> De ochtendbrief komt zodra de slaap van vannacht
+          binnen is, met de
           <strong>herstelkaart als PNG-foto</strong>. Het gesprek is <strong>gedeeld met de app</strong>:
           één geheugen. Je antwoordt in gewoon Nederlands:
           "verzet donderdag", "squat 3×8 op 110, voelde als een 8".
@@ -150,7 +152,7 @@
 <!-- ============ TELEFOON ============ -->
 <section class="band" id="telefoon">
   <div class="wrap">
-    <p class="eyebrow">Negen schermen</p>
+    <p class="eyebrow">Tien schermen</p>
     <h2 style="margin-bottom:44px">De kern in je zak.</h2>
 
     <div class="screens">
@@ -218,7 +220,8 @@
               <div class="row"><span class="k">HRV</span><span class="v" style="color:var(--dim)">ontbreekt &nbsp;geen dagwaarde via Huawei</span></div>
               <div class="row"><span class="k">Rustige hartslag</span><span class="v" style="color:var(--easy)">54 &nbsp;4 hoog</span></div>
               <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
-              <div class="row"><span class="k">Body Battery</span><span class="v" style="color:var(--easy)">62% &nbsp;<span style="color:var(--dim)">gauge · nog 48% nu · schatting</span></span></div>
+              <div class="row"><span class="k">Body Battery</span><span class="v" style="color:var(--easy)">62% &nbsp;<span style="color:var(--dim)">continu · nog 48% nu · schatting</span></span></div>
+              <div class="row"><span class="k">Herstel-curves</span><span class="v" style="color:var(--dim)">battery 24 u · slaap · herstel% · rust-HR &nbsp;hoverbaar</span></div>
 
               <div class="app-sub" style="margin:20px 0 4px">Slaaparchitectuur · gepland (Huawei levert geen fases)</div>
               <svg class="hypno" viewBox="0 0 300 72" preserveAspectRatio="none"
@@ -320,6 +323,19 @@
                 Halve marathon op 5:07/km · Base › Build › Peak › Taper
               </p>
 
+              <div class="app-sub" style="margin:14px 0 4px">Voortgang t.o.v. je doel</div>
+              <p style="font-size:0.78rem;color:var(--form);margin:0 0 4px">
+                Op koers — je zit binnen 3 sec/km van je streef-pace.
+              </p>
+
+              <div class="app-sub" style="margin:14px 0 4px">Seizoen · per fase</div>
+              <p class="mono" style="font-size:0.7rem;color:var(--muted);margin:0 0 4px">
+                Base 6 wk · Build 8 wk · Peak 2 wk · Taper 4 wk
+              </p>
+              <p class="mono" style="font-size:0.7rem;color:var(--dim);margin:0">
+                examen 12 nov · streefvolume per fase (beschikbaarheid × fasefactor)
+              </p>
+
               <div class="app-sub" style="margin:14px 0 4px">Patronen · je valkuilen</div>
               <p style="font-size:0.78rem;color:var(--muted);margin:0">
                 Wat telkens terugkomt in je eigen sessie-feedback — hier zie je het.
@@ -358,6 +374,13 @@
                 <b>Athlete Intelligence</b>
                 Twee korte nachten, RHR 6 slagen hoog, TSB −14. Dat is een opbouw die te snel
                 ging, geen luiheid. Volgende week staat er weer 2× kwaliteit in.
+              </div>
+
+              <div class="bubble me">Donderdag kan ik niet — herplan de week.</div>
+              <div class="bubble coach">
+                <b>Athlete Intelligence</b>
+                Voorstel: do 12 nov: − drempel 60 min · vr 13 nov: + duurloop 45 min.
+                Opslaan of aanpassen?
               </div>
 
               <div class="tg-actions">
@@ -406,7 +429,7 @@
                   <div class="row"><span class="k">Rustige HR</span><span class="v" style="color:var(--easy)">54</span></div>
                   <div class="row"><span class="k">Slaap</span><span class="v">6 u 55</span></div>
                 </div>
-                <div class="cap">herstel-kaart.png · verstuurd om 07:00</div>
+                <div class="cap">herstel-kaart.png · verstuurd zodra de slaap van vannacht binnen is</div>
               </div>
 
               <div class="bubble coach" style="margin-bottom:0">
@@ -477,6 +500,7 @@
                 <div class="t">Log je sets in de app</div>
                 <div class="d">oefening kiezen · reps + kg › tonnage en load</div>
               </div>
+              <div class="row" style="margin-top:10px"><span class="k">Hevy-dump</span><span class="v" style="color:var(--form)">importeren (CSV/JSON)</span></div>
               <div class="app-sub" style="margin:16px 0 4px">Recent gelogd</div>
               <div class="row"><span class="k">Ma · Lower A</span><span class="v">gelogd · 5 oefeningen</span></div>
               <div class="row"><span class="k">Za · Upper A</span><span class="v">gelogd · 6 oefeningen</span></div>
@@ -553,6 +577,9 @@
               <p style="font-size:0.8rem;color:var(--muted);margin:10px 0 0">
                 Clubrit werd langer dan gepland; benen voelden zwaar op het eind.
               </p>
+              <p class="mono" style="font-size:0.68rem;color:var(--dim);margin:10px 0 0">
+                de coach vult de accuratie (0–100%) als jij dat niet doet
+              </p>
               <div class="session" style="margin-top:12px;border-left-color:var(--form)">
                 <div class="t">Opgeslagen</div>
                 <div class="d">laatst vastgelegd · za 4 okt 19:42</div>
@@ -576,16 +603,48 @@
               <div class="row"><span class="k">Halve marathon</span><span class="v">5:07/km · A</span></div>
               <div class="row"><span class="k">Kracht</span><span class="v">opbouwen · B</span></div>
 
+              <div class="app-sub" style="margin:16px 0 4px">Voorkeuren</div>
+              <div class="row"><span class="k">Kracht</span><span class="v">split, geen full-body</span></div>
+              <div class="row"><span class="k">Tijden</span><span class="v">het liefst 's ochtends</span></div>
+
               <div class="app-sub" style="margin:16px 0 4px">Beschikbaarheid</div>
               <div class="row"><span class="k">Deze week</span><span class="v">5 dagdelen · 435 min</span></div>
               <p style="font-size:0.8rem;color:var(--muted);margin:10px 0 0">
                 Meerdere doelen kunnen naast elkaar staan. De coach bouwt de periodisering
-                (Base › Build › Peak › Taper) en toont die in Trends.
+                (Base › Build › Peak › Taper), toont die in Trends, en leest én schrijft
+                dezelfde voorkeuren.
               </p>
             </div>
           </div>
         </div>
-        <div class="screen-label"><b>Profiel</b><span>doelen en beschikbaarheid</span></div>
+        <div class="screen-label"><b>Profiel</b><span>doelen, voorkeuren en beschikbaarheid</span></div>
+      </div>
+
+      <!-- SCHERM · WEEGSCHAAL -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-bar"><span>07:20</span><span>dashboard</span></div>
+            <div class="device-body">
+              <div class="app-sub">Web Bluetooth · Chrome op Android</div>
+              <div class="app-h">Weegschaal</div>
+
+              <div class="row" style="margin-top:16px"><span class="k">Laatst</span><span class="v" style="color:var(--form)">78,4 kg</span></div>
+              <div class="row"><span class="k">Datum</span><span class="v">9 okt</span></div>
+
+              <div style="display:flex;gap:8px;margin-top:16px">
+                <span class="pill go">koppel weegschaal</span>
+                <span class="pill off">zoeken …</span>
+              </div>
+              <p style="font-size:0.8rem;color:var(--muted);margin:14px 0 0">
+                Lees de standaard Bluetooth-weegservice rechtstreeks uit; het gewicht gaat
+                meteen naar <span class="mono">wellness</span>. Gebruikt je weegschaal een
+                eigen protocol, dan zeg ik dat eerlijk en vul je het handmatig in.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label"><b>Weegschaal</b><span>via Web Bluetooth › wellness</span></div>
       </div>
 
     </div>
@@ -692,10 +751,10 @@
     <p class="eyebrow accent">Slaap &amp; herstel</p>
     <h2>Herstel is de eerste sessie<br>van de dag.</h2>
     <p style="max-width:64ch;color:var(--muted);margin-top:20px">
-      Dit scherm krijgt dezelfde gewichtige plek als de training. De ring, de drie bijdragers
-      en het herstelsaldo (Body Battery) komen uit de WHOOP-taal — maar de cijfers
-      zijn van jou, uit je eigen Huawei-data, en het systeem vertelt er eerlijk bij wat
-      het niet weet.
+      Dit scherm krijgt dezelfde gewichtige plek als de training. De ring, de drie bijdragers,
+      het herstelsaldo (Body Battery) en de herstel-curves komen uit de WHOOP- en Garmin-taal —
+      maar de cijfers zijn van jou, uit je eigen Huawei-data, en het systeem vertelt er eerlijk
+      bij wat het niet weet.
     </p>
 
     <div class="grid g4" style="margin-top:40px">
@@ -703,7 +762,8 @@
         <h4>De ring</h4>
         <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
           Eén herstelpercentage, met de kleur van de dag. Groen, amber, rood. Geen
-          tientallen grafieken — één oordeel.
+          tientallen grafieken — één oordeel. Dit is onze <strong>ochtend-readiness</strong>
+          (de Whoop-achtige snapshot).
         </p>
       </div>
       <div class="card">
@@ -724,11 +784,19 @@
       <div class="card">
         <h4>Body Battery</h4>
         <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
-          Een herstelsaldo (0–100) dat 's nachts oplaadt en overdag leegloopt met je training.
-          De batterij loopt nu ook <strong>over de dag</strong> leeg (intraday): naast de dagwaarde
-          staat er <strong>"nog X% nu"</strong> — te zien op Vandaag en als gauge op Herstel.
-          Benaderd met de starttijden van je activiteiten, dus eerlijk als <em>schatting</em>
-          gelabeld; het is geen meting.
+          Een <strong>continu, waak-verankerd</strong> herstelsaldo (0–100): het laadt 's nachts
+          op en loopt overdag leeg met je training, met <strong>"nog X% nu"</strong>. Garmin-achtig
+          is er <strong>geen reset om middernacht</strong> — de nacht is het oplaadmoment, niet het
+          begin van een nieuw saldo. Benaderd met slaap, rust-HR en HRV plus de starttijden van je
+          activiteiten, dus eerlijk als <em>schatting</em> gelabeld; het is geen meting.
+        </p>
+      </div>
+      <div class="card">
+        <h4>De herstel-curves</h4>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:8px">
+          Body battery over de <strong>laatste 24 u</strong>, slaap, herstel% en rust-HR — elk een
+          rustige kaart met een <strong>hoverbare</strong> lijn. Met de hand getekende SVG, geen
+          dependencies.
         </p>
       </div>
       <div class="card">
@@ -780,8 +848,11 @@
           <li>
             <strong>Je logt de sessie in de app.</strong> Kies een oefening uit de bibliotheek en
             voeg sets toe (reps + kg); de <strong>tonnage</strong> (som reps × gewicht) en de
-            <strong>load</strong> rekent het systeem uit. Hevy overtypen is niet meer nodig, al kun
-            je Hevy als logboek blijven gebruiken. Onder het blok staat wat je recent logde.
+            <strong>load</strong> rekent het systeem uit. Onder het blok staat wat je recent logde.
+          </li>
+          <li>
+            <strong>Of je importeert een Hevy data-dump.</strong> Je hele historie komt in één keer
+            binnen (CSV of JSON); Hevy overtypen is daardoor niet meer nodig.
           </li>
           <li class="warn">
             <strong>En de oefeningen wisselen niet binnen een blok.</strong> Vier tot acht
@@ -797,8 +868,9 @@
           <li>
             <strong>Een week-overzicht.</strong> 7 dagkaarten met per dag een samenvatting en het
             week-totaal. Tik een dag open om de <strong>drie dagdelen</strong> te bewerken (minuten +
-            sport); met "kopieer vorige week" en "week leegmaken". Dit is wat
-            <span class="mono">plan-my-week</span> gebruikt om sessies te plaatsen.
+            sport); met "kopieer vorige week" en "week leegmaken". Dit is wat de coach gebruikt om
+            sessies te plaatsen — en hij toetst zijn plan met pure regels
+            (<span class="mono">validateWeekPlan</span>).
           </li>
           <li>
             <strong>Andere sporten staan er gewoon tussen.</strong> Volleybal op woensdag
@@ -810,8 +882,9 @@
             handmatige sport is nog niet gebouwd. Anders doet de coach alsof die dag rust was.
           </li>
           <li class="warn">
-            <strong>Vrije dagen worden niet automatisch gevuld.</strong> De coach vraagt
-            eerst. Anders sluipt er training in die je niet wilde.
+            <strong>Vrije dagen worden niet automatisch gevuld.</strong> De coach plant de week
+            zelf (ma–wo) binnen de ruimte die je opgeeft, maar een dag die je vrij houdt, blijft
+            vrij. Anders sluipt er training in die je niet wilde.
           </li>
         </ul>
       </div>
@@ -837,7 +910,7 @@
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
         <span style="width:10px;height:10px;border-radius:50%;background:#33333f"></span>
-        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">PWA (Worker) — negen schermen: vandaag · herstel · week · trends · coach · kracht · invoer · feedback · profiel</span>
+        <span class="mono" style="font-size:0.72rem;color:var(--dim);margin-left:10px">PWA (Worker) — tien schermen: vandaag · herstel · week · trends · coach · kracht · invoer · feedback · profiel · weegschaal</span>
       </div>
 
       <div style="padding:28px">
@@ -908,10 +981,10 @@
 
     <div class="grid g3" style="margin-top:30px">
       <div class="card">
-        <h4>Drie tabs, zes eronder</h4>
+        <h4>Drie tabs, zeven eronder</h4>
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           Vandaag · Trends · Coach als hoofdtabbladen, met Herstel · Week · Kracht · Invoer ·
-          Feedback · Profiel eronder — zoals de gebouwde PWA ze heeft.
+          Feedback · Profiel · Weegschaal eronder — zoals de gebouwde PWA ze heeft.
         </p>
       </div>
       <div class="card">
@@ -926,9 +999,11 @@
         <p style="color:var(--muted);font-size:0.9rem;margin-top:8px">
           De PWA doet echte API-calls: <span class="mono">/api/today</span>,
           <span class="mono">/api/recovery</span>, <span class="mono">/api/trends</span>,
-          <span class="mono">/api/coach</span>, <span class="mono">/api/feedback</span>,
-          <span class="mono">/api/strength</span>, <span class="mono">/api/strength/log</span>,
-          <span class="mono">/api/sync</span>,
+          <span class="mono">/api/coach</span>, <span class="mono">/api/planned</span>,
+          <span class="mono">/api/feedback</span>, <span class="mono">/api/strength</span>,
+          <span class="mono">/api/strength/log</span>, <span class="mono">/api/strength/import</span>,
+          <span class="mono">/api/preferences</span>, <span class="mono">/api/tests</span>,
+          <span class="mono">/api/weight</span>, <span class="mono">/api/sync</span>,
           <span class="mono">POST /api/log</span>, <span class="mono">POST /api/sick</span> en
           <span class="mono">PUT /api/availability</span>.
           De coach is de Worker.
@@ -975,13 +1050,15 @@
 
     <div class="callout" style="margin-top:34px">
       <strong>Schetsen én gebouwde schermen.</strong> Vandaag, Herstel, Week, Trends, Coach,
-      Kracht, Invoer, Feedback en Profiel bestaan nu in de app. De voorbeelden hier blijven de
-      <em>bedoeling</em> tonen en zijn aanpasbaar — de kleuren, de tabbladen, de volgorde,
-      wat er wel en niet op het eerste scherm staat. Zeg wat je anders wilt en ik teken het opnieuw.
+      Kracht, Invoer, Feedback, Profiel en Weegschaal bestaan nu in de app. De voorbeelden hier
+      blijven de <em>bedoeling</em> tonen en zijn aanpasbaar — de kleuren, de tabbladen, de
+      volgorde, wat er wel en niet op het eerste scherm staat. Zeg wat je anders wilt en ik teken
+      het opnieuw.
 
       <strong>En wat nog open is, eerlijk:</strong> het <strong>hypnogram (slaapfases)</strong>
       ontbreekt, want Huawei levert geen slaapfases. <strong>Cloudflare Access</strong> als nettere
-      poort en de <strong>Tuya-weegschaal</strong> voor lichaamscompositie wachten op de gebruiker.
+      poort wacht op de gebruiker. De <strong>weegschaal</strong> koppel je al via Web Bluetooth
+      in de PWA.
     </div>
 
     <div class="grid g2" style="margin-top:44px">
