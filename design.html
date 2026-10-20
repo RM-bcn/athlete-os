@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontwerp · Athlete Intelligence</title>
+<meta name="description" content="Ontwerpvoorstel voor Athlete Intelligence: kleur en typografie terug op hun taak. Met live mockups van Vandaag en Week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  /* Een ontwerppagina is een proef: geen enkele overlay mag de specimens tinten.
+     De deck-vignette (multiply, 0.55) maakt een witte knop grijs — hier dus uit. */
+  body::before { display: none !important; }
+
+  /* ---------- de app-tokens, exact zoals ze in de app staan ---------- */
+  .appscope {
+    --a-void: #101014;
+    --a-surface: #1a1a21;
+    --a-surface-2: #23232b;
+    --a-line: #2b2b34;
+    --a-line-2: #3a3a45;
+    --a-text: #f2f2f6;
+    --a-muted: #9a9aa8;
+    --a-dim: #8e8e9c;
+    --a-fitness: #4f8dff;
+    --a-fatigue: #ff4d4d;
+    --a-form: #00e08c;
+    --a-easy: #ffd12e;
+    --a-rest: #ff4d4d;
+  }
+
+  /* ---------- de rolverdeling: de handtekening van deze pagina ---------- */
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 44px;
+  }
+  .role {
+    background: var(--surface);
+    padding: 20px 22px 22px;
+  }
+  .role i {
+    display: block;
+    width: 100%;
+    height: 6px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .role b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .role span {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  @media (max-width: 780px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* ---------- nu / straks ---------- */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 780px) { .ba { grid-template-columns: 1fr; } }
+  .ba__side {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 22px;
+    min-width: 0;
+  }
+  .ba__tag {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 18px;
+    display: block;
+  }
+  .ba__side--old { border-color: color-mix(in srgb, var(--fatigue) 26%, var(--line)); }
+  .ba__side--old .ba__tag { color: var(--fatigue); }
+  .ba__side--new { border-color: color-mix(in srgb, var(--form) 26%, var(--line)); }
+  .ba__side--new .ba__tag { color: var(--form); }
+  .ba__why {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .ba__why b { color: var(--text); font-weight: 600; }
+
+  /* ---------- specimen: oude stijl ---------- */
+  .s-old-btn {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--void);
+    background: var(--form);
+    border: 0;
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    font-weight: 500;
+  }
+  .s-old-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .s-old-loud {
+    font-family: var(--display);
+    font-variation-settings: "wdth" 116;
+    font-weight: 800;
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--form);
+  }
+  .s-old-quote {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-height: 7.6em;
+    overflow: hidden;
+    mask-image: linear-gradient(#000 70%, transparent);
+    -webkit-mask-image: linear-gradient(#000 70%, transparent);
+  }
+
+  /* ---------- specimen: nieuwe stijl ---------- */
+  .s-new-btn {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--void);
+    background: var(--text);
+    border: 0;
+    border-radius: var(--radius-sm);
+    padding: 13px 20px;
+  }
+  .s-new-btn--ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line-2);
+  }
+  .s-new-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .s-new-loud {
+    font-family: var(--display);
+    font-variation-settings: "wdth" 112;
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--form);
+  }
+  .s-new-title {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 10px;
+  }
+  .s-new-body {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 6px;
+  }
+  .s-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  /* ---------- typeschaal ---------- */
+  .scale { display: grid; gap: 0; margin-top: 8px; }
+  .scale__row {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 18px;
+    align-items: baseline;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .scale__row:first-child { border-top: 0; }
+  .scale__meta {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+  .t-display { font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 2.4rem; line-height: 1; letter-spacing: -0.03em; }
+  .t-title { font-family: var(--display); font-variation-settings: "wdth" 104; font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .t-action { font-family: var(--sans); font-weight: 600; font-size: 1rem; }
+  .t-body { font-family: var(--sans); font-size: 0.95rem; color: var(--muted); line-height: 1.55; }
+  .t-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+
+  /* ---------- telefoons ---------- */
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+    justify-items: center;
+  }
+  .phone {
+    width: 300px;
+    max-width: 100%;
+    height: 632px;
+    border-radius: 36px;
+    background: var(--a-void);
+    border: 1px solid #3a3a45;
+    box-shadow: 0 40px 70px -40px #000, 0 0 0 9px #07070a;
+    padding: 20px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    overflow: hidden;
+    font-family: var(--sans);
+    color: var(--a-text);
+    position: relative;
+  }
+  .ph-head { display: flex; align-items: center; justify-content: space-between; }
+  .ph-date { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-dim); }
+  .ph-brand { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--a-muted); }
+  .ph-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--a-form); }
+  .ph-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--a-dim); }
+
+  .ph-card { background: var(--a-surface); border: 1px solid var(--a-line); border-radius: 16px; padding: 14px; }
+
+  .ph-verdict { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 13px; align-items: center; }
+  .ph-ring {
+    position: relative;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: conic-gradient(var(--a-form) 100%, var(--a-line) 0);
+    display: grid; place-items: center;
+  }
+  .ph-ring::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--a-surface); }
+  .ph-ring b { position: relative; font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
+  .ph-loud { font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 1.5rem; line-height: 1; letter-spacing: -0.02em; color: var(--a-form); }
+  .ph-reason { font-size: 0.72rem; color: var(--a-muted); line-height: 1.4; margin-top: 5px; }
+  .ph-more { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--a-dim); }
+
+  .ph-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .ph-stats > div { background: var(--a-surface); border: 1px solid var(--a-line); border-radius: 12px; padding: 9px 10px; }
+  .ph-stats b { display: block; font-family: var(--mono); font-size: 0.86rem; font-weight: 500; }
+  .ph-stats span { display: block; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-dim); margin-top: 3px; }
+  .ph-state { color: var(--a-easy); }
+
+  .ph-session__ttl { font-weight: 600; font-size: 0.9rem; }
+  .ph-session__meta { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--a-dim); margin-top: 4px; }
+  .ph-blocks { display: flex; align-items: flex-end; gap: 3px; height: 42px; margin: 12px 0 13px; }
+  .ph-blocks i { flex: 1; border-radius: 2px; background: color-mix(in srgb, var(--a-fitness) 55%, var(--a-surface-2)); }
+  .ph-blocks i.hard { background: var(--a-fatigue); }
+  .ph-cta {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background: var(--a-text);
+    color: var(--a-void);
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 11px 12px;
+    text-align: left;
+  }
+  .ph-cta span { float: right; opacity: 0.55; }
+
+  .ph-checkin { display: grid; gap: 9px; }
+  .ph-checkin__row { display: flex; align-items: center; justify-content: space-between; }
+  .ph-checkin__l { font-size: 0.72rem; color: var(--a-muted); }
+  .ph-pills { display: flex; gap: 5px; }
+  .ph-pills i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--a-line-2); }
+  .ph-pills i.on { background: var(--a-form); border-color: var(--a-form); }
+
+  .ph-tabs {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    border-top: 1px solid var(--a-line);
+    padding-top: 9px;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--a-dim);
+    text-align: center;
+  }
+  .ph-tabs span.on { color: var(--a-text); }
+
+  /* week-mock */
+  .ph-opbouw { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .ph-opbouw > div { background: var(--a-surface); border: 1px solid var(--a-line); border-radius: 12px; padding: 10px 9px; }
+  .ph-opbouw b { display: block; font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.03em; }
+  .ph-opbouw span { display: block; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-dim); margin-top: 4px; }
+  .ph-opbouw .fit b { color: var(--a-fitness); }
+  .ph-opbouw .fat b { color: var(--a-fatigue); }
+  .ph-opbouw .form b { color: var(--a-easy); }
+  .ph-line { font-size: 0.7rem; color: var(--a-muted); line-height: 1.45; }
+  .ph-line--goal { color: var(--a-text); }
+  .ph-days { display: grid; gap: 6px; }
+  .ph-day { display: flex; align-items: center; justify-content: space-between; background: var(--a-surface); border: 1px solid var(--a-line); border-radius: 11px; padding: 9px 11px; }
+  .ph-day small { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-dim); width: 26px; }
+  .ph-day span { flex: 1; font-size: 0.74rem; margin-left: 4px; }
+  .ph-day em { font-family: var(--mono); font-size: 0.56rem; font-style: normal; color: var(--a-muted); }
+  .ph-day.rest span { color: var(--a-dim); }
+
+  /* ---------- notities naast de mock ---------- */
+  .mock-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 46px; align-items: start; margin-top: 44px; }
+  @media (max-width: 980px) { .mock-wrap { grid-template-columns: 1fr; } }
+  .notes { display: grid; gap: 18px; }
+  .note { border-left: 2px solid var(--line-2); padding-left: 16px; }
+  .note b { display: block; font-size: 0.94rem; margin-bottom: 4px; }
+  .note span { font-size: 0.86rem; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- navigatie ---------- */
+  .tabbar {
+    display: grid; grid-template-columns: repeat(4, 1fr) 44px;
+    gap: 2px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 8px;
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--dim);
+  }
+  .tabbar span { padding: 8px 2px; border-radius: 9px; }
+  .tabbar span.on { background: var(--surface-2); color: var(--text); }
+  .tabbar span.more { color: var(--dim); }
+
+  table.routes { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  table.routes th, table.routes td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.routes th { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); font-weight: 500; }
+  table.routes td:first-child { color: var(--muted); white-space: nowrap; }
+  table.routes tr:last-child td { border-bottom: 0; }
+  .yes { color: var(--form); }
+  .no { color: var(--dim); }
+
+  /* ---------- uitrol ---------- */
+  .steps { display: grid; gap: 0; margin-top: 10px; }
+  .step { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 22px; padding: 26px 0; border-top: 1px solid var(--line); }
+  .step:first-child { border-top: 0; }
+  .step__n { font-family: var(--mono); font-size: 0.7rem; color: var(--dim); letter-spacing: 0.1em; }
+  .step h3 { margin-bottom: 6px; }
+  .step p { color: var(--muted); font-size: 0.94rem; max-width: 62ch; }
+  .step__meta { font-family: var(--mono); font-size: 0.68rem; color: var(--dim); letter-spacing: 0.06em; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;Intelligence</span>
+    <div class="nav-links">
+      <a href="index.html">Voorstel</a>
+      <a href="science.html">Wetenschap</a>
+      <a href="strength.html">Kracht</a>
+      <a href="pwa.html">PWA</a>
+      <a href="backend.html">Backend</a>
+      <a href="frontend.html">Interface</a>
+      <a href="design.html" aria-current="page">Ontwerp</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ THESIS ============ -->
+<header class="band" id="thesis">
+  <div class="wrap">
+    <p class="eyebrow accent">Ontwerp · v2 · 2026-10</p>
+    <h1>Een coach.<br>Geen dashboard.</h1>
+
+    <p class="lead" style="max-width:60ch;margin-top:26px;font-size:1.12rem;color:var(--muted)">
+      De structuur klopt: de ringen, de basislijn-sliders, de kleurcodering, het eerlijke
+      <strong>ontbreekt</strong>. Maar de uitvoering leest als een datascherm. Alles is
+      mono-uppercase, alles is even luid, en mintgroen is tegelijk de actiekleur én de staat
+      &ldquo;go&rdquo;. Dit voorstel verandert de identiteit niet. Het geeft kleur en typografie
+      hun taak terug.
+    </p>
+
+    <div class="roles appscope" aria-label="De rolverdeling van de kleuren">
+      <div class="role">
+        <i style="background:var(--a-fitness)"></i>
+        <b>Fitness</b>
+        <span>CTL. Blauw. Alleen voor je lange-termijn belasting.</span>
+      </div>
+      <div class="role">
+        <i style="background:var(--a-fatigue)"></i>
+        <b>Vermoeidheid</b>
+        <span>ATL en rust. Rood. Alleen als signaal, nooit als decoratie.</span>
+      </div>
+      <div class="role">
+        <i style="background:var(--a-form)"></i>
+        <b>Vorm</b>
+        <span>TSB en &ldquo;go&rdquo;. Mint. Nu ook je knopkleur — dat is het probleem.</span>
+      </div>
+      <div class="role">
+        <i style="background:var(--a-text)"></i>
+        <b>Actie</b>
+        <span>Inkt. Wit op donker. Een knop hoort geen stemming te hebben.</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 01 DIAGNOSE ============ -->
+<section class="band" id="diagnose">
+  <div class="wrap">
+    <p class="eyebrow">01 · Wat er nu wringt</p>
+    <h2>Drie plekken waar de vorm de inhoud in de weg zit.</h2>
+    <p class="lead" style="max-width:64ch;color:var(--muted);margin-top:18px">
+      Geen smaakkwestie: dit zijn de plekken waar een scherm minder goed leest dan het zou
+      kunnen. Links zoals het nu is, rechts zoals het voorstel.
+    </p>
+
+    <div class="grid g3" style="margin-top:40px">
+
+      <div class="card">
+        <span class="card-num">01 · De actie</span>
+        <div class="ba__side ba__side--old" style="padding:18px;margin-bottom:12px">
+          <span class="ba__tag">Nu</span>
+          <button class="s-old-btn" type="button">Start routine ›</button>
+          <div style="margin-top:12px">
+            <button class="s-old-btn" type="button">Start lege training ›</button>
+          </div>
+        </div>
+        <div class="ba__side ba__side--new" style="padding:18px">
+          <span class="ba__tag">Straks</span>
+          <div class="s-row">
+            <button class="s-new-btn" type="button">Start training ›</button>
+            <button class="s-new-btn s-new-btn--ghost" type="button">Leeg</button>
+          </div>
+        </div>
+        <div class="ba__why">
+          <b>Twee identieke groene CTA's</b> concurreren om aandacht, en mint betekent hier
+          &ldquo;actie&rdquo; in plaats van &ldquo;goed herstel&rdquo;. Eén inktkleurige primaire
+          actie, één stille tweede. De staat blijft groen.
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-num">02 · De typografie</span>
+        <div class="ba__side ba__side--old" style="padding:18px;margin-bottom:12px">
+          <span class="ba__tag">Nu</span>
+          <div class="s-old-label">Kracht · overzicht</div>
+          <div style="height:8px"></div>
+          <div class="s-old-loud">HARD</div>
+          <div style="height:8px"></div>
+          <div class="s-old-quote">Slaap, rust-HR en vorm binnen je eigen basislijn. Je kunt vandaag voluit. Sleep, rust-HR en vorm binnen je eigen basislijn.</div>
+        </div>
+        <div class="ba__side ba__side--new" style="padding:18px">
+          <span class="ba__tag">Straks</span>
+          <div class="s-new-label">Kracht · overzicht</div>
+          <div style="height:10px"></div>
+          <div class="s-new-loud">HARD</div>
+          <div class="s-new-title">Slaap, rust-HR en vorm binnen je basislijn.</div>
+          <div class="s-new-body">Eén stem per scherm: het oordeel luid, de uitleg gewoon leesbaar, de rest stil.</div>
+        </div>
+        <div class="ba__why">
+          <b>Alles is even luid</b>: de paginatitel, het verdict en de cijfers staan allemaal in
+          hetzelfde 800-gewicht. Eén luid element per scherm, de rest in een rustige leesmaat.
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-num">03 · De uitleg</span>
+        <div class="ba__side ba__side--old" style="padding:18px;margin-bottom:12px">
+          <span class="ba__tag">Nu</span>
+          <div class="s-old-label">Body Battery · schatting &nbsp; 98%</div>
+          <div style="height:8px"></div>
+          <div class="s-old-quote">nog 98% nu · dag 94% · laadt 's nachts op, loopt overdag leeg, geen reset om middernacht; benaderd met slaap, rust-HR en HRV plus de starttijden en duur van je activiteiten, want Huawei levert geen continue hartcurve.</div>
+        </div>
+        <div class="ba__side ba__side--new" style="padding:18px">
+          <span class="ba__tag">Straks</span>
+          <div class="s-row" style="justify-content:space-between">
+            <span class="s-new-label">Body Battery · schatting</span>
+            <span class="s-new-loud" style="font-size:1.4rem">98%</span>
+          </div>
+          <div style="height:10px"></div>
+          <div class="s-new-body">Nog 98% — dag 94%.</div>
+          <div style="margin-top:10px">
+            <span class="s-new-label" style="color:var(--text)">Details ›</span>
+          </div>
+        </div>
+        <div class="ba__why">
+          <b>Vijf regels uitleg in de kaart</b>. De uitleg hoort achter het info-icoon of
+          &ldquo;Details ›&rdquo;; de kaart zelf zegt in één regel wat je moet weten.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 HET SYSTEEM ============ -->
+<section class="band" id="systeem">
+  <div class="wrap">
+    <p class="eyebrow">02 · Het systeem</p>
+    <h2>Dezelfde familie, andere rollen.</h2>
+
+    <div class="grid g2" style="margin-top:40px">
+      <div class="card">
+        <span class="card-num">Typografie</span>
+        <div class="scale">
+          <div class="scale__row">
+            <div class="scale__meta">Display<br>Archivo 800</div>
+            <div class="t-display">HARD</div>
+          </div>
+          <div class="scale__row">
+            <div class="scale__meta">Titel<br>Archivo 700</div>
+            <div class="t-title">Deze week in je opbouw</div>
+          </div>
+          <div class="scale__row">
+            <div class="scale__meta">Actie<br>Plex Sans 600</div>
+            <div class="t-action">Start training ›</div>
+          </div>
+          <div class="scale__row">
+            <div class="scale__meta">Tekst<br>Plex Sans 400</div>
+            <div class="t-body">Je draagt vermoeidheid; dat hoort bij opbouwen. Hou de makkelijke dagen makkelijk.</div>
+          </div>
+          <div class="scale__row">
+            <div class="scale__meta">Label<br>Plex Mono</div>
+            <div class="t-label">Vorm · TSB</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-num">De regel</span>
+        <p style="color:var(--muted);font-size:0.95rem">
+          Drie families, drie taken — en geen vierde. Archivo is de stem: alleen waar iets
+          <strong>geluid</strong> mag maken. Plex Sans is de taal: alles wat je leest of
+          aanraakt, in <strong>sentence case</strong>. Plex Mono is de maat: labels, cijfers,
+          eenheden — uppercase, klein, met letterspacing.
+        </p>
+        <div style="height:1px;background:var(--line);margin:22px 0"></div>
+        <table class="routes">
+          <tr><th>Element</th><th>Font</th><th>Case</th></tr>
+          <tr><td>Verdict / groot cijfer</td><td>Archivo 800</td><td class="no">—</td></tr>
+          <tr><td>Paginatitel</td><td>Archivo 700</td><td class="no">—</td></tr>
+          <tr><td>Kaarttitel, actie</td><td>Plex Sans 600</td><td class="yes">sentence</td></tr>
+          <tr><td>Body, uitleg</td><td>Plex Sans 400</td><td class="yes">sentence</td></tr>
+          <tr><td>Label, eenheid, eyebrow</td><td>Plex Mono</td><td class="yes">UPPER</td></tr>
+        </table>
+        <p style="color:var(--dim);font-size:0.82rem;margin-top:18px">
+          De knop is de grote verandering: die gaat van mono-uppercase met letterspacing naar
+          gewone sentence case. &ldquo;Start training&rdquo;, niet &ldquo;START TRAINING&rdquo;.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 DE NIEUWE VANDAAG ============ -->
+<section class="band" id="mock">
+  <div class="wrap">
+    <p class="eyebrow">03 · Het bewijs</p>
+    <h2>De nieuwe Vandaag — en de Week.</h2>
+    <p class="lead" style="max-width:64ch;color:var(--muted);margin-top:18px">
+      Dezelfde gegevens, dezelfde schermen. Alleen de rollen zijn omgedraaid: één luid
+      element, acties in inkt, uitleg achter &ldquo;Details ›&rdquo;. Dit is HTML, geen plaatje —
+      wat je hier ziet is wat er gebouwd kan worden.
+    </p>
+
+    <div class="mock-wrap">
+      <div class="phones appscope">
+
+        <!-- VANDAAG -->
+        <div class="phone" aria-label="Mockup: het nieuwe Vandaag-scherm">
+          <div class="ph-head">
+            <span class="ph-date">di 20 okt</span>
+            <span class="ph-brand"><span class="ph-dot"></span>AQ</span>
+          </div>
+
+          <div class="ph-card ph-verdict">
+            <div class="ph-ring"><b>100</b></div>
+            <div>
+              <div class="ph-loud">HARD</div>
+              <div class="ph-reason">Slaap, rust-HR en vorm binnen je basislijn.</div>
+            </div>
+          </div>
+
+          <div class="ph-stats">
+            <div><b>7,3 u</b><span>slaap</span></div>
+            <div><b>56</b><span>rust-HR</span></div>
+            <div><b class="ph-state">−7</b><span>vorm</span></div>
+          </div>
+
+          <div class="ph-label">Vandaag · gepland</div>
+          <div class="ph-card">
+            <div class="ph-session__ttl">Duurloop Z2</div>
+            <div class="ph-session__meta">Loop · 45 min · Z2</div>
+            <div class="ph-blocks">
+              <i style="height:26%"></i><i style="height:26%"></i><i style="height:26%"></i>
+              <i style="height:72%"></i><i style="height:72%"></i><i style="height:72%"></i>
+              <i style="height:72%"></i><i style="height:72%"></i><i class="hard" style="height:88%"></i>
+              <i style="height:72%"></i><i style="height:26%"></i><i style="height:26%"></i>
+            </div>
+            <button class="ph-cta" type="button">Start training <span>›</span></button>
+          </div>
+
+          <div class="ph-label">Check-in</div>
+          <div class="ph-card ph-checkin">
+            <div class="ph-checkin__row">
+              <span class="ph-checkin__l">gevoel</span>
+              <span class="ph-pills"><i></i><i></i><i></i><i class="on"></i><i></i></span>
+            </div>
+            <div class="ph-checkin__row">
+              <span class="ph-checkin__l">benen</span>
+              <span class="ph-pills"><i></i><i></i><i></i><i></i><i class="on"></i></span>
+            </div>
+            <div class="ph-checkin__row">
+              <span class="ph-checkin__l">stress</span>
+              <span class="ph-pills"><i></i><i></i><i></i><i></i><i class="on"></i></span>
+            </div>
+          </div>
+
+          <div class="ph-tabs">
+            <span class="on">Vandaag</span><span>Plan</span><span>Kracht</span><span>Coach</span><span>Meer</span>
+          </div>
+        </div>
+
+        <!-- WEEK -->
+        <div class="phone" aria-label="Mockup: het nieuwe Week-scherm">
+          <div class="ph-head">
+            <span class="ph-date">week · 19–25 okt</span>
+            <span class="ph-brand"><span class="ph-dot"></span>AQ</span>
+          </div>
+
+          <div class="ph-label">Deze week in je opbouw</div>
+          <div class="ph-opbouw">
+            <div class="fit"><b>24</b><span>fitness</span></div>
+            <div class="fat"><b>35</b><span>vermoeidheid</span></div>
+            <div class="form"><b>−11</b><span>opbouwen</span></div>
+          </div>
+          <div class="ph-line">
+            Je draagt vermoeidheid; dat hoort bij opbouwen. Hou de makkelijke dagen makkelijk.
+          </div>
+          <div class="ph-line ph-line--goal">
+            497 min gepland (7 sessies) — past bij de Base-fase (~530 min).
+          </div>
+
+          <div class="ph-label" style="margin-top:4px">Geplaatst</div>
+          <div class="ph-days">
+            <div class="ph-day"><small>ma</small><span>Kracht bovenlijf</span><em>60 min</em></div>
+            <div class="ph-day"><small>di</small><span>Kracht onderlijf · Duurloop Z2</span><em>45 min</em></div>
+            <div class="ph-day rest"><small>wo</small><span>Rust</span><em>—</em></div>
+            <div class="ph-day"><small>do</small><span>Kracht bovenlijf</span><em>60 min</em></div>
+            <div class="ph-day"><small>vr</small><span>Duurloop met strides</span><em>62 min</em></div>
+          </div>
+
+          <div class="ph-line" style="margin-top:auto;color:var(--a-dim)">
+            Richting Halve marathon — over 72 dagen · Base.
+          </div>
+
+          <div class="ph-tabs">
+            <span>Vandaag</span><span class="on">Plan</span><span>Kracht</span><span>Coach</span><span>Meer</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <b>Eén luid element</b>
+          <span>De ring plus het verdict is het enige wat schreeuwt. De cijfers eronder zijn
+          mono en klein — je leest ze als je ze zoekt.</span>
+        </div>
+        <div class="note">
+          <b>Acties in inkt</b>
+          <span>&ldquo;Start training&rdquo; is wit op donker. Mint blijft gereserveerd voor de
+          staat, dus een groene ring betekent weer echt iets.</span>
+        </div>
+        <div class="note">
+          <b>Uitleg achter Details</b>
+          <span>De kaarten zeggen wat je moet weten. De uitleg van de Body Battery, de
+          basislijn en de TSB verhuist naar het info-icoon.</span>
+        </div>
+        <div class="note">
+          <b>Check-in die je aantikt</b>
+          <span>Drie rijen met labels en stippen in plaats van drie naamloze rijen met
+          cijfers. Zelfde data, één blik.</span>
+        </div>
+        <div class="note">
+          <b>De Week vertelt, niet alleen telt</b>
+          <span>Fitness, vermoeidheid en vorm met een regel uitleg, plus de lijn naar je doel.
+          De cijfers krijgen context.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 NAVIGATIE ============ -->
+<section class="band" id="navigatie">
+  <div class="wrap">
+    <p class="eyebrow">04 · Navigatie</p>
+    <h2>Vier tabs die je mentale model volgen.</h2>
+    <p class="lead" style="max-width:66ch;color:var(--muted);margin-top:18px">
+      Nu staat <strong>Hardlopen</strong> als tab naast <strong>Vandaag</strong> en
+      <strong>Coach</strong> — maar Hardlopen is een sport, geen scherm. En
+      <strong>Trainingen</strong> (de bibliotheek) en <strong>Week</strong> (het plan) zijn twee
+      namen voor één idee: je plan. Daardoor zit het weekoverzicht achter &ldquo;Meer&rdquo;,
+      terwijl het je meest gebruikte scherm is.
+    </p>
+
+    <div class="grid g2" style="margin-top:40px">
+      <div class="card">
+        <span class="card-num">Straks</span>
+        <div class="tabbar appscope">
+          <span class="on">Vandaag</span><span>Plan</span><span>Kracht</span><span>Coach</span><span class="more">Meer</span>
+        </div>
+        <div style="margin-top:22px;display:grid;gap:10px">
+          <div style="display:flex;gap:12px;align-items:baseline">
+            <span class="s-new-label" style="width:64px;flex:none">Vandaag</span>
+            <span style="color:var(--muted);font-size:0.9rem">wat doe ik vandaag</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:baseline">
+            <span class="s-new-label" style="width:64px;flex:none">Plan</span>
+            <span style="color:var(--muted);font-size:0.9rem">wat is mijn week — en wat deed het met mijn opbouw</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:baseline">
+            <span class="s-new-label" style="width:64px;flex:none">Kracht</span>
+            <span style="color:var(--muted);font-size:0.9rem">wat til ik, en wat tilde ik</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:baseline">
+            <span class="s-new-label" style="width:64px;flex:none">Coach</span>
+            <span style="color:var(--muted);font-size:0.9rem">wat zegt de coach</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:baseline">
+            <span class="s-new-label" style="width:64px;flex:none">Meer</span>
+            <span style="color:var(--muted);font-size:0.9rem">de analyse: Herstel, Trends, Loopdetail, Profiel</span>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:18px">
+          Vier bestemmingen die elk één vraag beantwoorden: <em>wat doe ik vandaag</em>,
+          <em>wat is mijn plan</em>, <em>wat til ik</em>, <em>wat zegt de coach</em>.
+          &ldquo;Meer&rdquo; houdt de analyse bij elkaar.
+        </p>
+      </div>
+
+      <div class="card">
+        <span class="card-num">Waar het heen gaat</span>
+        <table class="routes">
+          <tr><th>Nu</th><th>Straks</th><th></th></tr>
+          <tr><td>Hardlopen</td><td>Loopdetail (onder een sessie)</td><td class="no">sport › detail</td></tr>
+          <tr><td>Trainingen</td><td>Plan › Bibliotheek</td><td class="yes">één idee</td></tr>
+          <tr><td>Week (Meer)</td><td>Plan</td><td class="yes">tab</td></tr>
+          <tr><td>Kracht (Meer)</td><td>Kracht</td><td class="yes">tab</td></tr>
+          <tr><td>Herstel (Meer)</td><td>Meer › Herstel</td><td class="no">blijft</td></tr>
+          <tr><td>Trends (Meer)</td><td>Meer › Trends</td><td class="no">blijft</td></tr>
+          <tr><td>Profiel (Meer)</td><td>Meer › Profiel</td><td class="no">blijft</td></tr>
+        </table>
+        <p style="color:var(--dim);font-size:0.82rem;margin-top:16px">
+          Geen scherm verdwijnt. De sport verhuist naar de plek waar je hem gebruikt: bij de
+          sessie en in de bibliotheek.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 UITROL ============ -->
+<section class="band" id="uitrol">
+  <div class="wrap">
+    <p class="eyebrow">05 · Uitrol</p>
+    <h2>In drie passen, zonder de app te breken.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step__n">01</span>
+        <div>
+          <h3>Rollen</h3>
+          <p>Acties naar inkt, mint alleen voor de staat, en de knop naar sentence case. Eén
+          CSS-laag plus de knoplabels — geen scherm opnieuw ontworpen, en direct overal
+          zichtbaar.</p>
+          <div class="step__meta">Raakt: app.css (tokens + .btn), de knoppen in de HTML</div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__n">02</span>
+        <div>
+          <h3>Typografie</h3>
+          <p>Eén schaal: een luid element per scherm, paginatitels lichter, body iets groter.
+          De mono-uppercase blijft voor labels en data, niet voor koppen en knoppen.</p>
+          <div class="step__meta">Raakt: app.css (type-schaal), de paginakoppen</div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step__n">03</span>
+        <div>
+          <h3>Dichtheid</h3>
+          <p>Uitleg naar het info-icoon en &ldquo;Details ›&rdquo;, lange coach-antwoorden in
+          korte regels, en de blokdump beperkt tot vier blokken met een verwijzing. Per scherm,
+          met een schermafdruk ervoor en erna.</p>
+          <div class="step__meta">Raakt: de kaarten op Vandaag, Herstel, Week en de coach-teksten</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card raised" style="margin-top:42px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between">
+      <div>
+        <h3 style="margin-bottom:6px">De navigatie is stap vier.</h3>
+        <p style="color:var(--muted);font-size:0.94rem;margin:0">
+          Die raakt elke pagina, dus die komt pas als de rollen en de typografie staan.
+        </p>
+      </div>
+      <a class="s-new-btn" href="frontend.html" style="text-decoration:none;display:inline-block">Naar de Interface-pagina ›</a>
+    </div>
+  </div>
+</section>
+
+<footer class="band" style="padding:44px 0">
+  <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:var(--dim);font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em">
+    <span>Athlete Intelligence · Ontwerp v2 · 2026-10</span>
+    <span> kleur en type terug op hun taak ›</span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
