@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beschikbaarheid &amp; meldingen · Athlete Intelligence</title>
+<meta name="description" content="Voorstel voor het beschikbaarheidssysteem en de meldingen: een gat in je week is geen alarm maar een openstaande vraag.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  body::before { display: none !important; }
+
+  :root{
+    --void:#101014; --surface:#1a1a21; --surface-2:#23232b; --line:#2b2b34; --line-2:#3a3a45;
+    --text:#f2f2f6; --muted:#9a9aa8; --dim:#8e8e9c;
+    --fitness:#4f8dff; --fatigue:#ff4d4d; --form:#00e08c; --easy:#ffd12e;
+    --radius:18px; --radius-sm:11px;
+    --mono:"IBM Plex Mono",monospace; --sans:"IBM Plex Sans",sans-serif; --display:"Archivo",sans-serif;
+  }
+  .aqmock *{box-sizing:border-box}
+  .aqmock{background:#0a0a0e;font-family:var(--sans);color:var(--text);-webkit-font-smoothing:antialiased;padding:0 0 40px}
+  .mh{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line);font-size:.9rem}
+  .mh span:first-child{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .mh span:last-child{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+
+  .pitch{max-width:2400px;padding:34px 44px 6px}
+  .pitch h1{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0 0 10px}
+  .pitch .lead{margin:0;max-width:78ch;font-size:14px;line-height:1.6;color:var(--muted)}
+  .principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:22px}
+  .pr{border-top:1px solid var(--line-2);padding-top:10px}
+  .pr .lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .pr b{display:block;margin:5px 0 4px;font-size:13px;font-weight:600}
+  .pr p{margin:0;font-size:12px;line-height:1.5;color:var(--muted)}
+
+  .stage{display:flex;flex-wrap:wrap;gap:30px;padding:26px 44px 48px;align-items:flex-start}
+  .frame{
+    width:390px;height:844px;border-radius:38px;overflow:hidden;position:relative;flex:none;
+    background:var(--void);box-shadow:0 0 0 10px #07070a,0 40px 80px -40px #000;
+    display:flex;flex-direction:column;
+  }
+  .cap{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#6b6b7a;padding:0 0 12px 6px;height:34px}
+
+  .eyebrow{display:flex;align-items:center;gap:.6em;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);padding:22px 20px 8px}
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--line-2)}
+
+  .btn-ink{background:var(--text);color:var(--void);border:0;border-radius:var(--radius-sm);padding:9px 14px;font-family:var(--sans);font-size:12px;font-weight:600}
+  .btn-quiet{background:var(--surface-2);color:var(--text);border:1px solid var(--line-2);border-radius:var(--radius-sm);padding:9px 14px;font-family:var(--sans);font-size:12px;font-weight:600}
+  .mono{font-family:var(--mono);letter-spacing:.06em}
+
+  /* f1 vandaag */
+  .vandaag{padding:4px 20px 0;display:flex;flex-direction:column;gap:14px;flex:1 1 auto}
+  .kicker{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .h1{font-family:var(--display);font-weight:800;font-size:25px;line-height:1.12;letter-spacing:-.02em;margin:0}
+  .sub{font-size:12px;color:var(--muted);margin-top:-6px}
+  .panel{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);padding:13px 13px 11px}
+  .panel__lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .strip{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);padding:11px 13px}
+  .strip__row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .strip__lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .strip__count{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line-2);border-radius:100px;padding:3px 9px}
+  .strip__link{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:0;cursor:pointer}
+  .exlist{display:grid;gap:2px}
+  .exrow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);min-height:27px}
+  .exrow .dot{width:4px;height:4px;border-radius:50%;background:var(--line-2);flex:none}
+  .facts{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:var(--muted)}
+  .facts div{display:flex;align-items:center;gap:9px}
+  .facts .mono{flex:none;width:74px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .hint{margin:0 20px 12px;padding:10px 12px;border:1px dashed var(--line-2);border-radius:var(--radius-sm);font-size:11px;color:var(--dim);line-height:1.5}
+  .hint b{color:var(--muted);font-weight:600}
+  .minicard{display:grid;gap:6px;margin-top:8px}
+  .minicard__row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .minicard__row b{font-size:14px;color:var(--text);font-weight:500}
+  .bubble--soft{opacity:.85}
+  .rules{margin-top:12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);overflow:hidden}
+  .rules__lab{padding:10px 12px 6px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .rule{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:9px 12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+  .rule b{font-size:12px;color:var(--text);font-weight:600;text-align:right}
+  .count{margin-top:14px;border-top:1px solid var(--line-2)}
+  .count__row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}
+  .count__row b{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;white-space:nowrap}
+  .count__row i{font-style:normal;color:var(--dim)}
+
+  /* f2 beschikbaarheid */
+  .avail{padding:4px 16px 0;display:flex;flex-direction:column;gap:10px;flex:1 1 auto}
+  .avail__head{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:0}
+  .avail__sub{font-size:12px;color:var(--muted);margin-top:-4px}
+  .daylist{display:grid;gap:6px;margin-top:6px}
+  .dayrow{display:flex;align-items:center;gap:10px;min-height:54px;padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+  .dayrow.past{opacity:.45;border-style:dashed}
+  .dayrow.today{border-color:var(--line-2);background:var(--surface-2)}
+  .dayrow.open{border-style:dashed;border-color:var(--line-2);background:transparent}
+  .dayrow .dd{font-family:var(--mono);font-size:11px;font-weight:500;width:26px;flex:none;color:var(--muted)}
+  .dayrow.today .dd{color:var(--text)}
+  .dayrow .info{flex:1 1 auto;min-width:0}
+  .dayrow .nm{display:block;font-size:13px;font-weight:600}
+  .dayrow .mt{display:block;font-size:10px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dayrow .status{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line-2);border-radius:100px;padding:3px 8px;flex:none}
+  .dayrow .status.rust{color:var(--muted);border-style:solid}
+  .dayrow .rustbtn{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--muted);background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:6px 9px;flex:none}
+  .foot{margin-top:auto;padding:12px 0 0;display:grid;gap:8px}
+  .foot .btn-ink{width:100%;min-height:48px;font-size:14px}
+  .foot .note{font-size:11px;color:var(--dim);text-align:center}
+
+  /* f2 weekkeuzes */
+  .prefs{padding:4px 16px 0;display:flex;flex-direction:column;gap:9px;flex:1 1 auto}
+  .prefs__head{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:0}
+  .prefs__sub{font-size:12px;color:var(--muted);margin-top:-4px;line-height:1.45}
+  .prefcard{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:9px 11px}
+  .prefcard__lab{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .prefrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px}
+  .stepper{display:flex;align-items:center;gap:11px}
+  .stepbtn{width:30px;height:30px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1}
+  .stepval{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.03em;min-width:20px;text-align:center}
+  .choice{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);border-radius:100px;padding:5px 8px;background:transparent}
+  .choice.on{background:var(--text);color:var(--void);border-color:var(--text)}
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:8px}
+  .daybtn{min-height:34px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:.04em;text-transform:uppercase}
+  .daybtn.on{background:var(--surface-2);border-color:var(--text);color:var(--text)}
+  .prefnote{font-size:10px;color:var(--dim);line-height:1.4;margin:6px 0 0}
+  .coachnote{border:1px solid var(--line);border-left:3px solid var(--form);border-radius:8px;background:var(--surface);padding:9px 11px;font-size:11px;line-height:1.45;color:var(--muted)}
+  .coachnote b{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+
+  /* f3 sessie doorgeven */
+  .session{padding:4px 16px 0;display:flex;flex-direction:column;gap:9px;flex:1 1 auto}
+  .session__head{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:0}
+  .session__sub{font-size:12px;color:var(--muted);margin-top:-4px;line-height:1.45}
+  .seg{display:flex;gap:6px;margin-top:7px}
+  .segbtn{flex:1 1 0;min-height:36px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:600}
+  .segbtn.on{background:var(--surface-2);border-color:var(--text);color:var(--text)}
+  .rpe-card{border:1px solid var(--line);border-radius:12px;background:var(--surface-2);padding:11px 12px 9px;text-align:center}
+  .rpe-num{font-family:var(--display);font-weight:800;font-size:38px;line-height:.9;letter-spacing:-.03em}
+  .rpe-word{font-family:var(--display);font-size:15px;font-weight:700;margin-top:2px}
+  .rpe-desc{font-size:11px;color:var(--muted);margin-top:4px}
+  .rpe-slider{width:100%;margin:10px 0 0;accent-color:var(--text)}
+  .rpe-scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--dim);margin-top:2px}
+  .imp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}
+  .impbtn{min-height:38px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--muted);font-family:var(--display);font-size:18px;font-weight:700}
+  .impbtn.on{background:var(--text);color:var(--void);border-color:var(--text)}
+  .impdesc{font-size:10px;color:var(--dim);line-height:1.4;margin:7px 0 0}
+  .timerow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px}
+  .timerow .mono{font-size:11px;color:var(--muted)}
+  .toggle{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+  .toggle input{accent-color:var(--text)}
+
+  /* f3 ochtendbrief */
+  .brief{padding:8px 16px 0;display:flex;flex-direction:column;gap:10px;flex:1 1 auto;justify-content:flex-start}
+  .bubble{border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);padding:14px 14px 12px}
+  .bubble__ttl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .bubble p{margin:0 0 10px;font-size:13px;line-height:1.5;color:var(--text)}
+  .brow{display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);font-size:11px;color:var(--muted);margin-bottom:6px}
+  .brow .lab{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);flex:none;width:62px}
+  .openline{display:flex;align-items:center;gap:10px;margin-top:6px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .openline b{color:var(--text);font-weight:600}
+  .openline .btn-quiet{margin-left:auto;padding:6px 10px;font-size:11px}
+
+  /* f4 ladder */
+  .ladder{padding:4px 20px 0;display:flex;flex-direction:column;gap:12px;flex:1 1 auto}
+  .ladder__ttl{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:0}
+  .tl{display:grid;gap:0;margin-top:6px}
+  .tlnode{display:flex;gap:12px;min-height:74px}
+  .tlnode .rail{display:flex;flex-direction:column;align-items:center;flex:none;width:20px}
+  .tlnode .dot{width:12px;height:12px;border-radius:50%;background:var(--surface-2);border:2px solid var(--line-2);flex:none}
+  .tlnode .dot.loud{background:var(--text);border-color:var(--text)}
+  .tlnode .line{flex:1 1 auto;width:2px;background:var(--line)}
+  .tlnode:last-child .line{display:none}
+  .tlnode .body{flex:1 1 auto;padding-bottom:10px}
+  .tlnode .when{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .tlnode .what{font-size:13px;font-weight:600;margin:3px 0 2px}
+  .tlnode .desc{font-size:11px;color:var(--muted);line-height:1.45}
+  .silence{margin-top:8px;padding:12px 13px;border:1px dashed var(--line-2);border-radius:var(--radius-sm);background:transparent}
+  .silence .lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+  .silence p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+  .fillnote{padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font-size:11px;color:var(--muted);line-height:1.5}
+  .fillnote b{color:var(--text);font-weight:600}
+
+  /* f5 before/after */
+  .ba{padding:8px 16px 0;display:flex;flex-direction:column;gap:10px;flex:1 1 auto;justify-content:flex-start}
+  .ba__ttl{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:0}
+  .ba__sub{font-size:12px;color:var(--muted);margin-top:-4px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+  .col .lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .msg{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:9px 10px;font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:6px}
+  .msg.struck{text-decoration:line-through;color:var(--dim)}
+  .clean{border:1px solid var(--line-2);border-radius:10px;background:var(--surface-2);padding:12px 12px;font-size:12px;color:var(--text);line-height:1.5}
+  .clean .lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+
+  @media (max-width: 900px){
+    .stage{display:grid;gap:26px;padding:12px;justify-items:center}
+    .cap{padding-left:0}
+    .frame{width:min(390px, calc(100vw - 24px))}
+    .principles{grid-template-columns:1fr}
+  }
+
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="dot"></span>Athlete&nbsp;Intelligence</span>
+    <div class="nav-links">
+      <a href="index.html">Voorstel</a>
+      <a href="science.html">Wetenschap</a>
+      <a href="strength.html">Kracht</a>
+      <a href="pwa.html">PWA</a>
+      <a href="backend.html">Backend</a>
+      <a href="frontend.html">Interface</a>
+      <a href="design.html">Ontwerp</a>
+      <a href="beschikbaarheid.html" aria-current="page">Beschikbaarheid</a>
+    </div>
+  </div>
+</nav>
+<div class="aqmock">
+<section class="pitch">
+  <h1>Geen rooster, een open week</h1>
+  <p class="lead">
+    Je hoeft niet vooraf ochtend, middag of avond te kiezen. Geef aantal sessies,
+    tijd, sport en welke dagen je openhoudt. Soms fiets of loop je spontaan met
+    vrienden; dat geef je later door, zoals je in JOIN een rit doorgeeft. De coach
+    past de week aan zonder dat je een dagdeel hoeft te claimen.
+  </p>
+  <div class="principles">
+    <div class="pr"><div class="lab">principe</div><b>Vier keuzes, geen dagdelen</b><p>Aantal sessies, tijd per sessie, sport en open dagen. De coach kiest de beste dag.</p></div>
+    <div class="pr"><div class="lab">1 · week</div><b>Open houden mag</b><p>Wo, za en zo open betekent: ruimte, geen verplichting. Rust blijft een geldige keuze.</p></div>
+    <div class="pr"><div class="lab">2 · spontaan</div><b>Geef later door</b><p>Een rit of loop met vrienden vul je in met RPE, belangrijkheid en tijd. De week schuift mee.</p></div>
+    <div class="pr"><div class="lab">3 · vraag</div><b>Één vraag per dag</b><p>Alleen als er nog sessies open staan. Daarna stilte.</p></div>
+  </div>
+</section>
+<div class="stage">
+
+  <!-- 1 -->
+  <div>
+    <div class="cap">1 · vandaag — de week in één strip</div>
+    <div class="frame" id="f1">
+      <div class="eyebrow">Vandaag · di 28 okt</div>
+      <div class="vandaag">
+        <div class="kicker">ochtend</div>
+        <h1 class="h1">Goedemorgen,<br>Robin</h1>
+        <div class="sub">TSB +4 · rustdag gisteren</div>
+
+        <div class="strip">
+          <div class="strip__lab">Deze week</div>
+          <div class="strip__row">
+            <span class="strip__count">3 sessies · 1 gedaan</span>
+            <span class="chips">
+              <span class="chip">wo</span>
+              <span class="chip">za</span>
+              <span class="chip">zo</span>
+            </span>
+            <button class="strip__link">week instellen ›</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__lab">vandaag</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5">Rustdag. Morgen kracht bovenlijf, 45 min.</div>
+        </div>
+
+        <div class="exlist">
+          <div class="exrow"><span class="dot"></span>Kracht bovenlijf · wo 29 okt</div>
+          <div class="exrow"><span class="dot"></span>Duurloop Z2 · vr 31 okt</div>
+          <div class="exrow"><span class="dot"></span>Lang duur · zo 2 nov</div>
+        </div>
+
+        <div class="facts">
+          <div><span class="mono">ctl / atl</span>52 / 48 · TSB +4</div>
+          <div><span class="mono">plan</span>3 sessies · 1 gedaan</div>
+        </div>
+      </div>
+      <div class="hint"><b>Geen modal, geen alarmkleur.</b> Drie getallen en open dagen; geen verplichte dagdelen.</div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div>
+    <div class="cap">2 · week instellen — aantal, tijd, sport, open houden</div>
+    <div class="frame" id="f2">
+      <div class="eyebrow">Beschikbaarheid · deze week</div>
+      <div class="prefs">
+        <h2 class="prefs__head">Hoeveel ruimte geef je deze week?</h2>
+        <div class="prefs__sub">Geen dagdelen. De coach kiest de beste dag binnen wat je openhoudt.</div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Sessies deze week</div>
+          <div class="prefrow">
+            <div class="stepper">
+              <button class="stepbtn" aria-label="minder sessies">−</button>
+              <span class="stepval">3</span>
+              <button class="stepbtn" aria-label="meer sessies">+</button>
+            </div>
+            <span class="choice on">3 × 60 min</span>
+          </div>
+        </div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Tijd per sessie</div>
+          <div class="prefrow">
+            <div class="chips">
+              <button class="choice">45 min</button>
+              <button class="choice on">60 min</button>
+              <button class="choice">90 min</button>
+            </div>
+            <span class="mono" style="font-size:10px;color:var(--dim)">totaal 3 u</span>
+          </div>
+        </div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Welke sport</div>
+          <div class="prefrow">
+            <div class="chips">
+              <button class="choice on">Hardlopen</button>
+              <button class="choice on">Fietsen</button>
+              <button class="choice">Kracht</button>
+            </div>
+          </div>
+          <p class="prefnote">Meerdere sporten mogen. De coach verdeelt ze over je open dagen.</p>
+        </div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Open houden</div>
+          <div class="days">
+            <button class="daybtn">ma</button>
+            <button class="daybtn">di</button>
+            <button class="daybtn on">wo</button>
+            <button class="daybtn">do</button>
+            <button class="daybtn">vr</button>
+            <button class="daybtn on">za</button>
+            <button class="daybtn on">zo</button>
+          </div>
+          <p class="prefnote">Open = ruimte, geen verplichting. Je hoeft geen ochtend, middag of avond te kiezen.</p>
+        </div>
+
+        <div class="coachnote"><b>Wat de coach doet</b>Verdeelt 3 sessies over wo, za en zo. Kiest de sport op basis van je week; jij hoeft geen dagdeel te kiezen.</div>
+
+        <div class="foot">
+          <button class="btn-ink">Week klaar</button>
+          <div class="note">3 sessies · 60 min · fiets + loop · wo, za, zo open</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 3 -->
+  <div>
+    <div class="cap">3 · sessie doorgeven — spontaan met vrienden</div>
+    <div class="frame" id="f3">
+      <div class="eyebrow">Sessie doorgeven · vandaag</div>
+      <div class="session">
+        <h2 class="session__head">Soms gebeurt het spontaan.</h2>
+        <div class="session__sub">Fietsen of hardlopen met vrienden? Geef het door; de week schuift mee.</div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Sport</div>
+          <div class="seg">
+            <button class="segbtn on">Fietsen</button>
+            <button class="segbtn">Hardlopen</button>
+          </div>
+        </div>
+
+        <div class="rpe-card">
+          <div class="rpe-num">3</div>
+          <div class="rpe-word">Licht</div>
+          <div class="rpe-desc">Een rustige rit met vrienden, geen wedstrijd.</div>
+          <input class="rpe-slider" type="range" min="1" max="5" value="3" aria-label="Verwachte RPE">
+          <div class="rpe-scale"><span>1 · herstel</span><span>3 · licht</span><span>5 · maximaal</span></div>
+        </div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Belangrijkheid</div>
+          <div class="imp">
+            <button class="impbtn">A</button>
+            <button class="impbtn">B</button>
+            <button class="impbtn on">C</button>
+          </div>
+          <p class="impdesc">C · niet belangrijk. We maken het passend en houden voldoende rust.</p>
+        </div>
+
+        <div class="prefcard">
+          <div class="prefcard__lab">Rijtijd</div>
+          <div class="timerow">
+            <span class="mono">1:30</span>
+            <div class="chips">
+              <button class="choice">45 min</button>
+              <button class="choice">1 u</button>
+              <button class="choice on">1 u 30</button>
+            </div>
+          </div>
+          <label class="toggle" style="margin-top:7px">
+            <input type="checkbox" checked> Met vrienden · niet in de planning
+          </label>
+        </div>
+
+        <div class="coachnote"><b>Wat er schuift</b>Deze 90 min fietsen telt als duurwerk. De coach houdt wo, za en zo open en past alleen aan als je herstel het vraagt.</div>
+
+        <div class="foot">
+          <button class="btn-ink">Sessie doorgeven</button>
+          <div class="note">Ook achteraf doorgeven mag. Je hoeft dit niet vooraf te plannen.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 4 -->
+  <div>
+    <div class="cap">4 · de ochtendbrief — één regel, geen extra bericht</div>
+    <div class="frame" id="f4">
+      <div class="eyebrow">Ochtendbrief · di 28 okt</div>
+      <div class="brief">
+        <div class="bubble">
+          <div class="bubble__ttl">Telegram · 06:12</div>
+          <p>TSB +4, rustdag gisteren. Deze week staan er 3 sessies; wo, za en zo zijn nog open.</p>
+          <div class="brow"><span class="lab">week</span><span>3 sessies · 60 min · fiets + loop</span></div>
+          <div class="brow"><span class="lab">voorstel</span><span>wo kracht 45 min · za duurloop 60 min · zo fiets 90 min</span></div>
+          <div class="openline">
+            <span><b>Nog open:</b> wo, za en zo.</span>
+            <button class="btn-quiet">Sessie doorgeven</button>
+          </div>
+        </div>
+        <div class="bubble bubble--soft">
+          <div class="bubble__ttl">Telegram · 06:12 · de kaart</div>
+          <div class="minicard">
+            <div class="minicard__row"><span>Herstel</span><b>68%</b></div>
+            <div class="minicard__row"><span>Body battery</span><b>78%</b></div>
+            <div class="minicard__row"><span>Vorm (TSB)</span><b>+4</b></div>
+          </div>
+        </div>
+        <div class="hint"><b>Geen apart bericht bij opslaan.</b> De app bevestigt zelf: "week bijgewerkt · ik plan de rest". Een tweede bericht over dezelfde vraag komt er niet.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 5 -->
+  <div>
+    <div class="cap">5 · de ladder — drie momenten, daarna stilte</div>
+    <div class="frame" id="f5">
+      <div class="eyebrow">Beschikbaarheid · ritme</div>
+      <div class="ladder">
+        <h2 class="ladder__ttl">Maximaal drie momenten</h2>
+        <div class="tl">
+          <div class="tlnode">
+            <div class="rail"><span class="dot loud"></span><span class="line"></span></div>
+            <div class="body">
+              <div class="when">zo · 18:00</div>
+              <div class="what">Één vraag</div>
+              <div class="desc">Of ma 06:00 als zondag niets gebeurde. Knoppen [Rust] en [Invullen].</div>
+            </div>
+          </div>
+          <div class="tlnode">
+            <div class="rail"><span class="dot"></span><span class="line"></span></div>
+            <div class="body">
+              <div class="when">ochtendbrief</div>
+              <div class="what">Één regel onderaan</div>
+              <div class="desc">Alleen als er nog sessies open staan. "Nog open: wo, za en zo." + [Sessie doorgeven].</div>
+            </div>
+          </div>
+          <div class="tlnode">
+            <div class="rail"><span class="dot"></span><span class="line"></span></div>
+            <div class="body">
+              <div class="when">do · 18:00</div>
+              <div class="what">Laatste vriendelijke sein</div>
+              <div class="desc">Alleen als er nog ≥2 sessies open staan én er al een plan is. "Ik plan de rest als rust, tenzij je aanvult."</div>
+            </div>
+          </div>
+        </div>
+        <div class="silence">
+          <div class="lab">daarna</div>
+          <p>Stilte. Geen vierde bericht, ook niet als je een sessie doorgeeft.</p>
+        </div>
+        <div class="fillnote"><b>Als hij een sessie doorgeeft:</b> geen bericht. De app bevestigt zelf met "week bijgewerkt · ik plan de rest".</div>
+        <div class="rules">
+          <div class="rules__lab">harde regels</div>
+          <div class="rule"><span>Maximaal</span><b>1 vraag per dag · 3 per week</b></div>
+          <div class="rule"><span>Nooit</span><b>tussen 21:00 en 07:00</b></div>
+          <div class="rule"><span>Nooit</span><b>over een dag die voorbij is</b></div>
+          <div class="rule"><span>Nooit</span><b>twee keer dezelfde vraag</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 6 -->
+  <div>
+    <div class="cap">6 · wat er níet meer gebeurt</div>
+    <div class="frame" id="f6">
+      <div class="eyebrow">Beschikbaarheid · voor en na</div>
+      <div class="ba">
+        <h2 class="ba__ttl">Voorheen vs. nu</h2>
+        <div class="ba__sub">Geen verplichte dagdelen. Drie getallen, open dagen en een spontane sessie.</div>
+        <div class="cols">
+          <div class="col">
+            <div class="lab">voorheen</div>
+            <div class="msg struck">ma ochtend · wo middag · za avond</div>
+            <div class="msg struck">Welk dagdeel? Ochtend / middag / avond.</div>
+            <div class="msg struck">Je gaf geen beschikbaarheid voor ma, wo, do, vr, za en zo…</div>
+          </div>
+          <div class="col">
+            <div class="lab">nu</div>
+            <div class="clean">
+              <div class="lab">week · één keer</div>
+              3 sessies · 60 min · fiets + loop<br>wo, za en zo open
+            </div>
+            <div class="clean" style="margin-top:6px">
+              <div class="lab">spontaan · later</div>
+              zo · 90 min fietsen met vrienden · RPE 3
+            </div>
+          </div>
+        </div>
+        <div class="count">
+          <div class="count__row"><span>Verplichte dagdelen</span><b>3 <i>›</i> 0</b></div>
+          <div class="count__row"><span>Spontane sessie doorgeven</span><b>nee <i>›</i> ja</b></div>
+          <div class="count__row"><span>Vragen over dagen die al voorbij zijn</span><b>ja <i>›</i> nee</b></div>
+          <div class="count__row"><span>Herinneringen per week</span><b>onbeperkt <i>›</i> 3</b></div>
+        </div>
+        <div class="hint"><b>Eerlijk en rustig.</b> Geen alarm, geen burst. Open houden is een geldige keuze.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>

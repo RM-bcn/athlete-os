@@ -457,9 +457,12 @@ ul.ticks li.no::before { border-color: var(--fatigue); border-radius: 50%; }
   .nav-links a { font-size: 0.63rem; letter-spacing: 0.04em; }
 }
 @media (max-width: 560px) {
-  /* alleen de stip van het merk; het woord verdwijnt zodat de vier links passen */
+  /* alleen de stip van het merk; het woord verdwijnt */
   .brand { font-size: 0; gap: 0; }
-  .nav-links { gap: 11px; }
+  .nav-inner { align-items: flex-start; }
+  /* acht pagina's passen niet op één regel: laat de links doorlopen in plaats
+     van de pagina horizontaal te laten scrollen */
+  .nav-links { gap: 8px 12px; flex-wrap: wrap; justify-content: flex-end; }
   .nav-links a { font-size: 0.6rem; letter-spacing: 0.02em; }
 }
 
